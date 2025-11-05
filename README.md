@@ -72,6 +72,8 @@ O **MVP Estetoscópio** é uma plataforma de estudos baseada em flashcards que u
 - Suporte a múltiplos tipos de conteúdo (texto, imagem, áudio)
 - Atalhos de teclado (Espaço/Enter para virar)
 - Botões de avaliação estilo Anki (Novamente, Difícil, Bom, Fácil)
+- Sistema de repetição espaçada integrado
+- Marcação de progresso por card
 
 📚 **Gestão de Baralhos**
 
@@ -79,6 +81,8 @@ O **MVP Estetoscópio** é uma plataforma de estudos baseada em flashcards que u
 - Visualizar estatísticas de cada baralho
 - Modo de estudo dedicado
 - Upload de mídia (imagens e áudios)
+- Contagem de cards e progresso
+- Sistema de navegação entre cards
 
 📊 **Dashboard Inteligente**
 
@@ -86,13 +90,26 @@ O **MVP Estetoscópio** é uma plataforma de estudos baseada em flashcards que u
 - Baralhos recentes
 - Progresso de aprendizado
 - Informações do usuário
+- Métricas detalhadas (total de cards, média por baralho, maior baralho)
+- Ações rápidas para criar novos baralhos
 
 🔐 **Sistema de Autenticação**
 
-- Registro de usuários
+- Registro de usuários com validação
 - Login seguro com JWT
-- Proteção de rotas
+- Proteção de rotas com middleware
 - Gerenciamento de sessão
+- Cookies HTTP-only para segurança
+- Logout com limpeza de sessão
+
+📖 **Documentação Interativa (MDX)**
+
+- Sistema completo de documentação com MDX
+- Componentes customizados (Callout, Card, Step, CodeBlock)
+- Navegação intuitiva entre páginas
+- Breadcrumbs para orientação
+- Suporte a modo escuro
+- Renderização de Markdown com sintaxe rica
 
 ## 🛠 Tecnologias
 
@@ -102,6 +119,8 @@ O **MVP Estetoscópio** é uma plataforma de estudos baseada em flashcards que u
 - **Banco de Dados**: [Better-SQLite3](https://github.com/WiseLibs/better-sqlite3)
 - **Autenticação**: JWT com bcryptjs
 - **Ícones**: [Lucide React](https://lucide.dev/)
+- **Documentação**: [MDX](https://mdxjs.com/) com componentes customizados
+- **Markdown**: [Marked](https://marked.js.org/) para renderização
 - **Linting**: ESLint
 
 ## 📦 Instalação
@@ -116,7 +135,7 @@ O **MVP Estetoscópio** é uma plataforma de estudos baseada em flashcards que u
 1. Clone o repositório:
 
 ```bash
-git clone <url-do-repositorio>
+git clone https://github.com/bernardopg/mvp-estetoscopio.git
 cd mvp-estetoscopio
 ```
 
@@ -192,6 +211,7 @@ mvp-estetoscopio/
 │   │   │   ├── auth/         # Autenticação (login, signup, logout)
 │   │   │   ├── dashboard/    # Dashboard do usuário
 │   │   │   ├── decks/        # CRUD de baralhos
+│   │   │   ├── profile/      # Perfil do usuário
 │   │   │   └── upload/       # Upload de arquivos
 │   │   ├── baralhos/         # Páginas de baralhos
 │   │   │   ├── criar/        # Criar novo baralho
@@ -199,8 +219,19 @@ mvp-estetoscopio/
 │   │   │   │   ├── editar/   # Editar baralho
 │   │   │   │   └── estudar/  # Modo de estudo
 │   │   │   └── page.tsx      # Lista de baralhos
+│   │   ├── docs/             # Documentação MDX
+│   │   │   ├── api/          # Documentação da API
+│   │   │   ├── arquitetura/  # Arquitetura do sistema
+│   │   │   ├── changelog/    # Histórico de mudanças
+│   │   │   ├── exemplos/     # Exemplos de uso
+│   │   │   ├── faq/          # Perguntas frequentes
+│   │   │   ├── guia/         # Guia do usuário
+│   │   │   ├── referencia/   # Referência técnica
+│   │   │   ├── layout.tsx    # Layout da documentação
+│   │   │   └── page.tsx      # Índice da documentação
 │   │   ├── flashcards/       # Página de demonstração
 │   │   ├── login/            # Página de login
+│   │   ├── perfil/           # Página de perfil
 │   │   ├── signup/           # Página de registro
 │   │   ├── layout.tsx        # Layout principal
 │   │   ├── page.tsx          # Dashboard/Home
@@ -209,18 +240,38 @@ mvp-estetoscopio/
 │   │   ├── AudioPlayer.tsx   # Player de áudio
 │   │   ├── Flashcard.tsx     # Componente de flashcard básico
 │   │   ├── MediaFlashcard.tsx # Flashcard com mídia
+│   │   ├── MarkdownRenderer.tsx # Renderizador de Markdown
 │   │   └── Sidebar.tsx       # Barra lateral de navegação
 │   ├── lib/                  # Utilitários
 │   │   ├── auth.ts           # Funções de autenticação
-│   │   └── db.ts             # Configuração do banco de dados
+│   │   ├── db.ts             # Configuração do banco de dados
+│   │   └── spaced-repetition.ts # Algoritmo de repetição espaçada
 │   └── types/                # Tipos TypeScript
 │       └── globals.d.ts      # Tipos globais
+├── docs/                     # Arquivos MDX da documentação
+│   ├── components/           # Componentes customizados MDX
+│   │   ├── DocComponents.tsx # Callout, Card, Step, etc
+│   │   └── mdx-components.tsx # Componentes base MDX
+│   ├── api.mdx              # Documentação da API
+│   ├── arquitetura.mdx      # Arquitetura técnica
+│   ├── changelog.mdx        # Changelog
+│   ├── exemplos.mdx         # Exemplos práticos
+│   ├── faq.mdx              # FAQ
+│   ├── guia.mdx             # Guia do usuário
+│   └── index.mdx            # Índice da documentação
 ├── public/
 │   └── uploads/              # Arquivos de mídia enviados
 ├── package.json              # Dependências do projeto
 ├── tsconfig.json             # Configuração do TypeScript
 ├── tailwind.config.ts        # Configuração do Tailwind
-└── next.config.ts            # Configuração do Next.js
+├── next.config.ts            # Configuração do Next.js
+├── mdx-components.tsx        # Configuração MDX global
+├── README.md                 # Este arquivo
+├── GUIA_DE_USO.md           # Guia do usuário
+├── EXEMPLOS.md              # Exemplos de código
+├── ARQUITETURA.md           # Documentação técnica
+├── FAQ.md                   # Perguntas frequentes
+└── CHANGELOG.md             # Histórico de versões
 ```
 
 ## 🔌 API
@@ -403,6 +454,27 @@ import AudioPlayer from "@/components/AudioPlayer";
 <AudioPlayer src="/uploads/audio.mp3" />
 ```
 
+### MarkdownRenderer
+
+Renderizador de Markdown com suporte a sintaxe rica.
+
+```tsx
+import MarkdownRenderer from "@/components/MarkdownRenderer";
+
+<MarkdownRenderer
+  content="# Título\nConteúdo em **Markdown**"
+  title="Documentação"
+/>
+```
+
+**Features:**
+
+- Renderização de Markdown completo
+- Breadcrumbs automáticos
+- Suporte a modo escuro
+- Links de navegação
+- Tabela de conteúdos
+
 ### Sidebar
 
 Barra lateral de navegação.
@@ -412,6 +484,13 @@ import Sidebar from "@/components/Sidebar";
 
 <Sidebar />
 ```
+
+**Features:**
+
+- Links de navegação principais
+- Indicador de página ativa
+- Design responsivo
+- Suporte a modo escuro
 
 ## 🎨 Estilização
 
@@ -550,21 +629,35 @@ Tem uma ideia? Abra uma issue com:
 
 ### v1.1 (Próxima versão)
 
+- [ ] Sistema de repetição espaçada aprimorado
 - [ ] Estatísticas avançadas de estudo
 - [ ] Gráficos de progresso
 - [ ] Atalhos de teclado numéricos para avaliação
 - [ ] Modo noturno automático
+- [ ] Página de perfil do usuário completa
+- [ ] Recuperação de senha
 
 ### v2.0 (Futuro)
 
-- [ ] Exportação/importação de baralhos (JSON, CSV)
+- [ ] Exportação/importação de baralhos (JSON, CSV, Anki)
 - [ ] Compartilhamento de baralhos entre usuários
 - [ ] Tags e categorias para organização
 - [ ] Busca avançada e filtros
 - [ ] Sistema de conquistas e gamificação
+- [ ] Migração para PostgreSQL
+- [ ] Sistema de cache com Redis
+- [ ] Rate limiting nas APIs
+- [ ] Upload para S3 ou Cloudinary
+
+### v3.0 (Longo Prazo)
+
 - [ ] App mobile nativo (React Native)
 - [ ] Sincronização offline (PWA)
 - [ ] Suporte a múltiplos idiomas (i18n)
+- [ ] Testes automatizados (Jest, Playwright)
+- [ ] Editor de cards WYSIWYG
+- [ ] Suporte a LaTeX para fórmulas matemáticas
+- [ ] Integração com APIs educacionais
 
 ---
 

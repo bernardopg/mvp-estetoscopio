@@ -5,6 +5,108 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.1.0] - 2025-11-05
+
+### ✨ Adicionado
+
+#### Sistema de Documentação MDX
+
+- Sistema completo de documentação interativa com MDX
+- Páginas de documentação renderizadas dinamicamente
+- Componentes customizados para documentação:
+  - `Callout`: Caixas de destaque (info, warning, success, error)
+  - `Card`: Cartões para organização de conteúdo
+  - `Step`: Passo a passo numerado
+  - `CodeBlock`: Blocos de código com destaque
+- Layout dedicado para documentação com navegação
+- Breadcrumbs para orientação do usuário
+- Suporte completo a modo escuro
+- Rotas de documentação:
+  - `/docs` - Índice da documentação
+  - `/docs/guia` - Guia do usuário
+  - `/docs/api` - Documentação da API
+  - `/docs/arquitetura` - Arquitetura técnica
+  - `/docs/exemplos` - Exemplos práticos
+  - `/docs/faq` - Perguntas frequentes
+  - `/docs/changelog` - Histórico de mudanças
+  - `/docs/referencia` - Referência técnica
+
+#### Componente MarkdownRenderer
+
+- Novo componente `MarkdownRenderer.tsx` para renderização de Markdown
+- Integração com biblioteca `marked` para parsing
+- Suporte a sintaxe Markdown completa
+- Breadcrumbs automáticos
+- Links de navegação (anterior/próximo)
+- Design responsivo com Tailwind CSS
+- Suporte a modo escuro
+
+#### Sistema de Repetição Espaçada
+
+- Implementação do algoritmo de repetição espaçada (lib/spaced-repetition.ts)
+- Cálculo de intervalos baseado em dificuldade
+- Tracking de revisões por card
+- Integração com API de progresso (`/api/decks/[id]/progress`)
+
+#### Melhorias de API
+
+- Nova rota `/api/profile` para gerenciamento de perfil
+- Endpoint `/api/decks/[id]/progress` para tracking de progresso
+- Validações aprimoradas em todas as rotas
+- Melhor tratamento de erros com mensagens descritivas
+
+### 🔄 Alterado
+
+#### Componentes
+
+- `Flashcard.tsx` agora suporta feedback visual ao virar
+- `MediaFlashcard.tsx` com melhor tratamento de erros de mídia
+- `AudioPlayer.tsx` com controles mais intuitivos
+- `Sidebar.tsx` com indicador visual de página ativa
+
+#### Interface
+
+- Dashboard com métricas mais detalhadas
+- Página de perfil reformulada (`/perfil`)
+- Melhorias visuais nos gradientes e cores
+- Animações mais suaves em transições
+- Melhor responsividade em dispositivos móveis
+
+#### Documentação
+
+- README.md atualizado com todas as features
+- Estrutura de documentação reorganizada
+- Exemplos de código mais detalhados
+- Links para documentação MDX
+
+### 🛠️ Técnico
+
+#### Dependências Atualizadas
+
+- `@mdx-js/loader`: ^3.1.1
+- `@mdx-js/react`: ^3.1.1
+- `@next/mdx`: ^16.0.1
+- `@types/mdx`: ^2.0.13
+- `marked`: ^16.4.1
+- `@tailwindcss/typography`: ^0.5.0-alpha.3
+
+#### Configuração
+
+- `next.config.ts` configurado para suportar MDX
+- `mdx-components.tsx` adicionado na raiz
+- Novo arquivo de tipagem para componentes MDX
+- Configuração do Tailwind Typography para prose
+
+### 📊 Métricas (v1.1.0)
+
+- **Componentes**: 5 componentes reutilizáveis (+1)
+- **Páginas**: 15 páginas (+7 de documentação)
+- **API Routes**: 11 endpoints (+1)
+- **Linhas de Código**: ~4.500 LOC (+1.500)
+- **Documentos MDX**: 8 arquivos de documentação
+
+---
+
 ## [1.0.0] - 2025-11-04
 
 ### 🎉 Lançamento Inicial
@@ -84,12 +186,13 @@ Primeira versão estável do MVP Estetoscópio.
 ### 🛠️ Tecnologias Implementadas
 
 - **Frontend**: Next.js 15, React 19, TypeScript 5
-- **Estilização**: Tailwind CSS 4, Lucide React
+- **Estilização**: Tailwind CSS 4, Lucide React, Tailwind Typography
 - **Backend**: Next.js API Routes, Better-SQLite3
 - **Autenticação**: JWT, bcryptjs
+- **Documentação**: MDX, Marked
 - **Ferramentas**: ESLint, PostCSS
 
-### 📊 Métricas
+### 📊 Métricas (v1.0.0)
 
 - **Componentes**: 4 componentes reutilizáveis
 - **Páginas**: 8 páginas principais
@@ -100,21 +203,21 @@ Primeira versão estável do MVP Estetoscópio.
 
 ## [Unreleased]
 
-### 🚧 Planejado para v1.1
+### 🚧 Planejado para v1.2
 
 #### Em Desenvolvimento
 
-- [ ] Estatísticas avançadas de estudo
-- [ ] Gráficos de progresso com Chart.js
-- [ ] Atalhos de teclado numéricos (1-4) para avaliação
-- [ ] Modo noturno automático baseado no sistema
+- [ ] Sistema de repetição espaçada aprimorado com algoritmo SM-2
+- [ ] Estatísticas avançadas de estudo com gráficos
+- [ ] Página de perfil completa com edição de dados
+- [ ] Sistema de recuperação de senha por email
 
 #### Em Análise
 
-- [ ] Página de perfil do usuário
-- [ ] Edição de informações da conta
-- [ ] Alteração de senha
-- [ ] Sistema de recuperação de senha
+- [ ] Atalhos de teclado numéricos (1-4) para avaliação
+- [ ] Modo noturno automático baseado no sistema
+- [ ] Exportação de baralhos para JSON
+- [ ] Importação de baralhos do Anki
 
 ### 🔮 Planejado para v2.0
 
@@ -182,6 +285,6 @@ Se você quiser sugerir uma nova feature ou reportar um bug:
 
 ---
 
-**Versão Atual**: 1.0.0
+**Versão Atual**: 1.1.0
 
-**Última Atualização**: 04 de novembro de 2025
+**Última Atualização**: 05 de novembro de 2025
