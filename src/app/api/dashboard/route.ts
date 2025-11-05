@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import db from "@/lib/db";
 import { getAuthUser } from "@/lib/auth";
+import db from "@/lib/db";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
@@ -14,12 +14,15 @@ export async function GET() {
     const userId = authUser.id;
 
     // Get user info
-    const user = db
-      .prepare("SELECT * FROM users WHERE id = ?")
-      .get(userId) as { id: number; name: string; email: string; created_at: string } | undefined;
+    const user = db.prepare("SELECT * FROM users WHERE id = ?").get(userId) as
+      | { id: number; name: string; email: string; created_at: string }
+      | undefined;
 
     if (!user) {
-      return NextResponse.json({ error: "Usuário não encontrado" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Usuário não encontrado" },
+        { status: 404 }
+      );
     }
 
     // Get total decks
@@ -37,7 +40,7 @@ export async function GET() {
       try {
         const cards = JSON.parse(deck.cards);
         totalCards += cards.length;
-      } catch (e) {
+      } catch {
         // Skip invalid JSON
       }
     });
@@ -55,9 +58,21 @@ export async function GET() {
     }[];
 
     // Calculate days since account creation
-    const accountAge = Math.floor(
-      (Date.now() - new Date(user.created_at).getTime()) / (1000 * 60 * 60 * 24)
-    );
+    let accountAge = 0;
+    try {
+      // O SQLite retorna datas no formato 'YYYY-MM-DD HH:MM:SS'
+      // Adicionar 'Z' para forçar UTC ou tratar como horário local
+      const createdDateStr = user.created_at.replace(" ", "T");
+      const createdDate = new Date(createdDateStr);
+
+      if (!isNaN(createdDate.getTime())) {
+        const diffInMs = Date.now() - createdDate.getTime();
+        accountAge = Math.max(0, Math.floor(diffInMs / (1000 * 60 * 60 * 24)));
+      }
+    } catch (e) {
+      console.error("Erro ao calcular idade da conta:", e);
+      accountAge = 0;
+    }
 
     // Get deck with most cards
     let largestDeck = null;
@@ -68,7 +83,7 @@ export async function GET() {
         if (cards.length > maxCards) {
           maxCards = cards.length;
         }
-      } catch (e) {
+      } catch {
         // Skip invalid JSON
       }
     });
@@ -88,7 +103,7 @@ export async function GET() {
             cardCount: maxCards,
           };
         }
-      } catch (e) {
+      } catch {
         // Skip invalid JSON
       }
     });
@@ -102,7 +117,8 @@ export async function GET() {
       stats: {
         totalDecks: deckCount.count,
         totalCards,
-        averageCardsPerDeck: deckCount.count > 0 ? Math.round(totalCards / deckCount.count) : 0,
+        averageCardsPerDeck:
+          deckCount.count > 0 ? Math.round(totalCards / deckCount.count) : 0,
         largestDeck,
       },
       recentDecks,

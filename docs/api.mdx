@@ -1,0 +1,739 @@
+export const metadata = {
+  title: "API Reference",
+  description: "Documentação da API REST do MVP Estetoscópio",
+};
+
+# 🔌 API Reference
+
+<Callout type="info" title="API RESTful">
+  Documentação completa das rotas de API disponíveis no MVP Estetoscópio.
+</Callout>
+
+---
+
+## 🔐 Autenticação
+
+Todas as rotas protegidas requerem um token JWT válido enviado via cookie `token`.
+
+### Base URL
+
+```
+http://localhost:3000/api
+```
+
+---
+
+## 📝 Endpoints
+
+### Autenticação
+
+<Card title="POST /api/auth/signup">
+
+Cria uma nova conta de usuário.
+
+**Request Body**:
+
+```json
+{
+  "name": "João Silva",
+  "email": "joao@example.com",
+  "password": "senha123"
+}
+```
+
+**Response** (201 Created):
+
+```json
+{
+  "message": "Usuário criado com sucesso",
+  "user": {
+    "id": 1,
+    "name": "João Silva",
+    "email": "joao@example.com"
+  }
+}
+```
+
+**Errors**:
+
+- `400`: Dados inválidos ou incompletos
+- `409`: Email já cadastrado
+- `500`: Erro interno do servidor
+
+</Card>
+
+<Card title="POST /api/auth/login">
+
+Realiza login e retorna token JWT em cookie.
+
+**Request Body**:
+
+```json
+{
+  "email": "joao@example.com",
+  "password": "senha123"
+}
+```
+
+**Response** (200 OK):
+
+```json
+{
+  "message": "Login bem-sucedido",
+  "user": {
+    "id": 1,
+    "name": "João Silva",
+    "email": "joao@example.com"
+  }
+}
+```
+
+**Errors**:
+
+- `400`: Email ou senha ausentes
+- `401`: Credenciais inválidas
+- `500`: Erro interno do servidor
+
+</Card>
+
+<Card title="POST /api/auth/logout">
+
+Realiza logout removendo o cookie de autenticação.
+
+**Response** (200 OK):
+
+```json
+{
+  "message": "Logout realizado"
+}
+```
+
+**Errors**:
+
+- `500`: Erro interno do servidor
+
+</Card>
+
+---
+
+### Dashboard
+
+<Card title="GET /api/dashboard">
+
+🔒 **Rota Protegida**
+
+Retorna estatísticas e informações do dashboard do usuário.
+
+**Response** (200 OK):
+
+```json
+{
+  "user": {
+    "id": 1,
+    "name": "João Silva",
+    "email": "joao@example.com",
+    "created_at": "2024-01-01T10:00:00Z"
+  },
+  "stats": {
+    "totalDecks": 5,
+    "totalCards": 120,
+    "averageCardsPerDeck": 24,
+    "largestDeckSize": 45
+  },
+  "recentDecks": [
+    {
+      "id": 1,
+      "title": "Anatomia Cardíaca",
+      "cardCount": 25,
+      "created_at": "2024-01-01T10:00:00Z",
+      "updated_at": "2024-01-15T14:30:00Z"
+    }
+  ]
+}
+```
+
+**Errors**:
+
+- `401`: Não autenticado
+- `500`: Erro interno do servidor
+
+</Card>
+
+---
+
+### Baralhos (Decks)
+
+<Card title="GET /api/decks">
+
+🔒 **Rota Protegida**
+
+Lista todos os baralhos do usuário autenticado.
+
+**Response** (200 OK):
+
+```json
+{
+  "decks": [
+    {
+      "id": 1,
+      "title": "Anatomia Cardíaca",
+      "cardCount": 25,
+      "created_at": "2024-01-01T10:00:00Z",
+      "updated_at": "2024-01-15T14:30:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Farmacologia",
+      "cardCount": 30,
+      "created_at": "2024-01-10T08:00:00Z",
+      "updated_at": "2024-01-20T16:45:00Z"
+    }
+  ]
+}
+```
+
+**Errors**:
+
+- `401`: Não autenticado
+- `500`: Erro interno do servidor
+
+</Card>
+
+<Card title="POST /api/decks">
+
+🔒 **Rota Protegida**
+
+Cria um novo baralho com cards.
+
+**Request Body**:
+
+```json
+{
+  "title": "Farmacologia Básica",
+  "cards": [
+    {
+      "front": "O que é aspirina?",
+      "back": "Ácido acetilsalicílico",
+      "mediaType": null,
+      "mediaUrl": null
+    },
+    {
+      "front": "Para que serve a aspirina?",
+      "back": "Anti-inflamatório e anticoagulante",
+      "mediaType": "image",
+      "mediaUrl": "/uploads/images/aspirina.jpg"
+    }
+  ]
+}
+```
+
+**Response** (201 Created):
+
+```json
+{
+  "message": "Baralho criado com sucesso",
+  "deck": {
+    "id": 3,
+    "title": "Farmacologia Básica",
+    "user_id": 1,
+    "created_at": "2024-01-25T10:00:00Z",
+    "updated_at": "2024-01-25T10:00:00Z"
+  }
+}
+```
+
+**Errors**:
+
+- `400`: Dados inválidos (título obrigatório, mínimo 1 card)
+- `401`: Não autenticado
+- `500`: Erro interno do servidor
+
+</Card>
+
+<Card title="GET /api/decks/[id]">
+
+🔒 **Rota Protegida**
+
+Obtém detalhes de um baralho específico incluindo todos os seus cards.
+
+**URL Parameters**:
+
+- `id`: ID do baralho
+
+**Response** (200 OK):
+
+```json
+{
+  "deck": {
+    "id": 1,
+    "title": "Anatomia Cardíaca",
+    "user_id": 1,
+    "created_at": "2024-01-01T10:00:00Z",
+    "updated_at": "2024-01-15T14:30:00Z"
+  },
+  "cards": [
+    {
+      "id": 1,
+      "deck_id": 1,
+      "front": "Quantas câmaras tem o coração?",
+      "back": "Quatro: dois átrios e dois ventrículos",
+      "media_type": null,
+      "media_url": null,
+      "created_at": "2024-01-01T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "deck_id": 1,
+      "front": "Anatomia do coração",
+      "back": "Estrutura muscular dividida em quatro câmaras",
+      "media_type": "image",
+      "media_url": "/uploads/images/coracao.jpg",
+      "created_at": "2024-01-01T10:05:00Z"
+    }
+  ]
+}
+```
+
+**Errors**:
+
+- `401`: Não autenticado
+- `403`: Baralho não pertence ao usuário
+- `404`: Baralho não encontrado
+- `500`: Erro interno do servidor
+
+</Card>
+
+<Card title="PUT /api/decks/[id]">
+
+🔒 **Rota Protegida**
+
+Atualiza um baralho existente (título e cards).
+
+**URL Parameters**:
+
+- `id`: ID do baralho
+
+**Request Body**:
+
+```json
+{
+  "title": "Anatomia Cardíaca Avançada",
+  "cards": [
+    {
+      "front": "Pergunta atualizada",
+      "back": "Resposta atualizada",
+      "mediaType": "audio",
+      "mediaUrl": "/uploads/audio/som.mp3"
+    }
+  ]
+}
+```
+
+**Response** (200 OK):
+
+```json
+{
+  "message": "Baralho atualizado com sucesso",
+  "deck": {
+    "id": 1,
+    "title": "Anatomia Cardíaca Avançada",
+    "user_id": 1,
+    "updated_at": "2024-01-26T15:30:00Z"
+  }
+}
+```
+
+**Errors**:
+
+- `400`: Dados inválidos
+- `401`: Não autenticado
+- `403`: Baralho não pertence ao usuário
+- `404`: Baralho não encontrado
+- `500`: Erro interno do servidor
+
+</Card>
+
+<Card title="DELETE /api/decks/[id]">
+
+🔒 **Rota Protegida**
+
+Exclui um baralho e todos os seus cards permanentemente.
+
+**URL Parameters**:
+
+- `id`: ID do baralho
+
+**Response** (200 OK):
+
+```json
+{
+  "message": "Baralho excluído com sucesso"
+}
+```
+
+**Errors**:
+
+- `401`: Não autenticado
+- `403`: Baralho não pertence ao usuário
+- `404`: Baralho não encontrado
+- `500`: Erro interno do servidor
+
+</Card>
+
+---
+
+### Progresso
+
+<Card title="GET /api/decks/[id]/progress">
+
+🔒 **Rota Protegida**
+
+Obtém o progresso de estudo do usuário em um baralho específico.
+
+**URL Parameters**:
+
+- `id`: ID do baralho
+
+**Response** (200 OK):
+
+```json
+{
+  "progress": [
+    {
+      "card_id": 1,
+      "ease_factor": 2.5,
+      "interval": 1,
+      "repetitions": 0,
+      "next_review": "2024-01-27T10:00:00Z",
+      "last_reviewed": null
+    },
+    {
+      "card_id": 2,
+      "ease_factor": 2.6,
+      "interval": 6,
+      "repetitions": 2,
+      "next_review": "2024-02-01T10:00:00Z",
+      "last_reviewed": "2024-01-26T14:30:00Z"
+    }
+  ]
+}
+```
+
+**Errors**:
+- `401`: Não autenticado
+- `403`: Baralho não pertence ao usuário
+- `404`: Baralho não encontrado
+- `500`: Erro interno do servidor
+
+</Card>
+
+<Card title="POST /api/decks/[id]/progress">
+
+🔒 **Rota Protegida**
+
+Atualiza o progresso após revisar um card.
+
+**URL Parameters**:
+
+- `id`: ID do baralho
+
+**Request Body**:
+
+```json
+{
+  "cardId": 1,
+  "quality": 4
+}
+```
+
+**Quality Scale**:
+
+- `0`: Resposta completamente errada
+- `1`: Resposta errada mas familiar
+- `2`: Resposta errada mas fácil de lembrar
+- `3`: Resposta correta com dificuldade
+- `4`: Resposta correta com hesitação
+- `5`: Resposta perfeita
+
+**Response** (200 OK):
+
+```json
+{
+  "message": "Progresso atualizado",
+  "progress": {
+    "card_id": 1,
+    "ease_factor": 2.6,
+    "interval": 6,
+    "repetitions": 1,
+    "next_review": "2024-02-02T10:00:00Z",
+    "last_reviewed": "2024-01-27T10:00:00Z"
+  }
+}
+```
+
+**Errors**:
+
+- `400`: Dados inválidos
+- `401`: Não autenticado
+- `403`: Card não pertence ao usuário
+- `404`: Card não encontrado
+- `500`: Erro interno do servidor
+
+</Card>
+
+---
+
+### Upload
+
+<Card title="POST /api/upload">
+
+🔒 **Rota Protegida**
+
+Faz upload de arquivo (imagem ou áudio).
+
+**Content-Type**: `multipart/form-data`
+
+**Form Data**:
+
+- `file`: Arquivo a ser enviado
+- `type`: "image" ou "audio"
+
+**Image Formats**: JPG, JPEG, PNG, GIF, WebP (máx 5MB)
+**Audio Formats**: MP3, WAV, OGG, M4A (máx 10MB)
+
+**Response** (200 OK):
+
+```json
+{
+  "url": "/uploads/images/1234567890-foto.jpg"
+}
+```
+
+**Errors**:
+- `400`: Arquivo não enviado ou tipo inválido
+- `401`: Não autenticado
+- `413`: Arquivo muito grande
+- `415`: Formato não suportado
+- `500`: Erro ao salvar arquivo
+
+</Card>
+
+---
+
+### Perfil
+
+<Card title="GET /api/profile">
+
+🔒 **Rota Protegida**
+
+Obtém informações do perfil do usuário autenticado.
+
+**Response** (200 OK):
+
+```json
+{
+  "user": {
+    "id": 1,
+    "name": "João Silva",
+    "email": "joao@example.com",
+    "created_at": "2024-01-01T10:00:00Z"
+  },
+  "stats": {
+    "totalDecks": 5,
+    "totalCards": 120,
+    "totalReviews": 450,
+    "averageAccuracy": 0.85
+  }
+}
+```
+
+**Errors**:
+- `401`: Não autenticado
+- `500`: Erro interno do servidor
+
+</Card>
+
+---
+
+## 🔒 Segurança
+
+### Autenticação JWT
+
+<Callout type="info" title="JSON Web Token">
+  O sistema usa JWT (JSON Web Token) para autenticação stateless.
+</Callout>
+
+**Token Storage**: Cookie HTTP-only chamado `token`
+**Token Duration**: 24 horas
+**Token Refresh**: Não implementado (requer novo login)
+
+### Headers Necessários
+
+Para rotas protegidas, o cookie `token` deve estar presente:
+
+```http
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+### Rate Limiting
+
+<Callout type="warning">
+  Atualmente não há rate limiting implementado. Planejado para v1.2.
+</Callout>
+
+---
+
+## 📊 Códigos de Status
+
+<Card title="Status HTTP">
+  - `200 OK`: Requisição bem-sucedida - `201 Created`: Recurso criado com
+  sucesso - `400 Bad Request`: Dados inválidos ou ausentes - `401 Unauthorized`:
+  Não autenticado - `403 Forbidden`: Sem permissão para acessar recurso - `404
+  Not Found`: Recurso não encontrado - `409 Conflict`: Conflito (ex: email já
+  cadastrado) - `413 Payload Too Large`: Arquivo muito grande - `415 Unsupported
+  Media Type`: Formato não suportado - `500 Internal Server Error`: Erro no
+  servidor
+</Card>
+
+---
+
+## 🧪 Exemplos de Uso
+
+### cURL
+
+<CodeBlock title="Criar conta" language="bash">
+  {`curl -X POST http://localhost:3000/api/auth/signup \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "name": "João Silva",
+    "email": "joao@example.com",
+    "password": "senha123"
+  }'`}
+</CodeBlock>
+
+<CodeBlock title="Fazer login" language="bash">
+  {`curl -X POST http://localhost:3000/api/auth/login \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "email": "joao@example.com",
+    "password": "senha123"
+  }' \\
+  -c cookies.txt`}
+</CodeBlock>
+
+<CodeBlock title="Listar baralhos" language="bash">
+  {`curl -X GET http://localhost:3000/api/decks \\
+  -b cookies.txt`}
+</CodeBlock>
+
+### JavaScript (fetch)
+
+<CodeBlock title="Criar baralho" language="javascript">
+{`const response = await fetch('/api/decks', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  credentials: 'include', // Inclui cookies
+  body: JSON.stringify({
+    title: 'Farmacologia',
+    cards: [
+      {
+        front: 'O que é aspirina?',
+        back: 'Ácido acetilsalicílico',
+        mediaType: null,
+        mediaUrl: null
+      }
+    ]
+  })
+});
+
+const data = await response.json();
+console.log(data);`}
+
+</CodeBlock>
+
+### TypeScript
+
+<CodeBlock title="Interface de tipos" language="typescript">
+{`interface User {
+  id: number;
+  name: string;
+  email: string;
+  created_at: string;
+}
+
+interface Card {
+id?: number;
+deck_id?: number;
+front: string;
+back: string;
+media_type: 'image' | 'audio' | null;
+media_url: string | null;
+created_at?: string;
+}
+
+interface Deck {
+id?: number;
+title: string;
+user_id?: number;
+created_at?: string;
+updated_at?: string;
+cards?: Card[];
+cardCount?: number;
+}
+
+interface Progress {
+card_id: number;
+ease_factor: number;
+interval: number;
+repetitions: number;
+next_review: string;
+last_reviewed: string | null;
+}`}
+
+</CodeBlock>
+
+---
+
+## 🔄 Webhooks
+
+<Callout type="warning">
+  Webhooks não estão implementados na versão atual. Planejado para v2.0.
+</Callout>
+
+---
+
+## 📝 Changelog da API
+
+### v1.0.0 (Atual)
+
+- ✅ Autenticação (signup, login, logout)
+- ✅ CRUD de baralhos
+- ✅ Upload de arquivos
+- ✅ Dashboard
+- ✅ Perfil de usuário
+- ✅ Sistema de progresso básico
+
+### v1.1 (Planejado)
+
+- [ ] Recuperação de senha
+- [ ] Edição de perfil
+- [ ] Rate limiting
+- [ ] Paginação em listagens
+- [ ] Filtros e busca
+
+### v2.0 (Futuro)
+
+- [ ] Webhooks
+- [ ] API pública com chaves
+- [ ] GraphQL endpoint
+- [ ] WebSocket para tempo real
+- [ ] Versionamento da API
+
+---
+
+<Callout type="success" title="Documentação Completa">
+  Para mais detalhes técnicos, consulte a [Arquitetura do
+  Sistema](/docs/arquitetura).
+</Callout>

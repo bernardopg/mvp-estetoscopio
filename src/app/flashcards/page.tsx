@@ -1,10 +1,29 @@
-import Flashcard from "@/components/Flashcard";
-import { ArrowRight, BookOpen, Info } from "lucide-react";
+"use client";
+
+import Flashcard, { DifficultyLevel } from "@/components/Flashcard";
+import { getDifficultyFeedback } from "@/lib/spaced-repetition";
+import { ArrowRight, BookOpen, CheckCircle2, Info } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 export const dynamic = "force-static";
 
 export default function FlashcardsPage() {
+  const [lastDifficulty, setLastDifficulty] = useState<{
+    message: string;
+    color: string;
+  } | null>(null);
+
+  const handleDifficulty = (difficulty: DifficultyLevel) => {
+    const feedback = getDifficultyFeedback(difficulty);
+    setLastDifficulty(feedback);
+
+    // Limpar feedback após 3 segundos
+    setTimeout(() => {
+      setLastDifficulty(null);
+    }, 3000);
+  };
+
   const examples = [
     {
       front: <>Qual é a capital da França?</>,
@@ -56,16 +75,59 @@ export default function FlashcardsPage() {
                 <li>
                   • O sistema ajusta automaticamente o intervalo de revisão
                 </li>
+                <li className="mt-2 pt-2 border-t border-zinc-200 dark:border-zinc-800">
+                  <strong>Botões de dificuldade:</strong>
+                  <ul className="ml-4 mt-1 space-y-0.5">
+                    <li>
+                      🔴 <strong>Novamente</strong>: Revisar em breve
+                    </li>
+                    <li>
+                      🟠 <strong>Difícil</strong>: Intervalo curto
+                    </li>
+                    <li>
+                      🟢 <strong>Bom</strong>: Intervalo normal
+                    </li>
+                    <li>
+                      🔵 <strong>Fácil</strong>: Intervalo longo
+                    </li>
+                  </ul>
+                </li>
               </ul>
             </div>
           </div>
         </div>
 
+        {/* Feedback */}
+        {lastDifficulty && (
+          <div
+            className={`mb-6 p-4 rounded-xl bg-white dark:bg-zinc-900 border-2 ${
+              lastDifficulty.color.includes("red")
+                ? "border-red-200 dark:border-red-900"
+                : lastDifficulty.color.includes("amber")
+                ? "border-amber-200 dark:border-amber-900"
+                : lastDifficulty.color.includes("emerald")
+                ? "border-emerald-200 dark:border-emerald-900"
+                : "border-sky-200 dark:border-sky-900"
+            } shadow-lg animate-in fade-in slide-in-from-top-5 duration-300`}
+          >
+            <div className="flex items-center gap-3">
+              <CheckCircle2 className={`w-5 h-5 ${lastDifficulty.color}`} />
+              <p className={`font-semibold ${lastDifficulty.color}`}>
+                {lastDifficulty.message}
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Flashcards Examples */}
         <div className="space-y-6">
           {examples.map((c, i) => (
             <div key={i}>
-              <Flashcard front={c.front} back={c.back} />
+              <Flashcard
+                front={c.front}
+                back={c.back}
+                onDifficultySelect={handleDifficulty}
+              />
             </div>
           ))}
         </div>

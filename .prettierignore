@@ -1,0 +1,17 @@
+# Ignore MDX files to prevent formatting issues with JSX components
+*.mdx
+docs/**/*.mdx
+
+# Ignore build outputs
+.next/
+out/
+build/
+dist/
+
+# Ignore dependencies
+node_modules/
+
+# Ignore lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml

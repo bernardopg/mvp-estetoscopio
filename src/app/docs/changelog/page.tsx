@@ -1,19 +1,10 @@
-import MarkdownRenderer from "@/components/MarkdownRenderer";
-import { promises as fs } from "fs";
-import { marked } from "marked";
-import path from "path";
+import ChangelogDoc from "../../../../docs/changelog.mdx";
 
-marked.setOptions({
-  gfm: true,
-  breaks: true,
-});
+export const metadata = {
+  title: "Changelog - MVP Estetoscópio",
+  description: "Histórico de versões e mudanças",
+};
 
-export default async function ChangelogPage() {
-  const filePath = path.join(process.cwd(), "CHANGELOG.md");
-  const content = await fs.readFile(filePath, "utf8");
-  const htmlContent = await marked.parse(content);
-
-  return (
-    <MarkdownRenderer content={htmlContent} title="Novidades e Changelog" />
-  );
+export default function ChangelogPage() {
+  return <ChangelogDoc />;
 }

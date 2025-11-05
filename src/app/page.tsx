@@ -8,6 +8,7 @@ import {
   Layers,
   Library,
   Plus,
+  Settings,
   Sparkles,
   TrendingUp,
   User,
@@ -112,13 +113,23 @@ export default function Home() {
                   {dashboardData?.user.email}
                 </p>
               </div>
-              <div className="text-right">
-                <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-                  <Calendar className="w-4 h-4" />
-                  <span>
-                    Conta criada há {dashboardData?.user.accountAge} dias
-                  </span>
+              <div className="flex items-center gap-4">
+                <div className="text-right">
+                  <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
+                    <Calendar className="w-4 h-4" />
+                    <span>
+                      Conta criada há {dashboardData?.user.accountAge || 0} dias
+                    </span>
+                  </div>
                 </div>
+                <Link
+                  href="/perfil"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all"
+                  title="Editar Perfil"
+                >
+                  <Settings className="w-4 h-4" />
+                  <span className="hidden sm:inline">Editar Perfil</span>
+                </Link>
               </div>
             </div>
           </div>

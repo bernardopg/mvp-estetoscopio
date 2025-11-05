@@ -1,19 +1,10 @@
-import MarkdownRenderer from "@/components/MarkdownRenderer";
-import { promises as fs } from "fs";
-import { marked } from "marked";
-import path from "path";
+import ArquiteturaDoc from "../../../../docs/arquitetura.mdx";
 
-marked.setOptions({
-  gfm: true,
-  breaks: true,
-});
+export const metadata = {
+  title: "Arquitetura - MVP Estetoscópio",
+  description: "Documentação técnica e arquitetura do sistema",
+};
 
-export default async function ArquiteturaPage() {
-  const filePath = path.join(process.cwd(), "ARQUITETURA.md");
-  const content = await fs.readFile(filePath, "utf8");
-  const htmlContent = await marked.parse(content);
-
-  return (
-    <MarkdownRenderer content={htmlContent} title="Documentação Técnica" />
-  );
+export default function ArquiteturaPage() {
+  return <ArquiteturaDoc />;
 }

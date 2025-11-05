@@ -48,7 +48,7 @@ export async function PUT(
       return NextResponse.json({ error: "ID inválido" }, { status: 400 });
     }
 
-    const { title, cards } = await request.json();
+    const { title, cards, category } = await request.json();
     if (!title || !Array.isArray(cards)) {
       console.error("Dados inválidos no PUT:", { title, cards });
       return NextResponse.json(
@@ -60,6 +60,7 @@ export async function PUT(
     const result = statements.updateDeck.run(
       title,
       JSON.stringify(cards),
+      category || null,
       id,
       DEFAULT_USER_ID
     );

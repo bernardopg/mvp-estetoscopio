@@ -1,20 +1,10 @@
-import MarkdownRenderer from "@/components/MarkdownRenderer";
-import { promises as fs } from "fs";
-import { marked } from "marked";
-import path from "path";
+import GuiaDoc from "../../../../docs/guia.mdx";
 
-// Configurar marked
-marked.setOptions({
-  gfm: true,
-  breaks: true,
-});
+export const metadata = {
+  title: "Guia de Uso - MVP Estetoscópio",
+  description: "Guia completo para usar o sistema de flashcards",
+};
 
-export default async function GuiaPage() {
-  const filePath = path.join(process.cwd(), "GUIA_DE_USO.md");
-  const content = await fs.readFile(filePath, "utf8");
-
-  // Converter markdown para HTML usando marked
-  const htmlContent = await marked.parse(content);
-
-  return <MarkdownRenderer content={htmlContent} title="Guia de Uso" />;
+export default function GuiaPage() {
+  return <GuiaDoc />;
 }

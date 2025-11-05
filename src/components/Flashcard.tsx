@@ -2,12 +2,15 @@
 
 import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 
+export type DifficultyLevel = "again" | "hard" | "good" | "easy";
+
 export type FlashcardProps = {
   front: React.ReactNode;
   back: React.ReactNode;
   className?: string;
   initialFlipped?: boolean;
   onFlipChange?: (flipped: boolean) => void;
+  onDifficultySelect?: (difficulty: DifficultyLevel) => void;
   showControls?: boolean;
   // Labels para acessibilidade e i18n
   labels?: {
@@ -37,6 +40,7 @@ export function Flashcard({
   className = "",
   initialFlipped = false,
   onFlipChange,
+  onDifficultySelect,
   showControls = true,
   labels = defaultLabels,
 }: FlashcardProps) {
@@ -51,6 +55,15 @@ export function Flashcard({
       return next;
     });
   }, [onFlipChange]);
+
+  const handleDifficulty = useCallback(
+    (difficulty: DifficultyLevel) => {
+      onDifficultySelect?.(difficulty);
+      // Virar o card de volta após selecionar dificuldade
+      setFlipped(false);
+    },
+    [onDifficultySelect]
+  );
 
   // Atalhos de teclado: Espaço/Enter para virar quando focado
   useEffect(() => {
@@ -100,16 +113,32 @@ export function Flashcard({
 
         {showControls && flipped && (
           <div className="flex w-full items-center justify-center gap-2">
-            <button className="h-9 rounded-md px-3 text-xs font-medium bg-red-600 text-white hover:opacity-90">
+            <button
+              onClick={() => handleDifficulty("again")}
+              className="h-9 rounded-md px-3 text-xs font-medium bg-red-600 text-white hover:opacity-90 transition-opacity"
+              title="Revisar novamente em breve"
+            >
               {labels.again}
             </button>
-            <button className="h-9 rounded-md px-3 text-xs font-medium bg-amber-500 text-white hover:opacity-90">
+            <button
+              onClick={() => handleDifficulty("hard")}
+              className="h-9 rounded-md px-3 text-xs font-medium bg-amber-500 text-white hover:opacity-90 transition-opacity"
+              title="Revisar em intervalo curto"
+            >
               {labels.hard}
             </button>
-            <button className="h-9 rounded-md px-3 text-xs font-medium bg-emerald-600 text-white hover:opacity-90">
+            <button
+              onClick={() => handleDifficulty("good")}
+              className="h-9 rounded-md px-3 text-xs font-medium bg-emerald-600 text-white hover:opacity-90 transition-opacity"
+              title="Revisar em intervalo normal"
+            >
               {labels.good}
             </button>
-            <button className="h-9 rounded-md px-3 text-xs font-medium bg-sky-600 text-white hover:opacity-90">
+            <button
+              onClick={() => handleDifficulty("easy")}
+              className="h-9 rounded-md px-3 text-xs font-medium bg-sky-600 text-white hover:opacity-90 transition-opacity"
+              title="Revisar em intervalo longo"
+            >
               {labels.easy}
             </button>
           </div>

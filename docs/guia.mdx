@@ -1,0 +1,250 @@
+export const metadata = {
+  title: "Guia de Uso",
+  description: "Guia completo para usar o MVP Estetoscópio",
+};
+
+# 📖 Guia Completo de Uso
+
+<Callout type="info" title="Bem-vindo!">
+  Este guia vai te ajudar a aproveitar ao máximo o MVP Estetoscópio, um sistema
+  de flashcards com repetição espaçada.
+</Callout>
+
+## 🚀 Primeiros Passos
+
+<Step number={1} title="Criando sua Conta">
+1. Acesse a página inicial do aplicativo
+2. Clique em "Criar Conta" ou navegue para `/signup`
+3. Preencha os campos:
+   - **Nome**: Seu nome completo ou apelido
+   - **Email**: Um email válido (será seu login)
+   - **Senha**: Mínimo de 6 caracteres
+4. Clique em "Criar Conta"
+5. Você será redirecionado automaticamente para o dashboard
+
+<Callout type="warning">
+Use uma senha forte para proteger sua conta!
+</Callout>
+</Step>
+
+<Step number={2} title="Fazendo Login">
+  1. Acesse `/login` 2. Digite seu email e senha 3. Clique em "Entrar" 4. Você
+  será levado ao dashboard principal
+</Step>
+
+<Step number={3} title="Navegando pelo Dashboard">
+O dashboard mostra:
+
+- **Perfil do Usuário**: Nome, email e tempo de conta
+- **Estatísticas**:
+  - Total de baralhos criados
+  - Total de cards em todos os baralhos
+  - Média de cards por baralho
+  - Maior baralho
+- **Baralhos Recentes**: Últimos 5 baralhos criados ou editados
+- **Ações Rápidas**: Botão para criar novo baralho
+
+</Step>
+
+---
+
+## 📚 Gerenciamento de Baralhos
+
+### Criar um Novo Baralho
+
+<Card title="Passo a passo">
+  1. No dashboard, clique em "Novo Baralho" ou acesse `/baralhos/criar` 2.
+  Digite um título descritivo para o baralho 3. Adicione cards clicando em
+  "Adicionar Card" 4. Configure cada card: - Escolha o tipo de conteúdo (Texto,
+  Imagem ou Áudio) - Preencha a frente (pergunta) - Preencha o verso (resposta)
+  5. Clique em "Criar Baralho"
+</Card>
+
+<Callout type="success" title="Dica">
+  Você pode adicionar quantos cards quiser antes de salvar!
+</Callout>
+
+### Visualizar Todos os Baralhos
+
+1. Acesse `/baralhos`
+2. Você verá uma lista com:
+   - Nome do baralho
+   - Número de cards
+   - Data de criação/atualização
+   - Botões de ação (Estudar, Editar, Excluir)
+
+### Editar um Baralho Existente
+
+1. Na lista de baralhos, clique no botão "Editar" (ícone de lápis)
+2. Você pode:
+   - Alterar o título do baralho
+   - Adicionar novos cards
+   - Editar cards existentes
+   - Remover cards (clique no ícone de lixeira em cada card)
+3. Clique em "Salvar Alterações"
+
+<Callout type="error" title="Atenção">
+  Ao excluir um card, a ação é irreversível após salvar!
+</Callout>
+
+### Excluir um Baralho
+
+1. Na lista de baralhos, clique no botão "Excluir" (ícone de lixeira vermelho)
+2. Confirme a exclusão no modal que aparece
+3. O baralho será permanentemente removido
+
+<Callout type="error" title="Atenção">
+  Esta ação não pode ser desfeita!
+</Callout>
+
+---
+
+## 🎴 Tipos de Flashcards
+
+<FeatureGrid>
+<Card title="Cards de Texto">
+O tipo mais comum de flashcard. Use para:
+- Definições e conceitos
+- Perguntas e respostas curtas
+- Vocabulário
+- Fórmulas matemáticas (usando LaTeX)
+
+**Suporte a Markdown**: Você pode usar formatação Markdown tanto na frente quanto no verso!
+
+</Card>
+
+<Card title="Cards de Imagem">
+  Excelente para aprendizado visual: - Anatomia e diagramas - Arte e fotografia
+  - Mapas e geografia - Química (estruturas moleculares)
+</Card>
+
+<Card title="Cards de Áudio">
+Perfeito para:
+- Aprender idiomas
+- Música e ritmo
+- Pronúncia
+- Sons de ausculta (daí o nome Estetoscópio!)
+</Card>
+</FeatureGrid>
+
+## 📖 Modo de Estudo
+
+### Como Estudar
+
+<Step number={1} title="Iniciar uma Sessão">
+  1. Na lista de baralhos, clique em "Estudar" 2. O primeiro card será mostrado
+  com a frente visível 3. Tente responder mentalmente 4. Clique no card ou
+  pressione `Espaço` para revelar a resposta
+</Step>
+
+<Step number={2} title="Avaliar sua Resposta">
+Após ver a resposta, avalie seu desempenho:
+
+- **Muito Difícil** (1): Errou completamente - o card voltará em breve
+- **Difícil** (2): Lembrou com dificuldade - revisão em intervalo curto
+- **Bom** (3): Lembrou bem - intervalo médio
+- **Fácil** (4): Lembrou facilmente - intervalo longo
+
+O sistema de repetição espaçada ajustará automaticamente quando você verá este card novamente!
+
+</Step>
+
+<Callout type="info" title="Algoritmo de Repetição Espaçada">
+  O MVP Estetoscópio usa um algoritmo similar ao SM-2 (SuperMemo 2) para
+  calcular os intervalos ideais de revisão.
+</Callout>
+
+### Atalhos de Teclado
+
+Durante o estudo, você pode usar:
+
+- `Espaço` ou `Enter`: Revelar resposta / Próximo card
+- `1`, `2`, `3`, `4`: Avaliar dificuldade (Muito Difícil até Fácil)
+- `Esc`: Sair do modo de estudo
+
+---
+
+## 📤 Upload de Arquivos
+
+### Imagens
+
+<Callout type="info">
+  Formatos suportados: JPG, PNG, GIF, WebP Tamanho máximo: 5MB por imagem
+</Callout>
+
+1. Ao criar ou editar um card, selecione "Imagem"
+2. Clique em "Escolher arquivo" ou arraste a imagem para a área
+3. A imagem será enviada e armazenada no servidor
+4. Você verá uma pré-visualização da imagem
+
+### Áudio
+
+<Callout type="info">
+  Formatos suportados: MP3, WAV, OGG, M4A Tamanho máximo: 10MB por arquivo
+</Callout>
+
+1. Ao criar ou editar um card, selecione "Áudio"
+2. Clique em "Escolher arquivo" para enviar o áudio
+3. Você poderá testar o áudio antes de salvar o card
+
+---
+
+## 💡 Dicas e Boas Práticas
+
+<Card title="Princípio da Atomicidade">
+  Crie cards pequenos e focados em um único conceito. É melhor ter 3 cards
+  simples do que 1 complexo.
+</Card>
+
+<Card title="Use Imagens e Mnemônicos">
+  O cérebro lembra melhor de informações visuais. Sempre que possível, adicione
+  imagens aos seus cards.
+</Card>
+
+<Card title="Seja Honesto nas Avaliações">
+  O sistema funciona melhor quando você é sincero sobre a dificuldade. Não tenha
+  medo de marcar "Muito Difícil"!
+</Card>
+
+<Card title="Estude Diariamente">
+  Mesmo que seja apenas 10-15 minutos por dia, a consistência é mais importante
+  que longas sessões esporádicas.
+</Card>
+
+<Card title="Revise os Cards Novos">
+  Tente adicionar novos cards em pequenas quantidades (10-20 por vez) para não
+  sobrecarregar sua rotina de estudo.
+</Card>
+
+---
+
+## 🔧 Troubleshooting
+
+### Problemas Comuns
+
+<Callout type="warning" title="Upload de arquivo falhou">
+  **Solução**: Verifique se o arquivo está dentro do tamanho máximo e se o
+  formato é suportado.
+</Callout>
+
+<Callout type="warning" title="Cards não aparecem no modo de estudo">
+  **Solução**: Certifique-se de que o baralho tem cards salvos. Tente atualizar
+  a página.
+</Callout>
+
+<Callout type="warning" title="Não consigo fazer login">
+  **Solução**: Verifique se o email e senha estão corretos. Use a opção "Esqueci
+  minha senha" se necessário.
+</Callout>
+
+<Callout type="warning" title="Imagens não carregam">
+  **Solução**: Verifique sua conexão com a internet. As imagens são carregadas
+  do servidor.
+</Callout>
+
+---
+
+<Callout type="success" title="Precisa de mais ajuda?">
+  Confira a [FAQ](/docs/faq) para mais informações ou entre em contato com o
+  suporte.
+</Callout>

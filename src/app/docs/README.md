@@ -99,8 +99,8 @@ Se você não encontrou o que procura:
 1. Verifique o [FAQ](/docs/faq) - provavelmente sua dúvida já foi respondida
 2. Procure no [Guia de Uso](/docs/guia) - tem tutoriais passo a passo
 3. Veja a [Referência Rápida](/docs/referencia) - informações condensadas
-4. Abra uma [issue no GitHub](https://github.com/seu-usuario/mvp-estetoscopio/issues)
-5. Participe das [discussões no GitHub](https://github.com/seu-usuario/mvp-estetoscopio/discussions)
+4. Abra uma [issue no GitHub](https://github.com/bernardopg/mvp-estetoscopio/issues)
+5. Participe das [discussões no GitHub](https://github.com/bernardopg/mvp-estetoscopio/discussions)
 
 ## 🤝 Contribuindo com a Documentação
 

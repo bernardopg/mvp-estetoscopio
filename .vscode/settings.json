@@ -1,0 +1,9 @@
+{
+  "[mdx]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": null
+  },
+  "files.associations": {
+    "*.mdx": "mdx"
+  }
+}

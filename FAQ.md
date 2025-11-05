@@ -251,7 +251,7 @@ Para produção, recomendamos usar serviços como:
 
 ### Onde reporto bugs?
 
-Abra uma issue no [GitHub](https://github.com/seu-usuario/mvp-estetoscopio/issues) com:
+Abra uma issue no [GitHub](https://github.com/bernardopg/mvp-estetoscopio/issues) com:
 
 - Descrição do problema
 - Passos para reproduzir
@@ -401,8 +401,8 @@ Consulte a documentação completa:
 
 Ou entre em contato:
 
-- 💬 [GitHub Discussions](https://github.com/seu-usuario/mvp-estetoscopio/discussions)
-- 🐛 [GitHub Issues](https://github.com/seu-usuario/mvp-estetoscopio/issues)
+- 💬 [GitHub Discussions](https://github.com/bernardopg/mvp-estetoscopio/discussions)
+- 🐛 [GitHub Issues](https://github.com/bernardopg/mvp-estetoscopio/issues)
 - 📧 Email: <seu-email@example.com>
 
 ---

@@ -5,6 +5,8 @@ import { Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 
+export type DifficultyLevel = "again" | "hard" | "good" | "easy";
+
 export type CardContent = {
   type: "text" | "image" | "audio";
   content: string; // Para texto é o texto, para imagem/audio é a URL
@@ -17,6 +19,7 @@ export type MediaFlashcardProps = {
   className?: string;
   initialFlipped?: boolean;
   onFlipChange?: (flipped: boolean) => void;
+  onDifficultySelect?: (difficulty: DifficultyLevel) => void;
   showControls?: boolean;
   labels?: {
     flip?: string;
@@ -94,6 +97,7 @@ export function MediaFlashcard({
   className = "",
   initialFlipped = false,
   onFlipChange,
+  onDifficultySelect,
   showControls = true,
   labels = defaultLabels,
 }: MediaFlashcardProps) {
@@ -108,6 +112,15 @@ export function MediaFlashcard({
       return next;
     });
   }, [onFlipChange]);
+
+  const handleDifficulty = useCallback(
+    (difficulty: DifficultyLevel) => {
+      onDifficultySelect?.(difficulty);
+      // Virar o card de volta após selecionar dificuldade
+      setFlipped(false);
+    },
+    [onDifficultySelect]
+  );
 
   useEffect(() => {
     const btn = btnRef.current;
@@ -152,16 +165,32 @@ export function MediaFlashcard({
 
         {showControls && flipped && (
           <div className="flex w-full items-center justify-center gap-2">
-            <button className="h-9 rounded-md px-3 text-xs font-medium bg-red-600 text-white hover:opacity-90">
+            <button
+              onClick={() => handleDifficulty("again")}
+              className="h-9 rounded-md px-3 text-xs font-medium bg-red-600 text-white hover:opacity-90 transition-opacity"
+              title="Revisar novamente em breve"
+            >
               {labels.again}
             </button>
-            <button className="h-9 rounded-md px-3 text-xs font-medium bg-amber-500 text-white hover:opacity-90">
+            <button
+              onClick={() => handleDifficulty("hard")}
+              className="h-9 rounded-md px-3 text-xs font-medium bg-amber-500 text-white hover:opacity-90 transition-opacity"
+              title="Revisar em intervalo curto"
+            >
               {labels.hard}
             </button>
-            <button className="h-9 rounded-md px-3 text-xs font-medium bg-emerald-600 text-white hover:opacity-90">
+            <button
+              onClick={() => handleDifficulty("good")}
+              className="h-9 rounded-md px-3 text-xs font-medium bg-emerald-600 text-white hover:opacity-90 transition-opacity"
+              title="Revisar em intervalo normal"
+            >
               {labels.good}
             </button>
-            <button className="h-9 rounded-md px-3 text-xs font-medium bg-sky-600 text-white hover:opacity-90">
+            <button
+              onClick={() => handleDifficulty("easy")}
+              className="h-9 rounded-md px-3 text-xs font-medium bg-sky-600 text-white hover:opacity-90 transition-opacity"
+              title="Revisar em intervalo longo"
+            >
               {labels.easy}
             </button>
           </div>

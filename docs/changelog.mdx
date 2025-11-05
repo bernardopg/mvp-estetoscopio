@@ -1,0 +1,276 @@
+export const metadata = {
+  title: "Changelog",
+  description: "Histórico de versões e mudanças do MVP Estetoscópio",
+};
+
+# ✨ Changelog
+
+<Callout type="info" title="Histórico de Versões">
+  Registro de todas as mudanças, melhorias e correções implementadas no MVP
+  Estetoscópio.
+</Callout>
+
+---
+
+## 🚀 [v1.0.0] - 2024-11-04
+
+### 📚 Documentação MDX
+
+<Card title="Nova Documentação Interativa">
+✨ **Adicionado**: Sistema completo de documentação usando MDX
+
+- Criada pasta `/docs` com arquivos MDX
+- Componentes customizados (Callout, Card, Step, CodeBlock, FeatureGrid)
+- Layout moderno com sidebar navegável
+- Suporte a dark mode
+- Documentação completa:
+  - Guia de Uso
+  - FAQ
+  - Arquitetura
+  - API Reference
+  - Exemplos
+  - Changelog
+
+</Card>
+
+### 🗄️ Banco de Dados
+
+<Card title="Migração do Schema">
+🔧 **Corrigido**: Adicionada coluna `category` à tabela `decks`
+
+**Migração necessária**:
+
+```sql
+ALTER TABLE decks ADD COLUMN category TEXT DEFAULT NULL;
+```
+
+📝 **Documentado**: Criado arquivo `MIGRATIONS.md` para rastrear mudanças no banco
+
+</Card>
+
+### 🎨 Melhorias Visuais
+
+- ✅ Sidebar com navegação intuitiva
+- ✅ Menu mobile responsivo
+- ✅ Componentes com dark mode
+- ✅ Tipografia otimizada (prose)
+- ✅ Syntax highlighting em código
+
+---
+
+## 🏗️ [v0.1.0] - 2024-10-01
+
+### 🎉 Lançamento Inicial
+
+<FeatureGrid>
+<Card title="🔐 Autenticação">
+Sistema completo de autenticação:
+- Cadastro de usuários
+- Login com JWT
+- Logout
+- Proteção de rotas
+- Criptografia de senhas (bcrypt)
+</Card>
+
+<Card title="🎴 Flashcards">
+  Sistema de flashcards multimídia: - Criação de baralhos - Cards com texto,
+  imagem e áudio - Suporte a Markdown - CRUD completo
+</Card>
+
+<Card title="📊 Dashboard">
+  Dashboard do usuário: - Estatísticas de estudo - Baralhos recentes - Progresso
+  visual - Perfil do usuário
+</Card>
+
+<Card title="🧠 Repetição Espaçada">
+  Algoritmo de repetição espaçada: - Baseado no SM-2 - Cálculo de intervalos -
+  Rastreamento de progresso - Avaliação de dificuldade
+</Card>
+
+<Card title="📤 Upload">
+  Sistema de upload: - Imagens (JPG, PNG, GIF, WebP) - Áudios (MP3, WAV, OGG,
+  M4A) - Validação de formato e tamanho - Armazenamento local
+</Card>
+
+<Card title="🎨 Interface">
+Design moderno:
+- Next.js 15 App Router
+- Tailwind CSS 4
+- Lucide React icons
+- Responsivo
+- Dark mode ready
+</Card>
+</FeatureGrid>
+
+### 🛠️ Stack Tecnológica
+
+<Card title="Frontend">
+  - Next.js 15 (App Router) - TypeScript 5 - Tailwind CSS 4 - React 19 - Lucide
+  React
+</Card>
+
+<Card title="Backend">
+  - Next.js API Routes - SQLite (better-sqlite3) - JWT (jsonwebtoken) - bcryptjs
+  - Marked (Markdown parser)
+</Card>
+
+### 📁 Estrutura do Projeto
+
+```
+mvp-estetoscopio/
+├── src/
+│   ├── app/              # App Router
+│   ├── components/       # Componentes React
+│   ├── lib/              # Utilitários
+│   └── types/            # TypeScript types
+├── public/
+│   └── uploads/          # Arquivos de usuários
+├── docs/                 # Documentação MDX
+└── mvp-estetoscopio.db  # Banco SQLite
+```
+
+### 🔒 Segurança
+
+- ✅ Senhas hasheadas com bcrypt
+- ✅ JWT com cookies HTTP-only
+- ✅ Validação de entrada
+- ✅ Prepared statements (SQL injection protection)
+- ✅ Middleware de autenticação
+
+---
+
+## 📋 Roadmap
+
+### 🔮 v1.1.0 (Planejado - Q1 2025)
+
+<Card title="Recursos Planejados">
+  - [ ] Recuperação de senha via email - [ ] Edição de perfil - [ ] Alteração de
+  email - [ ] Exclusão de conta - [ ] Reordenação de cards (drag-and-drop) - [ ]
+  Duplicação de baralhos - [ ] Suporte a URLs de imagens externas - [ ] Sistema
+  de tags para cards - [ ] Filtros e busca em baralhos - [ ] Paginação em
+  listagens
+</Card>
+
+### 🚀 v1.2.0 (Planejado - Q2 2025)
+
+<Card title="PWA e Offline">
+  - [ ] Progressive Web App (PWA) - [ ] Modo offline - [ ] Sincronização
+  automática - [ ] Notificações push - [ ] Cache de assets - [ ] Limpeza de
+  arquivos órfãos - [ ] Temas personalizáveis - [ ] Rate limiting nas APIs
+</Card>
+
+### 🎯 v2.0.0 (Planejado - Q3 2025)
+
+<Card title="Recursos Avançados">
+  - [ ] Importação/Exportação de baralhos - [ ] Compatibilidade com formato Anki
+  (.apkg) - [ ] Suporte a PostgreSQL/MySQL - [ ] API pública documentada - [ ]
+  Webhooks - [ ] GraphQL endpoint - [ ] WebSocket para tempo real - [ ] Sistema
+  de comunidade - [ ] Baralhos compartilháveis - [ ] Marketplace de baralhos - [
+  ] Gamificação (conquistas, streak) - [ ] Estatísticas avançadas - [ ] Gráficos
+  de progresso
+</Card>
+
+---
+
+## 🐛 Correções de Bugs
+
+### v1.0.0
+
+<Callout type="success" title="Bug Corrigido">
+**Problema**: Erro `SqliteError: table decks has no column named category`
+
+**Solução**: Adicionada migração para incluir coluna `category` na tabela `decks`
+
+**Commit**: `fix: add category column to decks table`
+
+</Callout>
+
+---
+
+## 📝 Notas de Versão
+
+### Versionamento Semântico
+
+Este projeto segue o [Semantic Versioning 2.0.0](https://semver.org/):
+
+- **MAJOR** (X.0.0): Mudanças incompatíveis na API
+- **MINOR** (0.X.0): Novas funcionalidades compatíveis
+- **PATCH** (0.0.X): Correções de bugs compatíveis
+
+### Convenção de Commits
+
+Seguimos [Conventional Commits](https://www.conventionalcommits.org/):
+
+- `feat:` Nova funcionalidade
+- `fix:` Correção de bug
+- `docs:` Mudanças na documentação
+- `style:` Formatação de código
+- `refactor:` Refatoração de código
+- `test:` Adição de testes
+- `chore:` Tarefas de manutenção
+
+---
+
+## 🔗 Links Úteis
+
+<FeatureGrid>
+<Card title="Documentação">
+- [Guia de Uso](/docs/guia)
+- [FAQ](/docs/faq)
+- [Arquitetura](/docs/arquitetura)
+- [API Reference](/docs/api)
+- [Exemplos](/docs/exemplos)
+</Card>
+
+<Card title="Desenvolvimento">
+  - [GitHub Repository](#) - [Issues](#) - [Pull Requests](#) - [Releases](#)
+</Card>
+
+<Card title="Comunidade">
+- [Discord](#)
+- [Twitter](#)
+- [Blog](#)
+</Card>
+</FeatureGrid>
+
+---
+
+## 📊 Estatísticas
+
+### Linhas de Código
+
+<Card>
+  - **Total**: ~5.000 linhas - **TypeScript**: 65% - **MDX**: 20% - **CSS**: 10%
+  - **Outros**: 5%
+</Card>
+
+### Arquivos
+
+<Card>
+  - **Componentes React**: 15 - **API Routes**: 12 - **Páginas**: 10 -
+  **Documentos MDX**: 6 - **Utilitários**: 5
+</Card>
+
+---
+
+## 🙏 Contribuidores
+
+<Callout type="success" title="Agradecimentos">
+Obrigado a todos que contribuíram para este projeto!
+
+Quer contribuir? Confira nosso [guia de contribuição](#) (em breve).
+
+</Callout>
+
+---
+
+## 📜 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+
+---
+
+<Callout type="info" title="Mantenha-se Atualizado">
+  Acompanhe as atualizações através do [GitHub Releases](#) ou siga-nos nas
+  redes sociais.
+</Callout>

@@ -1,0 +1,645 @@
+export const metadata = {
+  title: "Arquitetura",
+  description: "Documentação técnica do MVP Estetoscópio",
+};
+
+# 🏗️ Arquitetura do Sistema
+
+<Callout type="info" title="Documentação Técnica">
+  Esta página descreve a arquitetura, tecnologias e estrutura do MVP
+  Estetoscópio.
+</Callout>
+
+---
+
+## 📊 Visão Geral
+
+O MVP Estetoscópio é uma aplicação web full-stack construída com Next.js 15, utilizando o App Router para máxima performance e SEO.
+
+<Card title="Principais Características">
+  - **SSR/SSG**: Renderização no servidor para performance otimizada - **API
+  Routes**: Backend integrado no Next.js - **TypeScript**: Tipagem estática para
+  maior segurança - **Tailwind CSS**: Estilização utilitária e responsiva -
+  **SQLite**: Banco de dados leve e eficiente
+</Card>
+
+---
+
+## 🛠️ Stack Tecnológica
+
+### Frontend
+
+<FeatureGrid>
+<Card title="Next.js 15">
+Framework React com App Router, Server Components e otimizações automáticas.
+</Card>
+
+<Card title="TypeScript 5">
+  Linguagem com tipagem estática para código mais robusto e manutenível.
+</Card>
+
+<Card title="Tailwind CSS 4">
+  Framework CSS utilitário para estilização rápida e consistente.
+</Card>
+
+<Card title="Lucide React">
+  Biblioteca de ícones moderna e otimizada com mais de 1000 ícones.
+</Card>
+
+<Card title="MDX">
+  Markdown com componentes React para documentação interativa.
+</Card>
+
+<Card title="Marked">
+Parser de Markdown para renderização de conteúdo nos flashcards.
+</Card>
+</FeatureGrid>
+
+### Backend
+
+<FeatureGrid>
+<Card title="Next.js API Routes">
+Endpoints RESTful integrados no framework Next.js.
+</Card>
+
+<Card title="SQLite">
+  Banco de dados relacional leve, perfeito para MVPs e aplicações
+  pequenas/médias.
+</Card>
+
+<Card title="better-sqlite3">
+  Driver Node.js síncrono para SQLite com melhor performance.
+</Card>
+
+<Card title="JWT">JSON Web Tokens para autenticação stateless e segura.</Card>
+
+<Card title="bcryptjs">
+  Hashing de senhas com algoritmo bcrypt para segurança.
+</Card>
+
+<Card title="cookie">
+Gerenciamento de cookies HTTP-only para armazenar tokens de forma segura.
+</Card>
+</FeatureGrid>
+
+---
+
+## 📁 Estrutura do Projeto
+
+<CodeBlock title="Estrutura de Diretórios" language="text">
+  {`mvp-estetoscopio/
+├── src/
+│   ├── app/                    # App Router (Next.js 15)
+│   │   ├── api/               # API Routes
+│   │   │   ├── auth/          # Autenticação (login, signup, logout)
+│   │   │   ├── dashboard/     # Dados do dashboard
+│   │   │   ├── decks/         # CRUD de baralhos
+│   │   │   ├── profile/       # Perfil do usuário
+│   │   │   └── upload/        # Upload de arquivos
+│   │   ├── baralhos/          # Páginas de baralhos
+│   │   ├── docs/              # Documentação
+│   │   ├── flashcards/        # Modo de estudo
+│   │   ├── login/             # Login
+│   │   ├── perfil/            # Perfil
+│   │   ├── signup/            # Cadastro
+│   │   ├── layout.tsx         # Layout principal
+│   │   ├── page.tsx           # Página inicial
+│   │   └── globals.css        # Estilos globais
+│   ├── components/            # Componentes React
+│   │   ├── AudioPlayer.tsx
+│   │   ├── Flashcard.tsx
+│   │   ├── MarkdownRenderer.tsx
+│   │   ├── MediaFlashcard.tsx
+│   │   └── Sidebar.tsx
+│   ├── lib/                   # Utilitários e lógica de negócio
+│   │   ├── auth.ts           # Funções de autenticação
+│   │   ├── db.ts             # Conexão com SQLite
+│   │   └── spaced-repetition.ts
+│   ├── types/                 # Definições de tipos TypeScript
+│   │   └── globals.d.ts
+│   └── middleware.ts          # Middleware de autenticação
+├── docs/                      # Documentação MDX
+│   ├── components/            # Componentes para docs
+│   ├── index.mdx
+│   ├── guia.mdx
+│   ├── faq.mdx
+│   └── arquitetura.mdx
+├── public/                    # Arquivos estáticos
+│   └── uploads/               # Uploads de usuários
+│       ├── images/
+│       └── audio/
+├── mvp-estetoscopio.db       # Banco de dados SQLite
+├── next.config.ts            # Configuração Next.js
+├── tailwind.config.ts        # Configuração Tailwind
+├── tsconfig.json             # Configuração TypeScript
+└── package.json              # Dependências`}
+</CodeBlock>
+
+---
+
+## 🗄️ Banco de Dados
+
+### Modelo de Dados
+
+<Card title="Tabela: users">
+Armazena informações dos usuários do sistema.
+
+```sql
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  email TEXT UNIQUE NOT NULL,
+  password TEXT NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+</Card>
+
+<Card title="Tabela: decks">
+Armazena os baralhos de flashcards.
+
+```sql
+CREATE TABLE decks (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL,
+  user_id INTEGER NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+```
+
+</Card>
+
+<Card title="Tabela: cards">
+Armazena os flashcards individuais.
+
+```sql
+CREATE TABLE cards (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  deck_id INTEGER NOT NULL,
+  front TEXT NOT NULL,
+  back TEXT NOT NULL,
+  media_type TEXT,
+  media_url TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (deck_id) REFERENCES decks(id)
+);
+```
+
+</Card>
+
+<Card title="Tabela: progress">
+Rastreia o progresso do usuário em cada card.
+
+```sql
+CREATE TABLE progress (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  card_id INTEGER NOT NULL,
+  ease_factor REAL DEFAULT 2.5,
+  interval INTEGER DEFAULT 0,
+  repetitions INTEGER DEFAULT 0,
+  next_review DATE,
+  last_reviewed DATE,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (card_id) REFERENCES cards(id)
+);
+```
+
+</Card>
+
+---
+
+## 🔐 Autenticação e Segurança
+
+### Fluxo de Autenticação
+
+<Step number={1} title="Cadastro">
+  1. Usuário envia nome, email e senha 2. Sistema valida dados 3. Senha é
+  hasheada com bcrypt (10 rounds) 4. Dados são salvos no banco 5. JWT é gerado e
+  enviado em cookie HTTP-only
+</Step>
+
+<Step number={2} title="Login">
+  1. Usuário envia email e senha 2. Sistema busca usuário no banco 3. Senha é
+  comparada com hash armazenado 4. Se válido, JWT é gerado 5. Token enviado em
+  cookie HTTP-only com duração de 24h
+</Step>
+
+<Step number={3} title="Rotas Protegidas">
+  1. Middleware intercepta requisições 2. Verifica presença do token no cookie
+  3. Valida assinatura e expiração do JWT 4. Adiciona dados do usuário ao
+  request 5. Permite ou nega acesso
+</Step>
+
+### Segurança Implementada
+
+<Card title="Medidas de Segurança">
+  ✅ **Senhas hasheadas**: bcrypt com salt de 10 rounds ✅ **JWT**: Tokens
+  assinados com chave secreta ✅ **HTTP-only cookies**: Protege contra XSS ✅
+  **Validação de entrada**: Sanitização de dados ✅ **Prepared statements**:
+  Proteção contra SQL injection ✅ **HTTPS**: Recomendado em produção
+</Card>
+
+---
+
+## 🔄 Algoritmo de Repetição Espaçada
+
+### Implementação SM-2
+
+<Callout type="info" title="SuperMemo 2">
+  O sistema usa uma variação do algoritmo SM-2 para calcular intervalos de
+  revisão.
+</Callout>
+
+<Card title="Fórmula Básica">
+```typescript
+function calculateNextReview(quality: number, repetitions: number, easeFactor: number, interval: number) {
+  let newEaseFactor = easeFactor;
+  let newInterval = interval;
+  let newRepetitions = repetitions;
+
+if (quality < 3) {
+// Resposta incorreta - reinicia
+newRepetitions = 0;
+newInterval = 1;
+} else {
+// Resposta correta
+newRepetitions++;
+
+    if (newRepetitions === 1) {
+      newInterval = 1;
+    } else if (newRepetitions === 2) {
+      newInterval = 6;
+    } else {
+      newInterval = Math.round(interval * newEaseFactor);
+    }
+
+}
+
+// Ajusta fator de facilidade
+newEaseFactor = newEaseFactor + (0.1 - (5 - quality) _ (0.08 + (5 - quality) _ 0.02));
+
+if (newEaseFactor < 1.3) newEaseFactor = 1.3;
+
+return {
+easeFactor: newEaseFactor,
+interval: newInterval,
+repetitions: newRepetitions,
+nextReview: new Date(Date.now() + newInterval _ 24 _ 60 _ 60 _ 1000)
+};
+}
+
+````
+</Card>
+
+### Parâmetros
+
+<FeatureGrid>
+<Card title="Quality (Qualidade)">
+1-5 baseado na resposta do usuário:
+- 1: Muito difícil
+- 2: Difícil
+- 3: Bom
+- 4: Fácil
+- 5: Muito fácil
+</Card>
+
+<Card title="Ease Factor">
+Fator de facilidade inicial: **2.5**
+
+Ajustado após cada revisão baseado no desempenho.
+</Card>
+
+<Card title="Interval (Intervalo)">
+Dias até próxima revisão:
+- Nova: 1 dia
+- Segunda: 6 dias
+- Subsequentes: `intervalo × easeFactor`
+</Card>
+</FeatureGrid>
+
+---
+
+## 📡 API Routes
+
+### Autenticação
+
+<Card title="POST /api/auth/signup">
+Cria uma nova conta de usuário.
+
+**Body**:
+```json
+{
+  "name": "João Silva",
+  "email": "joao@example.com",
+  "password": "senha123"
+}
+````
+
+**Resposta** (201):
+
+```json
+{
+  "message": "Usuário criado com sucesso",
+  "user": {
+    "id": 1,
+    "name": "João Silva",
+    "email": "joao@example.com"
+  }
+}
+```
+
+</Card>
+
+<Card title="POST /api/auth/login">
+Realiza login e retorna token JWT.
+
+**Body**:
+
+```json
+{
+  "email": "joao@example.com",
+  "password": "senha123"
+}
+```
+
+**Resposta** (200):
+
+```json
+{
+  "message": "Login bem-sucedido",
+  "user": {
+    "id": 1,
+    "name": "João Silva",
+    "email": "joao@example.com"
+  }
+}
+```
+
+</Card>
+
+<Card title="POST /api/auth/logout">
+Realiza logout e remove o token.
+
+**Resposta** (200):
+
+```json
+{
+  "message": "Logout realizado"
+}
+```
+
+</Card>
+
+### Baralhos
+
+<Card title="GET /api/decks">
+Lista todos os baralhos do usuário autenticado.
+
+**Resposta** (200):
+
+```json
+{
+  "decks": [
+    {
+      "id": 1,
+      "title": "Anatomia Cardíaca",
+      "cardCount": 25,
+      "created_at": "2024-01-01T10:00:00Z",
+      "updated_at": "2024-01-15T14:30:00Z"
+    }
+  ]
+}
+```
+
+</Card>
+
+<Card title="POST /api/decks">
+Cria um novo baralho.
+
+**Body**:
+
+```json
+{
+  "title": "Farmacologia",
+  "cards": [
+    {
+      "front": "O que é aspirina?",
+      "back": "Ácido acetilsalicílico",
+      "mediaType": null,
+      "mediaUrl": null
+    }
+  ]
+}
+```
+
+</Card>
+
+<Card title="GET /api/decks/[id]">
+  Obtém detalhes de um baralho específico incluindo seus cards.
+</Card>
+
+<Card title="PUT /api/decks/[id]">Atualiza um baralho existente.</Card>
+
+<Card title="DELETE /api/decks/[id]">
+  Exclui um baralho e todos os seus cards.
+</Card>
+
+### Upload
+
+<Card title="POST /api/upload">
+Faz upload de arquivos (imagens ou áudio).
+
+**Content-Type**: `multipart/form-data`
+
+**Body**:
+
+- `file`: Arquivo a ser enviado
+- `type`: "image" ou "audio"
+
+**Resposta** (200):
+
+```json
+{
+  "url": "/uploads/images/1234567890-foto.jpg"
+}
+```
+
+</Card>
+
+---
+
+## 🎨 Componentes Principais
+
+### AudioPlayer
+
+<Card>
+Reprodutor de áudio customizado para flashcards com áudio.
+
+**Props**:
+
+- `src`: URL do arquivo de áudio
+- `className?`: Classes CSS adicionais
+
+**Recursos**:
+
+- Play/Pause
+- Controle de volume
+- Barra de progresso
+- Duração total
+
+</Card>
+
+### Flashcard
+
+<Card>
+Componente de flashcard com animação de virada.
+
+**Props**:
+
+- `front`: Conteúdo da frente
+- `back`: Conteúdo do verso
+- `isFlipped`: Estado de virado
+- `onClick`: Callback ao clicar
+
+**Recursos**:
+
+- Animação 3D de flip
+- Suporte a Markdown
+- Responsivo
+
+</Card>
+
+### MediaFlashcard
+
+<Card>
+Flashcard especializado para conteúdo multimídia.
+
+**Props**:
+
+- `front`: Texto da frente
+- `back`: Texto do verso
+- `mediaType`: "image" ou "audio"
+- `mediaUrl`: URL do arquivo
+- `isFlipped`: Estado
+
+**Recursos**:
+
+- Renderiza imagem ou player de áudio
+- Lazy loading de imagens
+- Suporte a Markdown
+
+</Card>
+
+### MarkdownRenderer
+
+<Card>
+Renderizador de Markdown com suporte a LaTeX e código.
+
+**Props**:
+
+- `content`: HTML gerado pelo `marked`
+- `title`: Título opcional
+
+**Recursos**:
+
+- Syntax highlighting
+- Suporte a LaTeX (via KaTeX)
+- Tabelas
+- Listas
+- Code blocks
+
+</Card>
+
+---
+
+## 🚀 Deploy e Performance
+
+### Otimizações
+
+<FeatureGrid>
+<Card title="Server Components">
+Componentes renderizados no servidor por padrão, reduzindo o JavaScript enviado ao cliente.
+</Card>
+
+<Card title="Image Optimization">
+  Otimização automática de imagens pelo Next.js com lazy loading e formatos
+  modernos (WebP).
+</Card>
+
+<Card title="Code Splitting">
+  Divisão automática de código para carregar apenas o necessário em cada página.
+</Card>
+
+<Card title="Static Generation">
+  Páginas estáticas são pré-renderizadas em build time para máxima performance.
+</Card>
+
+<Card title="API Routes Cache">
+  Cache de respostas de API quando apropriado para reduzir carga no banco.
+</Card>
+
+<Card title="Tailwind CSS">
+CSS minificado e tree-shaken, removendo estilos não utilizados.
+</Card>
+</FeatureGrid>
+
+### Deploy Recomendado
+
+<Card title="Vercel">
+Plataforma nativa do Next.js com deploy automático via Git.
+
+**Vantagens**:
+
+- Zero configuração
+- Deploy automático em cada push
+- Preview URLs para PRs
+- Edge Functions
+- Analytics integrado
+
+</Card>
+
+<Callout type="warning" title="Nota sobre SQLite">
+  SQLite funciona bem para MVPs, mas considere migrar para PostgreSQL ou MySQL
+  em produção com muitos usuários concorrentes.
+</Callout>
+
+---
+
+## 🔮 Roadmap Técnico
+
+### v1.1 (Próxima)
+
+- [ ] Sistema de recuperação de senha
+- [ ] Edição de perfil
+- [ ] Reordenação de cards (drag-and-drop)
+- [ ] Duplicação de baralhos
+- [ ] Suporte a URLs de imagens externas
+
+### v1.2
+
+- [ ] PWA (Progressive Web App)
+- [ ] Modo offline
+- [ ] Notificações push
+- [ ] Temas personalizáveis
+- [ ] Limpeza de arquivos órfãos
+
+### v2.0
+
+- [ ] Importação/Exportação de baralhos
+- [ ] Compatibilidade com formato Anki
+- [ ] Suporte a PostgreSQL/MySQL
+- [ ] API pública documentada
+- [ ] Sistema de tags
+- [ ] Baralhos compartilháveis
+- [ ] Comunidade e marketplace
+
+---
+
+<Callout type="success" title="Contribua!">
+  O projeto é open source. Contribuições são bem-vindas no
+  [GitHub](https://github.com/bernardopg/mvp-estetoscopio).
+</Callout>

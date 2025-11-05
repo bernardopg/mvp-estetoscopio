@@ -1,0 +1,365 @@
+export const metadata = {
+  title: "FAQ",
+  description: "Perguntas frequentes sobre o MVP Estetoscópio",
+};
+
+# ❓ FAQ - Perguntas Frequentes
+
+<Callout type="info">
+  Respostas para as perguntas mais comuns sobre o MVP Estetoscópio.
+</Callout>
+
+---
+
+## 🌐 Geral
+
+### O que é o MVP Estetoscópio?
+
+É um sistema de flashcards online inspirado no Anki, projetado para estudos com repetição espaçada. Permite criar baralhos personalizados com texto, imagens e áudio.
+
+### É gratuito?
+
+<Callout type="success">
+  Sim! O projeto é open source e totalmente gratuito para uso pessoal.
+</Callout>
+
+### Preciso instalar algo?
+
+Não! É uma aplicação web que funciona direto no navegador. Basta acessar a URL e criar sua conta.
+
+### Funciona offline?
+
+Atualmente não. A aplicação requer conexão com internet. O suporte offline está planejado para versões futuras (PWA).
+
+### Em quais dispositivos funciona?
+
+Funciona em qualquer dispositivo com navegador moderno:
+
+- 💻 Desktop (Windows, Mac, Linux)
+- 📱 Smartphones (Android, iOS)
+- 📲 Tablets
+
+### Quais navegadores são suportados?
+
+Recomendamos navegadores modernos:
+
+- ✅ Chrome 90+
+- ✅ Firefox 88+
+- ✅ Safari 14+
+- ✅ Edge 90+
+
+---
+
+## 🔐 Conta e Login
+
+### Como criar uma conta?
+
+<Step number={1} title="Acesse a página de cadastro">
+  Vá para `/signup` ou clique em "Criar Conta" na página inicial.
+</Step>
+
+<Step number={2} title="Preencha os dados">
+  Digite seu nome, email e senha (mínimo 6 caracteres).
+</Step>
+
+<Step number={3} title="Confirme">
+  Clique em "Criar Conta" e pronto! Você será redirecionado ao dashboard.
+</Step>
+
+### Esqueci minha senha, o que faço?
+
+<Callout type="warning" title="Em desenvolvimento">
+Atualmente não há sistema de recuperação de senha. Entre em contato com o administrador ou crie uma nova conta.
+
+**Planejado para v1.1**: Sistema de recuperação de senha via email.
+
+</Callout>
+
+### Posso alterar meu email?
+
+<Callout type="warning">
+  Atualmente não é possível alterar o email. Essa funcionalidade está planejada
+  para v1.1.
+</Callout>
+
+### Como excluir minha conta?
+
+<Callout type="warning">
+Atualmente não há opção de auto-exclusão de conta. Entre em contato com o administrador.
+
+**Planejado para v1.1**: Opção de exclusão de conta na página de perfil.
+
+</Callout>
+
+### Por quanto tempo fico logado?
+
+Sua sessão dura **24 horas**. Após esse período, você precisará fazer login novamente.
+
+### Posso usar a mesma conta em vários dispositivos?
+
+<Callout type="success">
+  Sim! Basta fazer login com o mesmo email e senha. Seus dados são sincronizados
+  automaticamente.
+</Callout>
+
+---
+
+## 📚 Baralhos e Cards
+
+### Quantos baralhos posso criar?
+
+<Callout type="success">Não há limite! Crie quantos baralhos precisar.</Callout>
+
+### Quantos cards posso ter em um baralho?
+
+Não há limite técnico. Recomendamos 15-30 cards por baralho para melhor organização.
+
+### Posso criar cards com imagens?
+
+<Callout type="info">✅ Sim! Suportamos JPEG, PNG e GIF até 5MB.</Callout>
+
+### Posso criar cards com áudio?
+
+<Callout type="info">✅ Sim! Suportamos MP3, WAV e OGG até 10MB.</Callout>
+
+### Como editar um card existente?
+
+1. Acesse `/baralhos`
+2. Clique em "Editar" no baralho
+3. Modifique o card desejado
+4. Clique em "Salvar Alterações"
+
+### Posso reordenar os cards?
+
+<Callout type="warning">
+Atualmente não. Os cards aparecem na ordem em que foram criados.
+
+**Planejado para v1.1**: Funcionalidade de drag-and-drop para reordenar.
+
+</Callout>
+
+### Como duplicar um baralho?
+
+<Callout type="warning">
+Atualmente não há opção de duplicar. Você precisa recriar manualmente.
+
+**Planejado para v1.1**: Opção de duplicar baralho.
+
+</Callout>
+
+### Posso exportar meus baralhos?
+
+<Callout type="warning">
+  Atualmente não. Funcionalidade de exportação está planejada para v2.0 (JSON,
+  CSV, formato Anki).
+</Callout>
+
+### Como importar baralhos do Anki?
+
+<Callout type="warning">
+  Atualmente não há suporte a importação. Está planejado para v2.0.
+</Callout>
+
+---
+
+## 📖 Modo de Estudo
+
+### Como funciona o sistema de repetição espaçada?
+
+O sistema ajusta os intervalos de revisão baseado na sua avaliação:
+
+<Card title="Avaliação dos Cards">
+  - **Novamente**: Revisa em breve - **Difícil**: Intervalo curto - **Bom**:
+  Intervalo médio - **Fácil**: Intervalo longo
+</Card>
+
+<Callout type="info" title="Nota Técnica">
+  A implementação completa do algoritmo está em desenvolvimento. Atualmente os
+  botões são visuais.
+</Callout>
+
+### Posso pausar uma sessão de estudo?
+
+Sim! Basta fechar ou sair da página. O progresso é salvo automaticamente.
+
+### Como saber quantos cards preciso revisar hoje?
+
+<Callout type="info">
+  **Em desenvolvimento**: Dashboard mostrará estatísticas de cards pendentes.
+  Atualmente está planejado para v1.1.
+</Callout>
+
+### O que acontece se eu pular dias de estudo?
+
+Os cards acumulam, mas não há penalidade. O sistema se adapta quando você retornar aos estudos.
+
+### Posso estudar o mesmo baralho várias vezes no mesmo dia?
+
+Sim! Você pode estudar quantas vezes quiser. O sistema salvará o progresso de cada sessão.
+
+---
+
+## 📤 Upload de Arquivos
+
+### Onde são armazenados os arquivos?
+
+<Card>
+Os arquivos são salvos no servidor, na pasta `/public/uploads/`.
+
+- Imagens: `/public/uploads/images/`
+- Áudios: `/public/uploads/audio/`
+
+</Card>
+
+### Qual o tamanho máximo de arquivo?
+
+<Card>- **Imagens**: 5 MB - **Áudio**: 10 MB</Card>
+
+### Quais formatos de imagem são suportados?
+
+<Callout type="info">JPG, JPEG, PNG, GIF, WebP</Callout>
+
+### Quais formatos de áudio são suportados?
+
+<Callout type="info">MP3, WAV, OGG, M4A</Callout>
+
+### O que acontece se eu excluir um card com mídia?
+
+O arquivo permanece no servidor. A limpeza de arquivos órfãos está planejada para v1.2.
+
+### Posso usar URLs externas para imagens?
+
+<Callout type="warning">
+  Atualmente não. Apenas upload de arquivos. Suporte a URLs está planejado para
+  v1.1.
+</Callout>
+
+---
+
+## 🔧 Técnico
+
+### Quais tecnologias são usadas?
+
+<Card title="Stack Tecnológica">
+  - **Framework**: Next.js 15 (App Router) - **Linguagem**: TypeScript 5 -
+  **Estilização**: Tailwind CSS 4 - **Banco de Dados**: SQLite (better-sqlite3)
+  - **Autenticação**: JWT + bcryptjs - **Documentação**: MDX - **Ícones**:
+  Lucide React
+</Card>
+
+### Como rodar localmente?
+
+<CodeBlock title="Terminal" language="bash">
+{`# Clone o repositório
+git clone <url-do-repositorio>
+cd mvp-estetoscopio
+
+# Instale as dependências
+
+npm install
+
+# Inicie o servidor de desenvolvimento
+
+npm run dev
+
+# Acesse http://localhost:3000`}
+
+</CodeBlock>
+
+### Como fazer build para produção?
+
+<CodeBlock title="Terminal" language="bash">
+  {`npm run build
+npm start`}
+</CodeBlock>
+
+### Onde fica o banco de dados?
+
+O arquivo SQLite fica em `/mvp-estetoscopio.db` na raiz do projeto.
+
+### Como fazer backup dos dados?
+
+<Callout type="info">
+  Faça uma cópia do arquivo `mvp-estetoscopio.db` e da pasta `/public/uploads/`.
+</Callout>
+
+### Posso usar PostgreSQL ou MySQL?
+
+Atualmente apenas SQLite é suportado. Suporte a outros bancos está planejado para v2.0.
+
+---
+
+## 🔒 Segurança e Privacidade
+
+### Minhas senhas são seguras?
+
+<Callout type="success" title="Sim!">
+  As senhas são criptografadas com bcrypt (hash) antes de serem armazenadas. Nem
+  o administrador consegue ver sua senha original.
+</Callout>
+
+### Meus dados são compartilhados?
+
+<Callout type="success">
+  Não! Seus dados ficam apenas no servidor e são privados. Não compartilhamos
+  informações com terceiros.
+</Callout>
+
+### Como funciona a autenticação?
+
+Usamos JSON Web Tokens (JWT) armazenados em cookies HTTP-only para manter você logado de forma segura.
+
+### Posso acessar meus dados via API?
+
+<Callout type="info">
+  Sim! Todas as funcionalidades estão disponíveis via API REST. Consulte a
+  [documentação da API](/docs/api).
+</Callout>
+
+---
+
+## 🐛 Problemas Conhecidos
+
+### Upload de arquivo falha
+
+<Callout type="warning">
+**Possíveis causas**:
+- Arquivo muito grande (>5MB para imagens, >10MB para áudio)
+- Formato não suportado
+- Problemas de permissão no servidor
+
+**Solução**: Verifique o tamanho e formato do arquivo. Se persistir, entre em contato.
+
+</Callout>
+
+### Cards não aparecem no modo de estudo
+
+<Callout type="warning">
+**Possíveis causas**:
+- Baralho vazio (sem cards salvos)
+- Cache do navegador
+
+**Solução**: Atualize a página (F5) ou limpe o cache do navegador.
+
+</Callout>
+
+### Não consigo fazer login
+
+<Callout type="warning">
+**Possíveis causas**:
+- Email ou senha incorretos
+- Sessão expirada
+
+**Solução**: Verifique suas credenciais. Se esqueceu a senha, entre em contato com o administrador.
+
+</Callout>
+
+---
+
+## 📞 Ainda tem dúvidas?
+
+<Callout type="info" title="Precisa de mais ajuda?">
+  - 📖 Confira o [Guia de Uso](/docs/guia) completo - 💡 Veja [Exemplos
+  práticos](/docs/exemplos) - 🏗️ Consulte a [Arquitetura
+  técnica](/docs/arquitetura) - 📧 Entre em contato com o suporte
+</Callout>

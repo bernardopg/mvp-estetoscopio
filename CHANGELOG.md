@@ -174,7 +174,7 @@ Se você quiser sugerir uma nova feature ou reportar um bug:
 
 ## Links Úteis
 
-- [Repositório GitHub](https://github.com/seu-usuario/mvp-estetoscopio)
+- [Repositório GitHub](https://github.com/bernardopg/mvp-estetoscopio)
 - [Documentação Completa](README.md)
 - [Guia do Usuário](GUIA_DE_USO.md)
 - [Arquitetura](ARQUITETURA.md)

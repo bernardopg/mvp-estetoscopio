@@ -12,6 +12,7 @@ import {
   MessageCircleQuestion,
   Plus,
   Sparkles,
+  User,
   X,
 } from "lucide-react";
 import Link from "next/link";
@@ -207,14 +208,23 @@ export default function Sidebar() {
 
         {/* Logout button */}
         <div className="px-4 py-4 border-t border-zinc-200 dark:border-zinc-800">
-          <button
-            onClick={handleLogout}
-            disabled={loggingOut}
-            className="group flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <LogOut className="w-5 h-5 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-12" />
-            <span>{loggingOut ? "Saindo..." : "Sair"}</span>
-          </button>
+          <div className="flex gap-2">
+            <Link
+              href="/perfil"
+              onClick={() => setIsOpen(false)}
+              className="group flex items-center justify-center flex-1 px-3 py-2.5 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-all duration-200"
+            >
+              <User className="w-5 h-5 transition-transform duration-200 group-hover:scale-110" />
+            </Link>
+            <button
+              onClick={handleLogout}
+              disabled={loggingOut}
+              className="group flex items-center justify-center flex-1 px-3 py-2.5 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              title="Sair"
+            >
+              <LogOut className="w-5 h-5 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-12" />
+            </button>
+          </div>
         </div>
       </aside>
     </>

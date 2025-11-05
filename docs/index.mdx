@@ -1,0 +1,190 @@
+export const metadata = {
+  title: "Documentação",
+  description: "Central de documentação do MVP Estetoscópio",
+};
+
+# 🎓 Documentação MVP Estetoscópio
+
+<Callout type="info" title="Sistema de Flashcards com Repetição Espaçada">
+  Bem-vindo à documentação completa do MVP Estetoscópio, um sistema moderno de
+  estudos baseado em repetição espaçada.
+</Callout>
+
+---
+
+## 📖 Documentação para Usuários
+
+<FeatureGrid>
+<Card title="Guia de Uso" className="hover:shadow-lg transition-shadow cursor-pointer">
+Aprenda a usar o sistema do zero com nosso guia completo para usuários finais.
+
+[Acessar Guia →](/docs/guia)
+
+</Card>
+
+<Card title="FAQ" className="hover:shadow-lg transition-shadow cursor-pointer">
+Respostas para as perguntas mais frequentes e resolução de problemas comuns.
+
+[Ver FAQ →](/docs/faq)
+
+</Card>
+
+<Card title="Exemplos" className="hover:shadow-lg transition-shadow cursor-pointer">
+Exemplos práticos de uso e casos de estudo para diferentes cenários.
+
+[Ver Exemplos →](/docs/exemplos)
+
+</Card>
+</FeatureGrid>
+
+---
+
+## 🔧 Documentação Técnica
+
+<FeatureGrid>
+<Card title="Arquitetura" className="hover:shadow-lg transition-shadow cursor-pointer">
+Documentação técnica completa sobre a arquitetura do sistema, tecnologias e estrutura do projeto.
+
+[Ver Arquitetura →](/docs/arquitetura)
+
+</Card>
+
+<Card title="API Reference" className="hover:shadow-lg transition-shadow cursor-pointer">
+Referência completa das APIs REST disponíveis no sistema.
+
+[Ver API →](/docs/api)
+
+</Card>
+
+<Card title="Changelog" className="hover:shadow-lg transition-shadow cursor-pointer">
+Histórico de versões e mudanças implementadas no projeto.
+
+[Ver Changelog →](/docs/changelog)
+
+</Card>
+</FeatureGrid>
+
+---
+
+## 🚀 Início Rápido
+
+<Step number={1} title="Instalação">
+```bash
+# Clone o repositório
+git clone <url-do-repositorio>
+cd mvp-estetoscopio
+
+# Instale as dependências
+
+npm install
+
+````
+</Step>
+
+<Step number={2} title="Configuração">
+```bash
+# Inicie o servidor de desenvolvimento
+npm run dev
+````
+
+O aplicativo estará disponível em `http://localhost:3000`
+
+</Step>
+
+<Step number={3} title="Primeiros Passos">
+  1. Acesse a aplicação 2. Crie sua conta 3. Crie seu primeiro baralho de
+  flashcards 4. Comece a estudar!
+</Step>
+
+---
+
+## 🎯 Principais Recursos
+
+<FeatureGrid>
+<Card title="🎴 Flashcards Multimídia">
+Suporte para texto, imagens e áudio. Use Markdown para formatação rica de conteúdo.
+</Card>
+
+<Card title="🧠 Repetição Espaçada">
+  Algoritmo baseado no SM-2 para otimizar sua retenção de conhecimento ao longo
+  do tempo.
+</Card>
+
+<Card title="📊 Estatísticas">
+  Acompanhe seu progresso com estatísticas detalhadas de estudo e desempenho.
+</Card>
+
+<Card title="🎨 Interface Moderna">
+  Design limpo e intuitivo construído com Next.js 15 e Tailwind CSS 4.
+</Card>
+
+<Card title="🔒 Autenticação Segura">
+  Sistema de autenticação com JWT e criptografia de senhas.
+</Card>
+
+<Card title="⚡ Performance">
+App Router do Next.js 15 para navegação ultra-rápida e otimizações automáticas.
+</Card>
+</FeatureGrid>
+
+---
+
+## 🛠️ Stack Tecnológica
+
+<Card>
+  - **Framework**: Next.js 15 (App Router) - **Linguagem**: TypeScript -
+  **Estilização**: Tailwind CSS 4 - **Banco de Dados**: SQLite (better-sqlite3)
+  - **Autenticação**: JWT + bcrypt - **Documentação**: MDX - **Ícones**: Lucide
+  React
+</Card>
+
+---
+
+## 📚 Conceitos Importantes
+
+### Repetição Espaçada
+
+<Callout type="info" title="O que é Repetição Espaçada?">
+  É uma técnica de aprendizado baseada em revisar informações em intervalos
+  crescentes de tempo. Isso aproveita o "efeito de espaçamento" psicológico para
+  melhorar a retenção de longo prazo.
+</Callout>
+
+O sistema calcula automaticamente quando você deve revisar cada card baseado em:
+
+- Quantas vezes você já viu o card
+- Quão bem você o lembrou nas vezes anteriores
+- O intervalo desde a última revisão
+
+### Algoritmo SM-2
+
+<Card title="SuperMemo 2">
+O MVP Estetoscópio implementa uma variação do algoritmo SM-2, desenvolvido por Piotr Wozniak. Este algoritmo:
+
+1. Calcula um "fator de facilidade" para cada card
+2. Ajusta os intervalos baseado no seu desempenho
+3. Otimiza a retenção minimizando o tempo de estudo
+
+**Fórmula básica**: `próximo_intervalo = intervalo_atual × fator_de_facilidade`
+
+</Card>
+
+---
+
+## 🤝 Contribuindo
+
+<Callout type="success" title="Contribuições são bem-vindas!">
+  Se você encontrou um bug ou tem uma sugestão de melhoria, sinta-se à vontade
+  para abrir uma issue ou enviar um pull request.
+</Callout>
+
+---
+
+## 📞 Suporte
+
+Precisa de ajuda? Confira nossas opções:
+
+- 📖 [Guia de Uso](/docs/guia) - Tutorial completo
+- ❓ [FAQ](/docs/faq) - Perguntas frequentes
+- 💡 [Exemplos](/docs/exemplos) - Casos práticos
+- 🏗️ [Arquitetura](/docs/arquitetura) - Documentação técnica
