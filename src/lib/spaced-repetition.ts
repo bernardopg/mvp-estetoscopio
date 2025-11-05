@@ -1,95 +1,202 @@
-// Sistema de Repetição Espaçada baseado no algoritmo Anki/SM-2
+/**
+ * Implementação do Algoritmo SM-2 (SuperMemo 2)
+ *
+ * Referência: https://www.supermemo.com/en/blog/application-of-a-computer-to-improve-the-results-obtained-in-working-with-the-supermemo-method
+ *
+ * O SM-2 é um algoritmo de repetição espaçada que calcula intervalos ótimos
+ * para revisão de flashcards baseado no desempenho do usuário.
+ */
 
+// Qualidade da resposta (0-5 no SM-2 original)
+// Mapeamento: again=0, hard=2, good=4, easy=5
 export type DifficultyLevel = "again" | "hard" | "good" | "easy";
 
-export interface CardProgress {
-  cardIndex: number;
-  easeFactor: number; // Fator de facilidade (padrão: 2.5)
+export interface CardReview {
+  cardId: string;
+  quality: number; // 0-5 (SM-2 quality factor)
+  easeFactor: number; // E-Factor (≥ 1.3)
   interval: number; // Intervalo em dias
-  repetitions: number; // Número de repetições corretas consecutivas
+  repetitions: number; // Repetições consecutivas corretas (quality ≥ 3)
+  nextReviewDate: string; // ISO date string
+  lastReviewed: string; // ISO date string
+  difficulty: DifficultyLevel;
+}
+
+export interface SM2Result {
+  easeFactor: number;
+  interval: number;
+  repetitions: number;
   nextReviewDate: Date;
-  lastReviewed: Date;
-  difficulty: DifficultyLevel | null;
 }
 
-// Inicializar progresso de um card
-export function initializeCardProgress(cardIndex: number): CardProgress {
-  return {
-    cardIndex,
-    easeFactor: 2.5,
-    interval: 0,
-    repetitions: 0,
-    nextReviewDate: new Date(),
-    lastReviewed: new Date(),
-    difficulty: null,
+/**
+ * Mapeia níveis de dificuldade para valores de qualidade SM-2
+ * - again (0): Resposta incorreta, resetar
+ * - hard (2): Resposta correta com dificuldade
+ * - good (4): Resposta correta sem hesitação
+ * - easy (5): Resposta perfeita e imediata
+ */
+export function difficultyToQuality(difficulty: DifficultyLevel): number {
+  const qualityMap: Record<DifficultyLevel, number> = {
+    again: 0, // Blackout - complete failure
+    hard: 2, // Correct response with serious difficulty
+    good: 4, // Correct response after hesitation
+    easy: 5, // Perfect response
   };
+  return qualityMap[difficulty];
 }
 
-// Calcular novo intervalo baseado na dificuldade
-export function calculateNextReview(
-  progress: CardProgress,
-  difficulty: DifficultyLevel
-): CardProgress {
-  const now = new Date();
-  let newEaseFactor = progress.easeFactor;
-  let newInterval = progress.interval;
-  let newRepetitions = progress.repetitions;
+/**
+ * Algoritmo SM-2 puro
+ *
+ * @param quality - Qualidade da resposta (0-5)
+ * @param repetitions - Número de repetições consecutivas corretas
+ * @param easeFactor - Fator de facilidade atual (E-Factor)
+ * @param interval - Intervalo atual em dias
+ * @returns Novo estado do card (easeFactor, interval, repetitions)
+ */
+export function calculateSM2(
+  quality: number,
+  repetitions: number,
+  easeFactor: number,
+  interval: number
+): SM2Result {
+  let newEaseFactor = easeFactor;
+  let newRepetitions = repetitions;
+  let newInterval = interval;
 
-  switch (difficulty) {
-    case "again":
-      // Resetar o card - revisar em breve
-      newInterval = 0;
-      newRepetitions = 0;
-      newEaseFactor = Math.max(1.3, progress.easeFactor - 0.2);
-      break;
+  // Calcular novo E-Factor usando a fórmula oficial do SM-2
+  // EF' = EF + (0.1 - (5 - q) * (0.08 + (5 - q) * 0.02))
+  newEaseFactor =
+    easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
 
-    case "hard":
-      // Intervalo mais curto
-      if (progress.repetitions === 0) {
-        newInterval = 1; // 1 dia
-      } else {
-        newInterval = Math.max(1, Math.round(progress.interval * 1.2));
-      }
-      newRepetitions += 1;
-      newEaseFactor = Math.max(1.3, progress.easeFactor - 0.15);
-      break;
+  // E-Factor mínimo é 1.3 (regra do SM-2)
+  if (newEaseFactor < 1.3) {
+    newEaseFactor = 1.3;
+  }
 
-    case "good":
-      // Intervalo padrão
-      if (progress.repetitions === 0) {
-        newInterval = 1; // 1 dia
-      } else if (progress.repetitions === 1) {
-        newInterval = 6; // 6 dias
-      } else {
-        newInterval = Math.round(progress.interval * progress.easeFactor);
-      }
-      newRepetitions += 1;
-      break;
+  // Se quality < 3, resetar repetições
+  if (quality < 3) {
+    newRepetitions = 0;
+    newInterval = 1; // Revisar amanhã
+  } else {
+    // Quality ≥ 3: incrementar repetições e calcular novo intervalo
+    newRepetitions += 1;
 
-    case "easy":
-      // Intervalo mais longo
-      if (progress.repetitions === 0) {
-        newInterval = 4; // 4 dias
-      } else {
-        newInterval = Math.round(progress.interval * progress.easeFactor * 1.3);
-      }
-      newRepetitions += 1;
-      newEaseFactor = Math.min(2.5, progress.easeFactor + 0.15);
-      break;
+    if (newRepetitions === 1) {
+      newInterval = 1; // 1 dia
+    } else if (newRepetitions === 2) {
+      newInterval = 6; // 6 dias
+    } else {
+      // I(n) = I(n-1) * EF
+      newInterval = Math.round(interval * newEaseFactor);
+    }
   }
 
   // Calcular próxima data de revisão
-  const nextReviewDate = new Date(now);
+  const nextReviewDate = new Date();
   nextReviewDate.setDate(nextReviewDate.getDate() + newInterval);
 
   return {
-    ...progress,
-    easeFactor: newEaseFactor,
+    easeFactor: Math.round(newEaseFactor * 100) / 100, // 2 decimais
     interval: newInterval,
     repetitions: newRepetitions,
     nextReviewDate,
-    lastReviewed: now,
+  };
+}
+
+/**
+ * Processar revisão de um card
+ */
+export function processCardReview(
+  cardId: string,
+  difficulty: DifficultyLevel,
+  currentReview?: CardReview
+): CardReview {
+  const quality = difficultyToQuality(difficulty);
+
+  // Valores padrão para novo card
+  const easeFactor = currentReview?.easeFactor ?? 2.5;
+  const interval = currentReview?.interval ?? 0;
+  const repetitions = currentReview?.repetitions ?? 0;
+
+  const result = calculateSM2(quality, repetitions, easeFactor, interval);
+
+  const now = new Date();
+
+  return {
+    cardId,
+    quality,
+    easeFactor: result.easeFactor,
+    interval: result.interval,
+    repetitions: result.repetitions,
+    nextReviewDate: result.nextReviewDate.toISOString(),
+    lastReviewed: now.toISOString(),
     difficulty,
+  };
+}
+
+/**
+ * Verificar se um card está devido para revisão
+ */
+export function isCardDue(nextReviewDate: string | Date): boolean {
+  const reviewDate =
+    typeof nextReviewDate === "string"
+      ? new Date(nextReviewDate)
+      : nextReviewDate;
+  const now = new Date();
+  return reviewDate <= now;
+}
+
+/**
+ * Filtrar cards devidos para revisão
+ */
+export function getDueCards<T extends { nextReviewDate?: string | Date }>(
+  cards: T[]
+): T[] {
+  return cards.filter((card) => {
+    if (!card.nextReviewDate) return true; // Novo card
+    return isCardDue(card.nextReviewDate);
+  });
+}
+
+/**
+ * Calcular estatísticas de revisão
+ */
+export function calculateReviewStats(reviews: CardReview[]): {
+  totalReviews: number;
+  averageEaseFactor: number;
+  averageInterval: number;
+  matureCards: number; // repetitions >= 2
+  youngCards: number; // repetitions === 1
+  newCards: number; // repetitions === 0
+} {
+  if (reviews.length === 0) {
+    return {
+      totalReviews: 0,
+      averageEaseFactor: 2.5,
+      averageInterval: 0,
+      matureCards: 0,
+      youngCards: 0,
+      newCards: 0,
+    };
+  }
+
+  const totalEaseFactor = reviews.reduce((sum, r) => sum + r.easeFactor, 0);
+  const totalInterval = reviews.reduce((sum, r) => sum + r.interval, 0);
+
+  const matureCards = reviews.filter((r) => r.repetitions >= 2).length;
+  const youngCards = reviews.filter((r) => r.repetitions === 1).length;
+  const newCards = reviews.filter((r) => r.repetitions === 0).length;
+
+  return {
+    totalReviews: reviews.length,
+    averageEaseFactor:
+      Math.round((totalEaseFactor / reviews.length) * 100) / 100,
+    averageInterval: Math.round(totalInterval / reviews.length),
+    matureCards,
+    youngCards,
+    newCards,
   };
 }
 
@@ -97,70 +204,65 @@ export function calculateNextReview(
 export function getDifficultyFeedback(difficulty: DifficultyLevel): {
   message: string;
   color: string;
+  interval: string;
 } {
-  switch (difficulty) {
-    case "again":
-      return {
-        message: "Você verá este card novamente em breve",
-        color: "text-red-600 dark:text-red-400",
-      };
-    case "hard":
-      return {
-        message: "Revisão programada em intervalo curto",
-        color: "text-amber-600 dark:text-amber-400",
-      };
-    case "good":
-      return {
-        message: "Bom trabalho! Revisão em intervalo normal",
-        color: "text-emerald-600 dark:text-emerald-400",
-      };
-    case "easy":
-      return {
-        message: "Excelente! Revisão em intervalo longo",
-        color: "text-sky-600 dark:text-sky-400",
-      };
-  }
+  const feedbackMap: Record<
+    DifficultyLevel,
+    { message: string; color: string; interval: string }
+  > = {
+    again: {
+      message: "Você verá este card novamente em breve",
+      color: "text-red-600 dark:text-red-400",
+      interval: "< 1 dia",
+    },
+    hard: {
+      message: "Revisão programada em intervalo curto",
+      color: "text-amber-600 dark:text-amber-400",
+      interval: "1-3 dias",
+    },
+    good: {
+      message: "Bom trabalho! Revisão em intervalo normal",
+      color: "text-emerald-600 dark:text-emerald-400",
+      interval: "4-7 dias",
+    },
+    easy: {
+      message: "Excelente! Revisão em intervalo longo",
+      color: "text-sky-600 dark:text-sky-400",
+      interval: "8+ dias",
+    },
+  };
+
+  return feedbackMap[difficulty];
 }
 
 // Formatar intervalo em texto legível
 export function formatInterval(days: number): string {
   if (days === 0) return "hoje";
   if (days === 1) return "amanhã";
-  if (days < 7) return `em ${days} dias`;
+  if (days < 7) return `${days} dias`;
   if (days < 30) {
     const weeks = Math.floor(days / 7);
-    return `em ${weeks} ${weeks === 1 ? "semana" : "semanas"}`;
+    return `${weeks} ${weeks === 1 ? "semana" : "semanas"}`;
   }
-  const months = Math.floor(days / 30);
-  return `em ${months} ${months === 1 ? "mês" : "meses"}`;
+  if (days < 365) {
+    const months = Math.floor(days / 30);
+    return `${months} ${months === 1 ? "mês" : "meses"}`;
+  }
+  const years = Math.floor(days / 365);
+  return `${years} ${years === 1 ? "ano" : "anos"}`;
 }
 
-// Salvar progresso no localStorage
-export function saveProgress(deckId: string, progress: CardProgress[]): void {
-  try {
-    const key = `deck_progress_${deckId}`;
-    localStorage.setItem(key, JSON.stringify(progress));
-  } catch (error) {
-    console.error("Erro ao salvar progresso:", error);
-  }
-}
-
-// Carregar progresso do localStorage
-export function loadProgress(deckId: string): CardProgress[] | null {
-  try {
-    const key = `deck_progress_${deckId}`;
-    const data = localStorage.getItem(key);
-    if (!data) return null;
-
-    const progress = JSON.parse(data);
-    // Converter strings de data de volta para objetos Date
-    return progress.map((p: CardProgress) => ({
-      ...p,
-      nextReviewDate: new Date(p.nextReviewDate),
-      lastReviewed: new Date(p.lastReviewed),
-    }));
-  } catch (error) {
-    console.error("Erro ao carregar progresso:", error);
-    return null;
-  }
+/**
+ * Obter cor do badge baseado no intervalo
+ */
+export function getIntervalColor(days: number): string {
+  if (days === 0)
+    return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+  if (days === 1)
+    return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200";
+  if (days < 7)
+    return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
+  if (days < 30)
+    return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+  return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
 }

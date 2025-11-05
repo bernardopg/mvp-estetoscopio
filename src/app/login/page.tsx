@@ -130,6 +130,16 @@ export default function LoginPage() {
                 </button>
               </div>
             </div>
+
+            {/* Link Esqueci a senha */}
+            <div className="text-right">
+              <Link
+                href="/esqueci-senha"
+                className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 font-medium"
+              >
+                Esqueci minha senha
+              </Link>
+            </div>
           </div>
 
           {/* Submit Button */}

@@ -3,15 +3,17 @@
 import {
   BookOpen,
   Calendar,
+  CheckCircle2,
   Clock,
+  Flame,
   GraduationCap,
-  Layers,
   Library,
   Plus,
   Settings,
   Sparkles,
-  TrendingUp,
+  Target,
   User,
+  Zap,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -31,6 +33,14 @@ interface DashboardData {
       title: string;
       cardCount: number;
     } | null;
+    cardsStudiedToday: number;
+    cardsStudiedWeek: number;
+    streak: number;
+    cardsDueToday: number;
+    totalReviewed: number;
+    matureCards: number;
+    youngCards: number;
+    newCards: number;
   };
   recentDecks: {
     id: number;
@@ -137,24 +147,62 @@ export default function Home() {
 
         {/* Estatísticas principais */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {/* Cards devidos hoje */}
+          <div className="p-6 rounded-xl bg-linear-to-br from-orange-500 to-red-600 text-white shadow-lg hover:shadow-xl transition-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <div className="p-3 rounded-lg bg-white/20">
+                <Target className="w-6 h-6" />
+              </div>
+              {(dashboardData?.stats.cardsDueToday || 0) > 0 && (
+                <span className="px-2 py-1 rounded-full bg-white/30 text-xs font-bold animate-pulse">
+                  PENDENTE
+                </span>
+              )}
+            </div>
+            <p className="text-4xl font-bold mb-1">
+              {dashboardData?.stats.cardsDueToday || 0}
+            </p>
+            <p className="text-sm text-white/90">Cards para Revisar Hoje</p>
+          </div>
+
+          {/* Streak */}
+          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <div className="p-3 rounded-lg bg-linear-to-br from-amber-400 to-orange-500">
+                <Flame className="w-6 h-6 text-white" />
+              </div>
+            </div>
+            <p className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-1">
+              {dashboardData?.stats.streak || 0} dias
+            </p>
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              Sequência de Estudo
+            </p>
+          </div>
+
+          {/* Cards estudados hoje */}
+          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="flex items-center justify-between mb-4">
+              <div className="p-3 rounded-lg bg-emerald-100 dark:bg-emerald-950/50">
+                <CheckCircle2 className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+              </div>
+            </div>
+            <p className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-1">
+              {dashboardData?.stats.cardsStudiedToday || 0}
+            </p>
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              Estudados Hoje
+            </p>
+            <p className="text-xs text-zinc-500 dark:text-zinc-500 mt-1">
+              {dashboardData?.stats.cardsStudiedWeek || 0} esta semana
+            </p>
+          </div>
+
+          {/* Total de cards */}
           <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg hover:shadow-xl transition-shadow">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 rounded-lg bg-blue-100 dark:bg-blue-950/50">
                 <Library className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-              </div>
-            </div>
-            <p className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-1">
-              {dashboardData?.stats.totalDecks || 0}
-            </p>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              Baralhos Criados
-            </p>
-          </div>
-
-          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-purple-100 dark:bg-purple-950/50">
-                <BookOpen className="w-6 h-6 text-purple-600 dark:text-purple-400" />
               </div>
             </div>
             <p className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-1">
@@ -163,33 +211,62 @@ export default function Home() {
             <p className="text-sm text-zinc-600 dark:text-zinc-400">
               Total de Cards
             </p>
-          </div>
-
-          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-emerald-100 dark:bg-emerald-950/50">
-                <TrendingUp className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
-              </div>
-            </div>
-            <p className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-1">
-              {dashboardData?.stats.averageCardsPerDeck || 0}
-            </p>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              Média de Cards/Baralho
+            <p className="text-xs text-zinc-500 dark:text-zinc-500 mt-1">
+              {dashboardData?.stats.totalDecks || 0} baralhos
             </p>
           </div>
+        </div>
 
-          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg hover:shadow-xl transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-amber-100 dark:bg-amber-950/50">
-                <Layers className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+        {/* Estatísticas de revisão */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 rounded-lg bg-green-100 dark:bg-green-950/50">
+                <Zap className="w-5 h-5 text-green-600 dark:text-green-400" />
               </div>
+              <h3 className="font-semibold text-zinc-900 dark:text-zinc-50">
+                Cards Maduros
+              </h3>
             </div>
-            <p className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-1">
-              {dashboardData?.stats.largestDeck?.cardCount || 0}
+            <p className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+              {dashboardData?.stats.matureCards || 0}
             </p>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              Maior Baralho
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1">
+              Revisados 2+ vezes
+            </p>
+          </div>
+
+          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 rounded-lg bg-yellow-100 dark:bg-yellow-950/50">
+                <BookOpen className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
+              </div>
+              <h3 className="font-semibold text-zinc-900 dark:text-zinc-50">
+                Cards Jovens
+              </h3>
+            </div>
+            <p className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+              {dashboardData?.stats.youngCards || 0}
+            </p>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1">
+              Revisado 1 vez
+            </p>
+          </div>
+
+          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 rounded-lg bg-purple-100 dark:bg-purple-950/50">
+                <Sparkles className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+              </div>
+              <h3 className="font-semibold text-zinc-900 dark:text-zinc-50">
+                Cards Novos
+              </h3>
+            </div>
+            <p className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+              {dashboardData?.stats.newCards || 0}
+            </p>
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1">
+              Nunca revisados
             </p>
           </div>
         </div>

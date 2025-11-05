@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, EyeOff, GraduationCap, User } from "lucide-react";
+import { Eye, EyeOff, GraduationCap, Upload, User, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,10 +15,51 @@ export default function SignupPage() {
     confirmPassword: "",
     profile_picture: "",
   });
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string>("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validar tipo
+      const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/jpg",
+        "image/webp",
+      ];
+      if (!allowedTypes.includes(file.type)) {
+        setError("Tipo de arquivo não permitido. Use JPEG, PNG ou WebP");
+        return;
+      }
+
+      // Validar tamanho (máximo 5MB)
+      const maxSize = 5 * 1024 * 1024;
+      if (file.size > maxSize) {
+        setError("Arquivo muito grande. Máximo 5MB");
+        return;
+      }
+
+      setAvatarFile(file);
+
+      // Criar preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setAvatarPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+      setError("");
+    }
+  };
+
+  const removeAvatar = () => {
+    setAvatarFile(null);
+    setAvatarPreview("");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,6 +79,25 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
+      // Fazer upload do avatar primeiro, se existir
+      let avatarUrl = "";
+      if (avatarFile) {
+        const avatarFormData = new FormData();
+        avatarFormData.append("avatar", avatarFile);
+
+        const uploadResponse = await fetch("/api/upload", {
+          method: "POST",
+          body: avatarFormData,
+        });
+
+        if (!uploadResponse.ok) {
+          throw new Error("Erro ao fazer upload da imagem");
+        }
+
+        const uploadData = await uploadResponse.json();
+        avatarUrl = uploadData.url;
+      }
+
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: {
@@ -47,7 +107,7 @@ export default function SignupPage() {
           name: formData.name,
           email: formData.email,
           password: formData.password,
-          profile_picture: formData.profile_picture || null,
+          profile_picture: avatarUrl || null,
         }),
       });
 
@@ -215,44 +275,55 @@ export default function SignupPage() {
               </div>
             </div>
 
-            {/* URL da Foto de Perfil (opcional) */}
+            {/* Foto de Perfil (opcional) */}
             <div>
-              <label
-                htmlFor="profile_picture"
-                className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2"
-              >
+              <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                 Foto de Perfil (opcional)
               </label>
-              <div className="flex items-center gap-3">
-                {formData.profile_picture && (
-                  <div className="w-12 h-12 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center overflow-hidden relative">
-                    <Image
-                      src={formData.profile_picture}
-                      alt="Preview"
-                      fill
-                      className="object-cover"
-                      onError={(e) => {
-                        e.currentTarget.style.display = "none";
-                      }}
-                    />
-                    <User className="w-6 h-6 text-zinc-400" />
-                  </div>
-                )}
-                <input
-                  id="profile_picture"
-                  name="profile_picture"
-                  type="url"
-                  autoComplete="photo"
-                  value={formData.profile_picture}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      profile_picture: e.target.value,
-                    })
-                  }
-                  className="flex-1 px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-800 dark:text-zinc-100"
-                  placeholder="URL da imagem"
-                />
+              <div className="flex items-center gap-4">
+                <div className="w-20 h-20 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center overflow-hidden relative border-2 border-zinc-300 dark:border-zinc-600">
+                  {avatarPreview ? (
+                    <>
+                      <Image
+                        src={avatarPreview}
+                        alt="Preview"
+                        fill
+                        className="object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={removeAvatar}
+                        className="absolute top-0 right-0 p-1 rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors"
+                        aria-label="Remover foto"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </>
+                  ) : (
+                    <User className="w-8 h-8 text-zinc-400" />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="avatar-upload"
+                    className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-lg border-2 border-dashed border-zinc-300 dark:border-zinc-700 hover:border-blue-500 dark:hover:border-blue-500 transition-colors bg-zinc-50 dark:bg-zinc-800/50 hover:bg-blue-50 dark:hover:bg-blue-950/30"
+                  >
+                    <Upload className="w-4 h-4 text-zinc-600 dark:text-zinc-400" />
+                    <span className="text-sm text-zinc-600 dark:text-zinc-400">
+                      {avatarFile ? avatarFile.name : "Escolher arquivo"}
+                    </span>
+                  </label>
+                  <input
+                    id="avatar-upload"
+                    type="file"
+                    accept="image/jpeg,image/png,image/jpg,image/webp"
+                    onChange={handleAvatarChange}
+                    className="hidden"
+                  />
+                  <p className="text-xs text-zinc-500 dark:text-zinc-500 mt-1">
+                    JPEG, PNG ou WebP. Máximo 5MB
+                  </p>
+                </div>
               </div>
             </div>
           </div>
