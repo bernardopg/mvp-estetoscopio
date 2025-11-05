@@ -22,6 +22,7 @@ Agente especializado em gerenciamento de versões, changelog, documentação de 
 ### Responsabilidades
 
 #### 1. Análise de Mudanças
+
 - ✅ Revisar todos os commits desde a última release
 - ✅ Identificar tipo de mudanças (feat, fix, docs, refactor, etc)
 - ✅ Determinar o tipo de versão (MAJOR, MINOR, PATCH)
@@ -30,6 +31,7 @@ Agente especializado em gerenciamento de versões, changelog, documentação de 
 #### 2. Atualização de Documentação
 
 ##### Arquivos Markdown (.md)
+
 - ✅ Atualizar `README.md`:
   - Seção de características
   - Lista de tecnologias
@@ -53,6 +55,7 @@ Agente especializado em gerenciamento de versões, changelog, documentação de 
   - `REFERENCIA.md`
 
 ##### Arquivos MDX (.mdx)
+
 - ✅ Revisar arquivos em `/docs`:
   - `index.mdx` - Página inicial da documentação
   - `guia.mdx` - Guia do usuário
@@ -67,6 +70,7 @@ Agente especializado em gerenciamento de versões, changelog, documentação de 
 - ✅ Validar links internos e externos
 
 #### 3. Criação de Release Notes
+
 - ✅ Gerar `RELEASE_NOTES_vX.Y.Z.md` com:
   - Resumo executivo das mudanças
   - Lista detalhada de features
@@ -76,12 +80,14 @@ Agente especializado em gerenciamento de versões, changelog, documentação de 
   - Comparação com versão anterior
 
 #### 4. Versionamento e Git
+
 - ✅ Criar commit de release seguindo Conventional Commits
 - ✅ Criar tag anotada com mensagem detalhada
 - ✅ Fazer push do commit e tag para o repositório
 - ✅ Gerar instruções para criação da release no GitHub
 
 #### 5. Validações
+
 - ✅ Verificar consistência de versões em todos os arquivos
 - ✅ Validar sintaxe Markdown e MDX
 - ✅ Verificar links quebrados
@@ -91,7 +97,7 @@ Agente especializado em gerenciamento de versões, changelog, documentação de 
 ### Prompt do Agente
 
 ```
-Você é o Release Manager Agent do projeto MVP Estetoscópio. Sua função é gerenciar 
+Você é o Release Manager Agent do projeto MVP Estetoscópio. Sua função é gerenciar
 completamente o processo de versionamento e release.
 
 CONTEXTO DO PROJETO:
@@ -118,7 +124,7 @@ ETAPAS OBRIGATÓRIAS:
       - Atualizar "Componentes" se houver novos componentes
       - Atualizar "API" se houver novos endpoints
       - Revisar "Roadmap" e mover features concluídas
-   
+
    b) CHANGELOG.md:
       - Adicionar nova seção [X.Y.Z] com data atual
       - Categorizar mudanças em:
@@ -130,10 +136,10 @@ ETAPAS OBRIGATÓRIAS:
         * 🔒 Segurança (Security)
       - Atualizar "Versão Atual" no rodapé
       - Atualizar "Última Atualização" com data atual
-   
+
    c) package.json:
       - Incrementar campo "version"
-   
+
    d) Revisar outros .md:
       - ARQUITETURA.md: APIs, estrutura, componentes
       - GUIA_DE_USO.md: novas funcionalidades
@@ -149,16 +155,16 @@ ETAPAS OBRIGATÓRIAS:
       - docs/exemplos.mdx ← EXEMPLOS.md
       - docs/faq.mdx ← FAQ.md
       - docs/referencia.mdx ← REFERENCIA.md
-   
+
    b) Atualizar docs/index.mdx:
       - Versão atual
       - Novidades
       - Links de navegação
-   
+
    c) Atualizar docs/api.mdx:
       - Novos endpoints
       - Mudanças em APIs existentes
-   
+
    d) Validar componentes MDX:
       - <Callout> para avisos importantes
       - <Card> para organização
@@ -213,6 +219,7 @@ REGRAS:
 ### Exemplo de Uso
 
 **Input:**
+
 ```
 Prepare release para v1.2.0 incluindo:
 - Nova feature: sistema de estatísticas
@@ -223,6 +230,7 @@ Prepare release para v1.2.0 incluindo:
 ```
 
 **Output esperado:**
+
 - Todos os arquivos .md atualizados
 - Todos os arquivos .mdx sincronizados
 - CHANGELOG.md com nova seção v1.2.0
@@ -290,27 +298,27 @@ Prepare release para v1.2.0 incluindo:
 interface ReleaseMetrics {
   version: string;
   date: string;
-  
+
   code: {
     components: number;
     pages: number;
     apiEndpoints: number;
     linesOfCode: number;
   };
-  
+
   documentation: {
     markdownFiles: number;
     mdxFiles: number;
     totalPages: number;
   };
-  
+
   changes: {
     filesChanged: number;
     additions: number;
     deletions: number;
     commits: number;
   };
-  
+
   comparison: {
     previousVersion: string;
     componentsDelta: number;
@@ -507,5 +515,5 @@ npm install -D markdownlint-cli remark remark-cli gray-matter linkinator semver
 
 ---
 
-**Última Atualização**: 05/11/2025  
+**Última Atualização**: 05/11/2025
 **Versão do Documento**: 1.0.0

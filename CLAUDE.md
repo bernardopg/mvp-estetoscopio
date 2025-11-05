@@ -7,12 +7,15 @@ Este documento fornece contexto completo sobre o projeto para assistentes de IA 
 ## 📋 Visão Geral do Projeto
 
 ### Nome
+
 **MVP Estetoscópio** - Sistema de flashcards com repetição espaçada
 
 ### Propósito
+
 Plataforma de estudos inspirada no Anki para criar e estudar flashcards com suporte a múltiplos tipos de mídia (texto, imagem, áudio).
 
 ### Versão Atual
+
 **v1.1.0** (05 de novembro de 2025)
 
 ---
@@ -22,6 +25,7 @@ Plataforma de estudos inspirada no Anki para criar e estudar flashcards com supo
 ### Stack Tecnológica
 
 #### Frontend
+
 - **Framework**: Next.js 15 (App Router)
 - **Linguagem**: TypeScript 5
 - **UI Library**: React 19.2
@@ -30,12 +34,14 @@ Plataforma de estudos inspirada no Anki para criar e estudar flashcards com supo
 - **Documentação**: MDX com componentes customizados
 
 #### Backend
+
 - **API**: Next.js API Routes (serverless)
 - **Banco de Dados**: Better-SQLite3 (embutido)
 - **Autenticação**: JWT (jsonwebtoken)
 - **Hash de Senhas**: bcryptjs
 
 #### DevOps
+
 - **Linting**: ESLint
 - **Versionamento**: Git + Semantic Versioning
 - **Commits**: Conventional Commits
@@ -86,18 +92,21 @@ mvp-estetoscopio/
 ## 🎯 Funcionalidades Principais
 
 ### 1. Sistema de Autenticação
+
 - Registro de usuários com validação
 - Login com JWT (cookies HTTP-only)
 - Proteção de rotas via middleware
 - Logout com limpeza de sessão
 
 ### 2. Gestão de Baralhos
+
 - Criar baralhos com múltiplos cards
 - Editar baralhos existentes
 - Excluir baralhos
 - Visualizar estatísticas
 
 ### 3. Flashcards
+
 - **Tipos de conteúdo**:
   - Texto (com HTML)
   - Imagem (JPEG, PNG, GIF)
@@ -108,11 +117,13 @@ mvp-estetoscopio/
   - Botões de avaliação (Novamente, Difícil, Bom, Fácil)
 
 ### 4. Sistema de Repetição Espaçada
+
 - Algoritmo baseado em dificuldade
 - Tracking de revisões
 - Cálculo de intervalos
 
 ### 5. Dashboard
+
 - Estatísticas gerais:
   - Total de baralhos
   - Total de cards
@@ -122,6 +133,7 @@ mvp-estetoscopio/
 - Ações rápidas
 
 ### 6. Documentação Interativa (MDX)
+
 - 8 páginas de documentação
 - Componentes customizados:
   - `<Callout>`: Avisos (info, warning, success, error)
@@ -138,6 +150,7 @@ mvp-estetoscopio/
 ### Schema SQLite
 
 #### Tabela: users
+
 ```sql
 CREATE TABLE users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -149,6 +162,7 @@ CREATE TABLE users (
 ```
 
 #### Tabela: decks
+
 ```sql
 CREATE TABLE decks (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -190,7 +204,9 @@ interface CardContent {
 ### Autenticação
 
 #### POST `/api/auth/signup`
+
 Cria nova conta.
+
 ```json
 {
   "name": "string",
@@ -200,7 +216,9 @@ Cria nova conta.
 ```
 
 #### POST `/api/auth/login`
+
 Faz login.
+
 ```json
 {
   "email": "string",
@@ -209,20 +227,25 @@ Faz login.
 ```
 
 #### POST `/api/auth/logout`
+
 Faz logout.
 
 ### Dashboard
 
 #### GET `/api/dashboard`
+
 Retorna estatísticas do usuário.
 
 ### Baralhos
 
 #### GET `/api/decks`
+
 Lista todos os baralhos do usuário.
 
 #### POST `/api/decks`
+
 Cria novo baralho.
+
 ```json
 {
   "title": "string",
@@ -231,26 +254,33 @@ Cria novo baralho.
 ```
 
 #### GET `/api/decks/[id]`
+
 Retorna baralho específico.
 
 #### PUT `/api/decks/[id]`
+
 Atualiza baralho.
 
 #### DELETE `/api/decks/[id]`
+
 Remove baralho.
 
 #### POST `/api/decks/[id]/progress`
+
 Atualiza progresso de um card.
 
 ### Profile
 
 #### GET `/api/profile`
+
 Retorna dados do perfil.
 
 ### Upload
 
 #### POST `/api/upload`
+
 Faz upload de arquivo.
+
 ```
 FormData: { file: File }
 ```
@@ -260,9 +290,11 @@ FormData: { file: File }
 ## 🎨 Componentes React
 
 ### Flashcard
+
 Componente básico de flashcard.
 
 **Props:**
+
 ```typescript
 interface FlashcardProps {
   front: ReactNode;
@@ -281,9 +313,11 @@ interface FlashcardProps {
 ```
 
 ### MediaFlashcard
+
 Flashcard com suporte a mídia.
 
 **Props:**
+
 ```typescript
 interface MediaFlashcardProps {
   front: CardContent;
@@ -293,9 +327,11 @@ interface MediaFlashcardProps {
 ```
 
 ### AudioPlayer
+
 Player de áudio customizado.
 
 **Props:**
+
 ```typescript
 interface AudioPlayerProps {
   src: string;
@@ -303,9 +339,11 @@ interface AudioPlayerProps {
 ```
 
 ### MarkdownRenderer
+
 Renderizador de Markdown.
 
 **Props:**
+
 ```typescript
 interface MarkdownRendererProps {
   content: string;
@@ -314,6 +352,7 @@ interface MarkdownRendererProps {
 ```
 
 ### Sidebar
+
 Barra lateral de navegação.
 
 ---
@@ -425,6 +464,7 @@ O projeto segue **Semantic Versioning 2.0.0**:
 Formato: `<type>(<scope>): <subject>`
 
 **Types:**
+
 - `feat`: Nova feature
 - `fix`: Bug fix
 - `docs`: Documentação
@@ -437,6 +477,7 @@ Formato: `<type>(<scope>): <subject>`
 - `build`: Build system
 
 **Exemplos:**
+
 ```
 feat(docs): add MDX documentation system
 fix(auth): correct token expiration
@@ -549,6 +590,7 @@ export default function NovoComponente({ prop }: NovoComponenteProps) {
 ```
 
 Depois, documentar em:
+
 - EXEMPLOS.md
 - docs/exemplos.mdx
 - README.md (seção Componentes)
@@ -571,12 +613,14 @@ Use o **Release Manager Agent** (veja AGENTS.md):
 ## 🚀 Roadmap
 
 ### v1.2.0 (Próxima)
+
 - Sistema de repetição espaçada aprimorado (algoritmo SM-2)
 - Estatísticas avançadas com gráficos
 - Página de perfil completa
 - Sistema de recuperação de senha
 
 ### v2.0.0
+
 - Migração para PostgreSQL
 - Sistema de cache com Redis
 - Exportação/importação de baralhos
@@ -584,6 +628,7 @@ Use o **Release Manager Agent** (veja AGENTS.md):
 - Tags e categorias
 
 ### v3.0.0
+
 - App mobile (React Native)
 - PWA com offline sync
 - Internacionalização (i18n)
@@ -661,8 +706,8 @@ git push origin main --tags
 
 ### Links Úteis
 
-- **Repositório**: https://github.com/bernardopg/mvp-estetoscopio
-- **Issues**: https://github.com/bernardopg/mvp-estetoscopio/issues
+- **Repositório**: <https://github.com/bernardopg/mvp-estetoscopio>
+- **Issues**: <https://github.com/bernardopg/mvp-estetoscopio/issues>
 - **Documentação**: `/docs`
 
 ### Reportar Problemas
@@ -685,8 +730,8 @@ Veja AGENTS.md para guias de automação e workflows.
 
 ---
 
-**Versão do Documento**: 1.0.0  
-**Última Atualização**: 05/11/2025  
+**Versão do Documento**: 1.0.0
+**Última Atualização**: 05/11/2025
 **Mantido por**: @bernardopg
 
 ---
@@ -704,13 +749,13 @@ Ao trabalhar neste projeto:
 7. ✅ **SEMPRE** considere breaking changes
 8. ✅ **SEMPRE** teste antes de commitar
 
-❌ **NUNCA** use `any` em TypeScript  
-❌ **NUNCA** esqueça de atualizar CHANGELOG  
-❌ **NUNCA** quebre a API sem documentar  
-❌ **NUNCA** faça commit sem mensagem clara  
+❌ **NUNCA** use `any` em TypeScript
+❌ **NUNCA** esqueça de atualizar CHANGELOG
+❌ **NUNCA** quebre a API sem documentar
+❌ **NUNCA** faça commit sem mensagem clara
 ❌ **NUNCA** ignore ESLint errors
 
 ---
 
-**Este documento é a fonte única de verdade sobre o projeto.**  
+**Este documento é a fonte única de verdade sobre o projeto.**
 **Mantenha-o atualizado sempre que houver mudanças significativas.**

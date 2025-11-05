@@ -41,12 +41,14 @@ Determine a versão apropriada (MAJOR.MINOR.PATCH) e execute todas as etapas.
 O Release Manager Agent seguirá estas etapas automaticamente:
 
 #### 1. Análise de Mudanças ✅
+
 - Lista todos os commits desde última release
 - Categoriza por tipo (feat, fix, docs, etc)
 - Determina tipo de versão
 - Identifica breaking changes
 
 #### 2. Atualiza Documentação Markdown ✅
+
 - `README.md` - Características, tecnologias, estrutura
 - `CHANGELOG.md` - Nova seção com mudanças categorizadas
 - `package.json` - Incrementa versão
@@ -54,6 +56,7 @@ O Release Manager Agent seguirá estas etapas automaticamente:
 - Outros .md - Conforme necessário
 
 #### 3. Sincroniza Documentação MDX ✅
+
 - `docs/index.mdx` - Versão e novidades
 - `docs/changelog.mdx` - Sincroniza com CHANGELOG.md
 - `docs/api.mdx` - Novos endpoints
@@ -61,17 +64,20 @@ O Release Manager Agent seguirá estas etapas automaticamente:
 - Valida componentes MDX
 
 #### 4. Cria Release Notes ✅
+
 - Gera `RELEASE_NOTES_vX.Y.Z.md`
 - Inclui resumo, features, melhorias, fixes
 - Estatísticas da versão
 - Guia de migração (se necessário)
 
 #### 5. Prepara Versionamento Git ✅
+
 - Cria commit seguindo Conventional Commits
 - Cria tag anotada com descrição completa
 - Fornece comandos para push
 
 #### 6. Fornece Instruções ✅
+
 - Como criar release no GitHub
 - Checklist de verificação
 - Próximos passos
@@ -79,6 +85,7 @@ O Release Manager Agent seguirá estas etapas automaticamente:
 ### Exemplo Completo
 
 **Input:**
+
 ```
 Prepare release v1.2.0 incluindo:
 
@@ -152,24 +159,28 @@ git push origin v1.2.0
 Após o agente executar, verifique:
 
 ### Documentação
+
 - [ ] README.md tem todas as features mencionadas
 - [ ] CHANGELOG.md tem seção nova com data atual
 - [ ] package.json tem versão correta
 - [ ] Todos os .md relevantes foram atualizados
 
 ### MDX
+
 - [ ] docs/*.mdx estão sincronizados com .md
 - [ ] docs/index.mdx tem versão atual
 - [ ] docs/changelog.mdx reflete CHANGELOG.md
 - [ ] Links internos funcionando
 
 ### Release
+
 - [ ] RELEASE_NOTES_vX.Y.Z.md foi criado
 - [ ] Versões consistentes em todos os arquivos
 - [ ] Métricas calculadas e documentadas
 - [ ] Breaking changes documentados (se houver)
 
 ### Git
+
 - [ ] Commit criado com mensagem adequada
 - [ ] Tag criada com descrição completa
 - [ ] Pronto para push
@@ -193,21 +204,25 @@ Após o agente executar, verifique:
 ## Problemas Comuns
 
 ### "Versões inconsistentes"
+
 **Solução**: Execute o agente novamente pedindo para verificar e corrigir todas as versões
 
 ### "Links quebrados na documentação"
+
 **Solução**: Peça ao agente para validar e corrigir todos os links
 
 ### "MDX não sincronizado com MD"
+
 **Solução**: Peça ao agente para refazer a sincronização completa
 
 ### "Faltam métricas"
+
 **Solução**: Peça ao agente para calcular e incluir todas as métricas
 
 ## Próximos Passos Após Release
 
 1. **Criar Release no GitHub**
-   - Acesse: https://github.com/seu-user/mvp-estetoscopio/releases
+   - Acesse: <https://github.com/seu-user/mvp-estetoscopio/releases>
    - Clique em "Draft a new release"
    - Selecione a tag vX.Y.Z
    - Copie conteúdo de RELEASE_NOTES_vX.Y.Z.md
@@ -232,7 +247,7 @@ Após o agente executar, verifique:
 
 ---
 
-**Versão**: 1.0.0  
+**Versão**: 1.0.0
 **Última Atualização**: 05/11/2025
 
 ---
@@ -241,7 +256,7 @@ Após o agente executar, verifique:
 
 ```bash
 # 1. Inicie o agente
-"Você é o Release Manager Agent. Leia /CLAUDE.md e /AGENTS.md. 
+"Você é o Release Manager Agent. Leia /CLAUDE.md e /AGENTS.md.
 Prepare release v1.X.0 com estas mudanças: [liste mudanças]"
 
 # 2. Revise os arquivos gerados

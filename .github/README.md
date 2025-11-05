@@ -7,7 +7,9 @@ Esta pasta contém configurações e guias para automação do projeto.
 ## 📄 Arquivos
 
 ### RELEASE_GUIDE.md
+
 Guia completo para criação de releases, incluindo:
+
 - Passos para criar release no GitHub
 - Documentação de Semantic Versioning
 - Convenções de Conventional Commits
@@ -16,7 +18,9 @@ Guia completo para criação de releases, incluindo:
 - Roadmap de versões
 
 ### copilot-instructions.md
+
 Instruções específicas para GitHub Copilot sobre:
+
 - Tipo de projeto (Next.js 15)
 - Estrutura de pastas
 - Progresso do desenvolvimento
@@ -44,6 +48,7 @@ Siga todas as etapas documentadas em AGENTS.md.
 ```
 
 O agente irá:
+
 1. ✅ Analisar todos os commits
 2. ✅ Determinar tipo de versão (MAJOR.MINOR.PATCH)
 3. ✅ Atualizar todos os arquivos .md
@@ -56,6 +61,7 @@ O agente irá:
 ### Outros Agentes
 
 Consulte `/AGENTS.md` para documentação completa sobre:
+
 - Documentation Agent
 - Testing Agent
 - Code Review Agent

@@ -12,29 +12,34 @@
 ## 🏗️ Project Structure
 
 ### Framework & Language
+
 - **Framework**: Next.js 15 (App Router) - Use ONLY App Router, not Pages Router
 - **Language**: TypeScript 5 - Always use strict typing, no `any`
 - **React**: Version 19.2 - Use modern hooks and patterns
 - **Node**: 18+ required
 
 ### Styling & UI
+
 - **CSS Framework**: Tailwind CSS 4 - Use utility classes, no CSS modules
 - **Icons**: Lucide React - Consistent icon library
 - **Typography**: Tailwind Typography for prose content
 - **Theme**: Support for dark mode with `dark:` variants
 
 ### Backend & Database
+
 - **API**: Next.js API Routes (serverless architecture)
 - **Database**: Better-SQLite3 (synchronous, embedded)
 - **Authentication**: JWT with HTTP-only cookies
 - **Password Hashing**: bcryptjs with 10 rounds
 
 ### Documentation
+
 - **Markdown**: Standard .md files in root
 - **MDX**: Interactive documentation in `/docs` folder
 - **Components**: Custom MDX components (Callout, Card, Step, CodeBlock)
 
 ### Code Quality
+
 - **Linting**: ESLint with Next.js config
 - **Package Manager**: npm (use `npm install`, not yarn/pnpm)
 - **Git**: Conventional Commits format
@@ -80,30 +85,35 @@ src/
 ## 🎯 Key Features
 
 ### 1. Authentication System
+
 - JWT-based authentication with HTTP-only cookies
 - User registration with validation
 - Protected routes via middleware
 - Secure password hashing
 
 ### 2. Flashcard System
+
 - Three content types: text, image, audio
 - 3D flip animation
 - Keyboard shortcuts (Space/Enter to flip)
 - Anki-style difficulty buttons (Again, Hard, Good, Easy)
 
 ### 3. Deck Management
+
 - Create, read, update, delete operations
 - Statistics per deck
 - Study mode with progress tracking
 - File upload for media (images, audio)
 
 ### 4. Spaced Repetition
+
 - Algorithm in `lib/spaced-repetition.ts`
 - Tracks review history per card
 - Calculates next review dates
 - API endpoint: `/api/decks/[id]/progress`
 
 ### 5. Documentation (MDX)
+
 - 8 interactive documentation pages
 - Custom components: Callout, Card, Step, CodeBlock
 - Breadcrumb navigation
@@ -114,6 +124,7 @@ src/
 ## 💻 Coding Guidelines
 
 ### TypeScript
+
 ```typescript
 // ✅ DO: Always type everything
 interface ComponentProps {
@@ -126,10 +137,11 @@ export default function Component({ title, count }: ComponentProps) {
 }
 
 // ❌ DON'T: Use 'any'
-function badFunction(data: any) { } // NEVER do this
+function badFunction(data: any) {} // NEVER do this
 ```
 
 ### React Components
+
 ```tsx
 // ✅ DO: Use "use client" only when needed
 "use client";
@@ -148,6 +160,7 @@ export default function MyComponent({ initialValue }: Props) {
 ```
 
 ### API Routes
+
 ```typescript
 // ✅ DO: Proper error handling
 import { NextRequest, NextResponse } from "next/server";
@@ -157,10 +170,7 @@ export async function GET(request: NextRequest) {
   try {
     const user = await verifyToken(request);
     if (!user) {
-      return NextResponse.json(
-        { error: "Unauthorized" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     // Logic here
@@ -176,6 +186,7 @@ export async function GET(request: NextRequest) {
 ```
 
 ### Tailwind CSS
+
 ```tsx
 // ✅ DO: Use Tailwind utility classes
 <div className="min-h-screen bg-zinc-50 dark:bg-zinc-900 p-6">
@@ -189,6 +200,7 @@ export async function GET(request: NextRequest) {
 ```
 
 ### Naming Conventions
+
 - **Components**: PascalCase (`AudioPlayer.tsx`)
 - **Utilities**: camelCase (`auth.ts`, `spaced-repetition.ts`)
 - **Types/Interfaces**: PascalCase (`UserData`, `CardContent`)
@@ -211,6 +223,7 @@ export async function GET(request: NextRequest) {
 ## 📦 Database Schema
 
 ### Users Table
+
 ```sql
 CREATE TABLE users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -222,6 +235,7 @@ CREATE TABLE users (
 ```
 
 ### Decks Table
+
 ```sql
 CREATE TABLE decks (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -235,6 +249,7 @@ CREATE TABLE decks (
 ```
 
 ### Card Structure (JSON)
+
 ```typescript
 interface Card {
   id: string;
@@ -244,12 +259,12 @@ interface Card {
     reviews: number;
     lastReview: string;
     nextReview: string;
-    difficulty: 'again' | 'hard' | 'good' | 'easy';
+    difficulty: "again" | "hard" | "good" | "easy";
   };
 }
 
 interface CardContent {
-  type: 'text' | 'image' | 'audio';
+  type: "text" | "image" | "audio";
   content: string;
   text?: string;
 }
@@ -260,6 +275,7 @@ interface CardContent {
 ## 🎨 UI/UX Guidelines
 
 ### Color Palette
+
 - **Primary**: Blue/Purple gradient (`from-blue-500 to-purple-600`)
 - **Secondary**: Emerald/Teal (`from-emerald-500 to-teal-600`)
 - **Neutral**: Zinc scale (zinc-50 to zinc-900)
@@ -267,16 +283,19 @@ interface CardContent {
 - **Success**: Green (green-500, green-600)
 
 ### Spacing
+
 - Use Tailwind spacing scale: `p-4`, `m-6`, `gap-8`
 - Consistent padding: `px-6 py-4` for containers
 - Margins between sections: `mb-8` or `space-y-8`
 
 ### Typography
+
 - Headings: `text-4xl font-bold` (h1), `text-2xl font-semibold` (h2)
 - Body: `text-base` (default)
 - Small text: `text-sm text-zinc-600 dark:text-zinc-400`
 
 ### Animations
+
 - Transitions: `transition-colors`, `transition-transform`
 - Hover states: `hover:bg-zinc-100 dark:hover:bg-zinc-800`
 - Focus: `focus-visible:ring-2 focus-visible:ring-blue-500`
@@ -286,6 +305,7 @@ interface CardContent {
 ## 🔄 Git Workflow
 
 ### Commit Messages (Conventional Commits)
+
 ```bash
 # Format: <type>(<scope>): <subject>
 
@@ -299,6 +319,7 @@ chore(deps): update dependencies
 ```
 
 ### Types
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation only
@@ -315,6 +336,7 @@ chore(deps): update dependencies
 ## 📚 Documentation Guidelines
 
 ### When Creating New Features
+
 1. **Code**: Implement with proper TypeScript types
 2. **Tests**: Add unit tests (if applicable)
 3. **Docs**: Update relevant documentation:
@@ -324,19 +346,18 @@ chore(deps): update dependencies
    - `CHANGELOG.md` - Add to [Unreleased] section
 
 ### MDX Components
+
 Use these custom components in documentation:
 
 ```mdx
 <Callout type="info" title="Important">
-This is an information callout.
+  This is an information callout.
 </Callout>
 
-<Card title="Example">
-Card content here.
-</Card>
+<Card title="Example">Card content here.</Card>
 
 <Step number={1} title="First Step">
-Step instructions here.
+  Step instructions here.
 </Step>
 ```
 
@@ -345,18 +366,23 @@ Step instructions here.
 ## 🐛 Common Issues & Solutions
 
 ### Issue: "Module not found" error
+
 **Solution**: Check import paths use `@/` alias for `src/` directory
 
 ### Issue: SQLite database locked
+
 **Solution**: Ensure you're not running multiple dev servers
 
 ### Issue: JWT token expired
+
 **Solution**: Check token expiration time in `lib/auth.ts`
 
 ### Issue: Tailwind classes not working
+
 **Solution**: Restart dev server, check `tailwind.config.ts`
 
 ### Issue: MDX not rendering
+
 **Solution**: Check `next.config.ts` has MDX configuration
 
 ---
@@ -389,6 +415,7 @@ git push origin main     # Push to remote
 ### Version: v1.1.0 (Released: 2025-11-05)
 
 ### Progress Tracking
+
 - [x] Verificar requisitos do projeto
 - [x] Configurar estrutura do projeto Next.js
 - [x] Instalar dependências
@@ -403,6 +430,7 @@ git push origin main     # Push to remote
 - [x] Agentes de IA (Release Manager, etc)
 
 ### Next Steps (v1.2.0)
+
 - [ ] Sistema de repetição espaçada aprimorado (SM-2 algorithm)
 - [ ] Estatísticas avançadas com gráficos
 - [ ] Página de perfil completa com edição
@@ -415,6 +443,7 @@ git push origin main     # Push to remote
 This project uses AI agents for automation:
 
 ### Release Manager Agent
+
 - Automates versioning and changelog
 - Updates all .md and .mdx documentation
 - Creates release notes
@@ -423,6 +452,7 @@ This project uses AI agents for automation:
 **See**: `/AGENTS.md` for complete documentation
 
 ### How to Use
+
 ```
 Read /CLAUDE.md first, then use the Release Manager Agent
 to prepare the next release following the complete workflow.
@@ -432,17 +462,18 @@ to prepare the next release following the complete workflow.
 
 ## 📖 Additional Resources
 
-- **[CLAUDE.md](../CLAUDE.md)** - Complete project context for AI
-- **[AGENTS.md](../AGENTS.md)** - AI agents documentation
-- **[CHANGELOG.md](../CHANGELOG.md)** - Version history
-- **[README.md](../README.md)** - Project overview
-- **[ARQUITETURA.md](../ARQUITETURA.md)** - Technical architecture
+- **CLAUDE.md** - Complete project context for AI (in project root)
+- **AGENTS.md** - AI agents documentation (in project root)
+- **CHANGELOG.md** - Version history (in project root)
+- **README.md** - Project overview (in project root)
+- **ARQUITETURA.md** - Technical architecture (in project root)
 
 ---
 
 ## ✅ Code Review Checklist
 
 Before committing, ensure:
+
 - [ ] TypeScript types are complete (no `any`)
 - [ ] ESLint shows no errors
 - [ ] Component is properly tested
