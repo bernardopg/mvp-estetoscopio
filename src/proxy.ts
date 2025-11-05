@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 // Rotas que não requerem autenticação
 const publicPaths = ["/login", "/signup"];
@@ -7,7 +7,7 @@ const publicPaths = ["/login", "/signup"];
 // Rotas que devem redirecionar para / se o usuário já estiver autenticado
 const authPaths = ["/login", "/signup"];
 
-export function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("auth_token");
 
