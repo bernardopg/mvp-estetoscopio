@@ -139,7 +139,7 @@ O **MVP Estetoscópio** é uma plataforma de estudos baseada em flashcards que u
 
 ### Pré-requisitos
 
-- Node.js 18+
+- Node.js 20+
 - npm, yarn, pnpm ou bun
 
 ### Passos

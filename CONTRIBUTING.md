@@ -73,7 +73,7 @@ Documentação é sempre bem-vinda! Você pode:
 
 ### Pré-requisitos
 
-- Node.js 18+
+- Node.js 20+
 - npm 9+
 - Git
 
