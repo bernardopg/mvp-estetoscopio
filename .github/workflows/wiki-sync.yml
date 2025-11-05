@@ -1,12 +1,15 @@
 name: Sync Wiki
 
+# Sincroniza automaticamente arquivos de docs/ para o repositório wiki
+# Usa WIKI_PAT secret para ter permissão de push no .wiki
+
 on:
   push:
     branches: [main]
     paths:
-      - 'docs/**/*.md'
-      - 'docs/**/*.mdx'
-      - '.github/workflows/wiki-sync.yml'
+      - "docs/**/*.md"
+      - "docs/**/*.mdx"
+      - ".github/workflows/wiki-sync.yml"
   workflow_dispatch:
 
 jobs:
@@ -23,6 +26,7 @@ jobs:
         with:
           repository: ${{ github.repository }}.wiki
           path: wiki
+          token: ${{ secrets.WIKI_PAT }}
 
       - name: Sync documentation
         run: |
