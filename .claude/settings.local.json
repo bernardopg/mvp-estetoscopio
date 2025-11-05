@@ -1,6 +1,7 @@
 {
   "permissions": {
     "allow": [
+      "Bash(./scripts/sync-wiki.sh)",
       "Bash(tree:*)",
       "Bash(chmod:*)",
       "Bash(git add:*)",
@@ -8,7 +9,11 @@
       "Bash(cat:*)",
       "Bash(.gitignore)",
       "Bash(git push:*)",
-      "Bash(\">=20.9.0\" is required.\"\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "FileSystem(read:./package.json)",
+      "FileSystem(read:./.claude/settings.local.json)",
+      "Bash(git*)",
+      "Bash(npm*)",
+      "Bash(curl*)"
     ],
     "deny": [],
     "ask": []

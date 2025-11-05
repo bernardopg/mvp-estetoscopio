@@ -1,4 +1,4 @@
-import ExemplosDoc from "../../../../docs/exemplos.mdx";
+import ExemplosDoc from "@docs/exemplos.mdx";
 
 export const metadata = {
   title: "Exemplos - MVP Estetoscópio",

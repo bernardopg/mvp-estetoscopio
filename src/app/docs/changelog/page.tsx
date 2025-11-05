@@ -1,4 +1,4 @@
-import ChangelogDoc from "../../../../docs/changelog.mdx";
+import ChangelogDoc from "@docs/changelog.mdx";
 
 export const metadata = {
   title: "Changelog - MVP Estetoscópio",

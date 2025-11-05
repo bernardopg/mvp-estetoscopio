@@ -1,4 +1,4 @@
-import ArquiteturaDoc from "../../../../docs/arquitetura.mdx";
+import ArquiteturaDoc from "@docs/arquitetura.mdx";
 
 export const metadata = {
   title: "Arquitetura - MVP Estetoscópio",

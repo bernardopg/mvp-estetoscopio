@@ -1,4 +1,4 @@
-import ApiDoc from "../../../../docs/api.mdx";
+import ApiDoc from "@docs/api.mdx";
 
 export const metadata = {
   title: "API Reference - MVP Estetoscópio",

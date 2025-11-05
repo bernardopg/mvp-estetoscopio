@@ -1,4 +1,4 @@
-import GuiaDoc from "../../../../docs/guia.mdx";
+import GuiaDoc from "@docs/guia.mdx";
 
 export const metadata = {
   title: "Guia de Uso - MVP Estetoscópio",

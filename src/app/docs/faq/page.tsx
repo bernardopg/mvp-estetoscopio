@@ -1,4 +1,4 @@
-import FaqDoc from "../../../../docs/faq.mdx";
+import FaqDoc from "@docs/faq.mdx";
 
 export const metadata = {
   title: "FAQ - MVP Estetoscópio",
