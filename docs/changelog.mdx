@@ -12,6 +12,49 @@ export const metadata = {
 
 ---
 
+## 🚀 [v1.1.0] - 2025-11-05
+
+### ✨ Novidades
+
+<Card title="Documentação MDX + Renderer">
+- Sistema completo de documentação interativa (MDX)
+- Layout dedicado com navegação, breadcrumbs e dark mode
+- Componentes customizados: `Callout`, `Card`, `Step`, `CodeBlock`
+- Novo `MarkdownRenderer.tsx` com parsing via `marked`
+</Card>
+
+<Card title="Repetição Espaçada">
+- Implementação do algoritmo de repetição espaçada (`lib/spaced-repetition.ts`)
+- Integração com `/api/decks/[id]/progress`
+</Card>
+
+### 🔧 Melhorias
+
+- Nova rota `/api/profile`
+- Validações aprimoradas nas rotas existentes
+- Melhor tratamento de erros com mensagens descritivas
+
+### 🛠 Dependências e Configuração
+
+- MDX modernizado (`@mdx-js/*`, `@next/mdx`)
+- `next.config.ts` com suporte a MDX
+- Adicionado `mdx-components.tsx` na raiz
+- Atualizações em Tailwind Typography
+
+### 📚 Documentação
+
+- README reorganizado e expandido
+- Estrutura de `docs/` consolidada e navegável
+
+### 📊 Métricas (v1.1.0)
+
+- Componentes reutilizáveis: 5 (+1)
+- Páginas: 15 (+7 de documentação)
+- API Routes: 11 (+1)
+- Documentos MDX: 8
+
+---
+
 ## 🚀 [v1.0.0] - 2024-11-04
 
 ### 📚 Documentação MDX

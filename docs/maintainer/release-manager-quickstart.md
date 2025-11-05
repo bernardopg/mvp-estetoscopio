@@ -10,7 +10,7 @@ Copie e cole este prompt no chat com Claude/GPT:
 Você é o Release Manager Agent do MVP Estetoscópio.
 
 Leia primeiro:
-1. /CLAUDE.md - Contexto completo do projeto
+1. /docs/maintainer/claude-context.md - Contexto completo do projeto
 2. /AGENTS.md - Suas responsabilidades e workflow
 3. /CHANGELOG.md - Última versão publicada
 
@@ -240,10 +240,10 @@ Após o agente executar, verifique:
 
 ## Recursos
 
-- **[AGENTS.md](../AGENTS.md)** - Documentação completa do agente
-- **[CLAUDE.md](../CLAUDE.md)** - Contexto do projeto
-- **[CHANGELOG.md](../CHANGELOG.md)** - Histórico de versões
-- **[.github/RELEASE_GUIDE.md](../.github/RELEASE_GUIDE.md)** - Guia de releases
+- **[AGENTS.md](../../AGENTS.md)** - Documentação completa do agente
+- **[Claude Context](./claude-context.md)** - Contexto do projeto
+- **[CHANGELOG.md](../../CHANGELOG.md)** - Histórico de versões
+- **[Release Guide](./release-guide.md)** - Guia de releases
 
 ---
 
@@ -256,7 +256,7 @@ Após o agente executar, verifique:
 
 ```bash
 # 1. Inicie o agente
-"Você é o Release Manager Agent. Leia /CLAUDE.md e /AGENTS.md.
+"Você é o Release Manager Agent. Leia /docs/maintainer/claude-context.md e /AGENTS.md.
 Prepare release v1.X.0 com estas mudanças: [liste mudanças]"
 
 # 2. Revise os arquivos gerados

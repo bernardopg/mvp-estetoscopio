@@ -2,7 +2,7 @@
 
 > Sistema de flashcards estilo Anki para estudos com repetição espaçada
 
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?logo=tailwind-css)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -14,21 +14,25 @@
 Toda documentação está organizada em [`docs/`](docs/README.md):
 
 ### 👥 Para Usuários
+
 - **[Getting Started](docs/user/getting-started.md)** - Primeiros passos
 - **[User Guide](docs/user/user-guide.md)** - Guia completo
 - **[Examples](docs/user/examples.md)** - Exemplos práticos
 - **[FAQ](docs/user/faq.md)** - Perguntas frequentes
 
 ### 💻 Para Desenvolvedores
+
 - **[Architecture](docs/developer/architecture.md)** - Arquitetura técnica
 - **[API Reference](docs/developer/api-reference.md)** - Referência da API
 - **[Migrations](docs/developer/migrations.md)** - Migrações
 
 ### 🔧 Para Mantenedores
+
 - **[Agents](docs/maintainer/agents.md)** - Agentes de automação
 - **[Release Guide](docs/maintainer/release-guide.md)** - Guia de releases
 
 ### 📝 Outros
+
 - **[CHANGELOG.md](CHANGELOG.md)** - Histórico de versões
 - **[Wiki](https://github.com/bernardopg/mvp-estetoscopio/wiki)** - Documentação completa no GitHub Wiki
 
@@ -125,7 +129,7 @@ O **MVP Estetoscópio** é uma plataforma de estudos baseada em flashcards que u
 
 ## 🛠 Tecnologias
 
-- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
 - **Linguagem**: [TypeScript](https://www.typescriptlang.org/)
 - **Estilização**: [Tailwind CSS 4](https://tailwindcss.com/)
 - **Banco de Dados**: [Better-SQLite3](https://github.com/WiseLibs/better-sqlite3)
@@ -553,7 +557,7 @@ O projeto é compatível com qualquer plataforma que suporte Next.js:
 
 ### 👥 Para Usuários
 
-📘 **[GUIA_DE_USO.md](GUIA_DE_USO.md)** - Guia completo do usuário
+📘 **[Guia do Usuário](docs/guia.mdx)** - Guia completo do usuário
 
 Aprenda tudo sobre como usar o sistema:
 
@@ -568,7 +572,7 @@ Aprenda tudo sobre como usar o sistema:
 
 ### 👨‍💻 Para Desenvolvedores
 
-🔧 **[ARQUITETURA.md](ARQUITETURA.md)** - Documentação técnica
+🔧 **[Arquitetura](docs/arquitetura.mdx)** - Documentação técnica
 
 Entenda a arquitetura do sistema:
 
@@ -584,7 +588,7 @@ Entenda a arquitetura do sistema:
 - Implementações de segurança
 - Checklist de deploy
 
-💡 **[EXEMPLOS.md](EXEMPLOS.md)** - Exemplos práticos
+💡 **[Exemplos](docs/exemplos.mdx)** - Exemplos práticos
 
 Exemplos de código prontos para usar:
 
@@ -716,7 +720,7 @@ Contribuições são bem-vindas! Veja nosso [guia de contribuição](CONTRIBUTIN
 
 ### Contato
 
-- **Email**: bernardo.gomes@bebitterbebetter.com.br
+- **Email**: <bernardo.gomes@bebitterbebetter.com.br>
 - **Instagram**: [@be.pgomes](https://instagram.com/be.pgomes)
 - **GitHub**: [@bernardopg](https://github.com/bernardopg)
 

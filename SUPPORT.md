@@ -13,14 +13,15 @@ Antes de procurar ajuda, confira nossa documentação completa:
 | Documento | Quando Usar |
 |-----------|-------------|
 | **[README.md](README.md)** | Visão geral, instalação e configuração inicial |
-| **[GUIA_DE_USO.md](GUIA_DE_USO.md)** | Manual completo para usuários finais |
-| **[EXEMPLOS.md](EXEMPLOS.md)** | Exemplos práticos de código e uso |
-| **[ARQUITETURA.md](ARQUITETURA.md)** | Documentação técnica e arquitetura |
-| **[FAQ.md](FAQ.md)** | Perguntas frequentes e soluções |
+| **[Guia do Usuário](docs/guia.mdx)** | Manual completo para usuários finais |
+| **[Exemplos](docs/exemplos.mdx)** | Exemplos práticos de código e uso |
+| **[Arquitetura](docs/arquitetura.mdx)** | Documentação técnica e arquitetura |
+| **[FAQ](docs/faq.mdx)** | Perguntas frequentes e soluções |
 
 ### Documentação MDX
 
 Acesse a documentação interativa em `/docs`:
+
 - **Guia do Usuário**: `/docs/guia`
 - **Documentação da API**: `/docs/api`
 - **Exemplos Práticos**: `/docs/exemplos`
@@ -34,7 +35,7 @@ Acesse a documentação interativa em `/docs`:
 
 Antes de criar uma nova issue:
 
-- ✅ Leia o [FAQ.md](FAQ.md)
+- ✅ Leia o [FAQ](docs/faq.mdx)
 - ✅ Pesquise nas [issues existentes](https://github.com/bernardopg/mvp-estetoscopio/issues)
 - ✅ Verifique as [discussões](https://github.com/bernardopg/mvp-estetoscopio/discussions)
 - ✅ Consulte a [documentação](#documentação)
@@ -46,6 +47,7 @@ Para reportar bugs ou problemas técnicos:
 👉 [Criar Nova Issue](https://github.com/bernardopg/mvp-estetoscopio/issues/new/choose)
 
 **Escolha o template apropriado:**
+
 - 🐛 **Bug Report** - Para reportar bugs
 - ✨ **Feature Request** - Para sugerir melhorias
 - 📚 **Documentation** - Para melhorias na documentação
@@ -58,6 +60,7 @@ Para discussões gerais, dúvidas ou compartilhar ideias:
 👉 [Iniciar Discussão](https://github.com/bernardopg/mvp-estetoscopio/discussions)
 
 **Categorias disponíveis:**
+
 - 💡 **Ideas** - Compartilhe ideias e sugestões
 - 🙏 **Q&A** - Faça perguntas e obtenha respostas
 - 📣 **Announcements** - Acompanhe novidades
@@ -73,11 +76,13 @@ Para discussões gerais, dúvidas ou compartilhar ideias:
 Ao reportar um bug, inclua:
 
 #### Descrição
+
 - Título claro e descritivo
 - O que aconteceu vs o que deveria acontecer
 - Gravidade do problema (crítico, alto, médio, baixo)
 
 #### Reprodução
+
 ```markdown
 ## Passos para Reproduzir
 
@@ -88,6 +93,7 @@ Ao reportar um bug, inclua:
 ```
 
 #### Ambiente
+
 ```markdown
 ## Ambiente
 
@@ -98,11 +104,13 @@ Ao reportar um bug, inclua:
 ```
 
 #### Screenshots/Logs
+
 - Capturas de tela do problema
 - Logs do console (F12 > Console)
 - Mensagens de erro completas
 
 #### Código (se aplicável)
+
 ```typescript
 // Código que causa o problema
 ```
@@ -162,8 +170,9 @@ Documentação confusa ou incompleta? Você pode:
 **NÃO** reporte vulnerabilidades de segurança publicamente!
 
 Para questões de segurança, consulte [SECURITY.md](SECURITY.md):
+
 - Crie um [Security Advisory](https://github.com/bernardopg/mvp-estetoscopio/security/advisories/new)
-- Ou envie e-mail para: bernardo.gomes@bebitterbebetter.com.br
+- Ou envie e-mail para: <bernardo.gomes@bebitterbebetter.com.br>
 
 ---
 
@@ -175,7 +184,7 @@ Precisa de suporte dedicado ou customizações?
 - **Desenvolvimento customizado**: Solicite um orçamento
 - **Treinamento**: Workshops e sessões de treinamento disponíveis
 
-📧 Contato: bernardo.gomes@bebitterbebetter.com.br
+📧 Contato: <bernardo.gomes@bebitterbebetter.com.br>
 
 ---
 
@@ -195,7 +204,7 @@ Veja [CONTRIBUTING.md](CONTRIBUTING.md) para mais detalhes.
 
 - **GitHub**: [@bernardopg](https://github.com/bernardopg)
 - **Twitter**: [@be.pgomes](https://instagram.com/be.pgomes)
-- **LinkedIn**: 
+- **LinkedIn**:
 
 ---
 
@@ -263,17 +272,21 @@ Obrigado por usar o MVP Estetoscópio! Sua pergunta ou feedback nos ajuda a melh
 ## 📞 Contatos
 
 ### Para Issues Técnicas
-- GitHub Issues: https://github.com/bernardopg/mvp-estetoscopio/issues
+
+- GitHub Issues: <https://github.com/bernardopg/mvp-estetoscopio/issues>
 
 ### Para Discussões
-- GitHub Discussions: https://github.com/bernardopg/mvp-estetoscopio/discussions
+
+- GitHub Discussions: <https://github.com/bernardopg/mvp-estetoscopio/discussions>
 
 ### Para Segurança
-- Security Advisories: https://github.com/bernardopg/mvp-estetoscopio/security/advisories
-- Email: bernardo.gomes@bebitterbebetter.com.br
+
+- Security Advisories: <https://github.com/bernardopg/mvp-estetoscopio/security/advisories>
+- Email: <bernardo.gomes@bebitterbebetter.com.br>
 
 ### Para Negócios
-- Email: bernardo.gomes@bebitterbebetter.com.br
+
+- Email: <bernardo.gomes@bebitterbebetter.com.br>
 - LinkedIn: [Seu Perfil](https://linkedin.com/in/seu-perfil)
 
 ---

@@ -59,7 +59,7 @@ Veja [IMPLEMENTACAO_MDX.md](./IMPLEMENTACAO_MDX.md) para detalhes técnicos.
 
 ## 🔍 Navegação Rápida
 
-### Quero...
+### Quero
 
 - **Começar a usar** → [Getting Started](./user/getting-started.md)
 - **Aprender a usar** → [User Guide](./user/user-guide.md)
@@ -153,7 +153,7 @@ Precisa de ajuda?
 
 - **Issues**: [GitHub Issues](https://github.com/bernardopg/mvp-estetoscopio/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/bernardopg/mvp-estetoscopio/discussions)
-- **Email**: bernardo.gomes@bebitterbebetter.com.br
+- **Email**: <bernardo.gomes@bebitterbebetter.com.br>
 - **Instagram**: [@be.pgomes](https://instagram.com/be.pgomes)
 
 ---

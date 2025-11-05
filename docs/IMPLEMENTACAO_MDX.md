@@ -147,7 +147,7 @@ Exemplo completo no `/docs/README.md`
 2. **Componentização**: Reutilização de componentes visuais
 3. **Interatividade**: Componentes React dentro do Markdown
 4. **Estilização**: Design consistente com Tailwind CSS
-5. **Performance**: Server Components do Next.js 15
+5. **Performance**: Server Components do Next.js 16
 6. **SEO**: Metadata em cada página
 7. **Acessibilidade**: Componentes semânticos
 8. **Dark Mode**: Suporte nativo em todos os componentes
@@ -167,7 +167,7 @@ Você pode adicionar mais documentos:
 - **@mdx-js/react**: Componentes React no Markdown
 - **Tailwind CSS**: Estilização dos componentes
 - **Lucide React**: Ícones modernos
-- **Next.js 15**: App Router e Server Components
+- **Next.js 16**: App Router e Server Components
 
 ## 📚 Documentação
 

@@ -169,4 +169,4 @@ Se esta PR contém breaking changes, descreva:
 
 ---
 
-**Obrigado por contribuir com o MVP Estetoscópio! 🎉**
+## Obrigado por contribuir com o MVP Estetoscópio! 🎉

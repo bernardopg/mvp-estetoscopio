@@ -20,7 +20,7 @@ Forneça contexto sobre o que você está tentando fazer:
 
 ## 🔎 Pesquisa Prévia
 
-### Já consultou:
+### Já consultou
 
 - [ ] [README.md](../README.md)
 - [ ] [GUIA_DE_USO.md](../GUIA_DE_USO.md)

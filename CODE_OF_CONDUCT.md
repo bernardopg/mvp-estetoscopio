@@ -8,19 +8,19 @@ No interesse de promover um ambiente aberto e acolhedor, nós, como contribuidor
 
 Exemplos de comportamento que contribuem para criar um ambiente positivo incluem:
 
-* Usar linguagem acolhedora e inclusiva
-* Respeitar pontos de vista e experiências diferentes
-* Aceitar graciosamente críticas construtivas
-* Focar no que é melhor para a comunidade
-* Mostrar empatia com outros membros da comunidade
+- Usar linguagem acolhedora e inclusiva
+- Respeitar pontos de vista e experiências diferentes
+- Aceitar graciosamente críticas construtivas
+- Focar no que é melhor para a comunidade
+- Mostrar empatia com outros membros da comunidade
 
 Exemplos de comportamento inaceitável por parte dos participantes incluem:
 
-* O uso de linguagem ou imagens sexualizadas e atenção ou avanços sexuais indesejados
-* Trolling, comentários insultuosos/depreciativos e ataques pessoais ou políticos
-* Assédio público ou privado
-* Publicar informações privadas de outras pessoas, como endereço físico ou eletrônico, sem permissão explícita
-* Outra conduta que poderia ser razoavelmente considerada inadequada em um ambiente profissional
+- O uso de linguagem ou imagens sexualizadas e atenção ou avanços sexuais indesejados
+- Trolling, comentários insultuosos/depreciativos e ataques pessoais ou políticos
+- Assédio público ou privado
+- Publicar informações privadas de outras pessoas, como endereço físico ou eletrônico, sem permissão explícita
+- Outra conduta que poderia ser razoavelmente considerada inadequada em um ambiente profissional
 
 ## Nossas Responsabilidades
 
@@ -40,6 +40,6 @@ Mantenedores do projeto que não seguirem ou não aplicarem o Código de Conduta
 
 ## Atribuição
 
-Este Código de Conduta é adaptado do [Contributor Covenant](https://www.contributor-covenant.org), versão 2.1, disponível em https://www.contributor-covenant.org/version/2/1/code_of_conduct.html
+Este Código de Conduta é adaptado do [Contributor Covenant](https://www.contributor-covenant.org), versão 2.1, disponível em <https://www.contributor-covenant.org/version/2/1/code_of_conduct.html>
 
-Para respostas a perguntas comuns sobre este código de conduta, consulte as Perguntas Frequentes em https://www.contributor-covenant.org/faq. Traduções estão disponíveis em https://www.contributor-covenant.org/translations.
+Para respostas a perguntas comuns sobre este código de conduta, consulte as Perguntas Frequentes em <https://www.contributor-covenant.org/faq>. Traduções estão disponíveis em <https://www.contributor-covenant.org/translations>.

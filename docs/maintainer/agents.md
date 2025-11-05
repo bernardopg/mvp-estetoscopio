@@ -101,7 +101,7 @@ Você é o Release Manager Agent do projeto MVP Estetoscópio. Sua função é g
 completamente o processo de versionamento e release.
 
 CONTEXTO DO PROJETO:
-- Framework: Next.js 15 com TypeScript
+ - Framework: Next.js 16 com TypeScript
 - Versionamento: Semantic Versioning 2.0.0
 - Commits: Conventional Commits
 - Documentação: Markdown (.md) e MDX (.mdx)
@@ -140,21 +140,21 @@ ETAPAS OBRIGATÓRIAS:
    c) package.json:
       - Incrementar campo "version"
 
-   d) Revisar outros .md:
-      - ARQUITETURA.md: APIs, estrutura, componentes
-      - GUIA_DE_USO.md: novas funcionalidades
-      - EXEMPLOS.md: novos exemplos
-      - FAQ.md: novas perguntas
-      - REFERENCIA.md: nova documentação técnica
+   d) Revisar outros arquivos de documentação:
+      - docs/arquitetura.mdx: APIs, estrutura, componentes
+      - docs/guia.mdx: novas funcionalidades
+      - docs/exemplos.mdx: novos exemplos
+      - docs/faq.mdx: novas perguntas
+      - REFERENCIA.md: conteúdo técnico (fonte única)
 
 3. ATUALIZAR DOCUMENTAÇÃO MDX
-   a) Sincronizar conteúdo de .md → .mdx:
-      - docs/changelog.mdx ← CHANGELOG.md
-      - docs/arquitetura.mdx ← ARQUITETURA.md
-      - docs/guia.mdx ← GUIA_DE_USO.md
-      - docs/exemplos.mdx ← EXEMPLOS.md
-      - docs/faq.mdx ← FAQ.md
-      - docs/referencia.mdx ← REFERENCIA.md
+   a) Manter conteúdo consistente entre fontes:
+      - docs/changelog.mdx ↔ CHANGELOG.md (sincronizar)
+      - docs/arquitetura.mdx (fonte principal)
+      - docs/guia.mdx (fonte principal)
+      - docs/exemplos.mdx (fonte principal)
+      - docs/faq.mdx (fonte principal)
+      - docs/referencia.mdx ← REFERENCIA.md (renderiza a referência)
 
    b) Atualizar docs/index.mdx:
       - Versão atual

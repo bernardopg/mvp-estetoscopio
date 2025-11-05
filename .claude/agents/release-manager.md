@@ -2,7 +2,7 @@
 name: release-manager
 description: Use este agente quando o usuário precisar preparar um novo lançamento de software, criar notas de lançamento, atualizar números de versão ou gerenciar o fluxo de trabalho de lançamento para o projeto MVP Estetoscópio. Isso inclui tarefas como analisar commits desde o último lançamento, determinar o próximo número de versão com base no Semantic Versioning, atualizar arquivos de documentação (CHANGELOG.md, README.md, package.json), sincronizar arquivos .md e .mdx, criar notas de lançamento e preparar tags git.
 tools: All tools
-model: sonnet
+model: claude-sonnet-4.5
 ---
 
 # Release Manager Agent - MVP Estetoscópio

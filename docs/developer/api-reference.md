@@ -343,11 +343,11 @@ updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP
 
 Para informações detalhadas, consulte:
 
-- 📘 [GUIA_DE_USO.md](GUIA_DE_USO.md) - Guia completo do usuário
-- 🔧 [ARQUITETURA.md](ARQUITETURA.md) - Documentação técnica
-- 💡 [EXEMPLOS.md](EXEMPLOS.md) - Exemplos de código
-- ❓ [FAQ.md](FAQ.md) - Perguntas frequentes
-- 📝 [CHANGELOG.md](CHANGELOG.md) - Histórico de versões
+- 📘 [User Guide](../user/user-guide.md) - Guia completo do usuário
+- 🔧 [Architecture](./architecture.md) - Documentação técnica
+- 💡 [Examples](../user/examples.md) - Exemplos de código
+- ❓ [FAQ](../user/faq.md) - Perguntas frequentes
+- 📝 [CHANGELOG.md](../../CHANGELOG.md) - Histórico de versões
 
 ---
 

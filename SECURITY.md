@@ -21,7 +21,7 @@ Se você descobrir uma vulnerabilidade de segurança, por favor, siga estas etap
 1. **NÃO** crie uma issue pública no GitHub
 2. Envie um relatório detalhado através de:
    - Criando uma [Security Advisory](https://github.com/bernardopg/mvp-estetoscopio/security/advisories/new) privada no GitHub
-   - Ou enviando um e-mail para: bernardo.gomes@bebitterbebetter.com.br
+   - Ou enviando um e-mail para: <bernardo.gomes@bebitterbebetter.com.br>
 
 ### O Que Incluir no Relatório
 
@@ -78,6 +78,7 @@ Após enviar um relatório de vulnerabilidade:
 Atualmente não há vulnerabilidades conhecidas não corrigidas.
 
 Histórico de vulnerabilidades corrigidas pode ser encontrado em:
+
 - [Security Advisories](https://github.com/bernardopg/mvp-estetoscopio/security/advisories)
 - [CHANGELOG.md](CHANGELOG.md) (seção Security)
 
@@ -116,6 +117,7 @@ Atualmente não temos um programa formal de recompensas por bugs, mas reconhecem
 ## Contato
 
 Para questões relacionadas a segurança que não sejam vulnerabilidades:
+
 - Abra uma [issue](https://github.com/bernardopg/mvp-estetoscopio/issues) com a tag `security`
 - Consulte nossa [documentação](README.md)
 

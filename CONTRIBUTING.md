@@ -28,10 +28,12 @@ Este projeto e todos os participantes estão sob o [Código de Conduta](CODE_OF_
 ### Reportar Bugs
 
 Antes de criar um relatório de bug:
+
 - Verifique se o bug já não foi reportado nas [issues](https://github.com/bernardopg/mvp-estetoscopio/issues)
 - Teste na versão mais recente do projeto
 
 Ao criar um relatório de bug, inclua:
+
 - Título claro e descritivo
 - Passos detalhados para reproduzir
 - Comportamento esperado vs comportamento atual
@@ -41,6 +43,7 @@ Ao criar um relatório de bug, inclua:
 ### Sugerir Melhorias
 
 Para sugerir uma nova feature:
+
 1. Verifique se já não existe uma issue similar
 2. Crie uma nova issue com a tag `enhancement`
 3. Descreva detalhadamente:
@@ -61,6 +64,7 @@ Para sugerir uma nova feature:
 ### Contribuir com Documentação
 
 Documentação é sempre bem-vinda! Você pode:
+
 - Corrigir erros de digitação
 - Melhorar explicações
 - Adicionar exemplos
@@ -96,7 +100,7 @@ npm run dev
 
 ### Estrutura do Projeto
 
-Consulte [ARQUITETURA.md](ARQUITETURA.md) para entender a estrutura completa do projeto.
+Consulte [Arquitetura](docs/arquitetura.mdx) para entender a estrutura completa do projeto.
 
 ---
 
@@ -120,6 +124,7 @@ git checkout -b tipo/descricao-curta
 ```
 
 Tipos de branch:
+
 - `feature/` - Nova funcionalidade
 - `fix/` - Correção de bug
 - `docs/` - Documentação
@@ -128,7 +133,9 @@ Tipos de branch:
 - `chore/` - Manutenção
 
 Exemplos:
+
 ```bash
+
 git checkout -b feature/dark-mode
 git checkout -b fix/login-redirect
 git checkout -b docs/api-endpoints
@@ -327,6 +334,7 @@ Fixes #[número da issue]
 ### Revisão
 
 Seu PR será revisado por mantenedores que podem:
+
 - Aprovar e fazer merge
 - Solicitar mudanças
 - Fazer comentários
@@ -342,24 +350,29 @@ Seja receptivo ao feedback e faça as alterações solicitadas.
 Ao revisar um PR, verifique:
 
 #### Funcionalidade
+
 - [ ] O código faz o que se propõe?
 - [ ] Existem bugs ou edge cases?
 
 #### Qualidade
+
 - [ ] Código é legível e mantível?
 - [ ] Segue os padrões do projeto?
 - [ ] Está bem documentado?
 
 #### Testes
+
 - [ ] Testes adequados foram adicionados?
 - [ ] Cobertura é suficiente?
 
 #### Segurança
+
 - [ ] Não introduz vulnerabilidades?
 - [ ] Valida entrada adequadamente?
 - [ ] Não expõe dados sensíveis?
 
 #### Performance
+
 - [ ] Não degrada performance?
 - [ ] Usa recursos eficientemente?
 
@@ -383,11 +396,11 @@ O projeto usa agentes automatizados para releases. Veja [AGENTS.md](AGENTS.md) p
 ### Documentação do Projeto
 
 - [README.md](README.md) - Visão geral
-- [ARQUITETURA.md](ARQUITETURA.md) - Arquitetura técnica
-- [GUIA_DE_USO.md](GUIA_DE_USO.md) - Guia do usuário
-- [EXEMPLOS.md](EXEMPLOS.md) - Exemplos de código
-- [FAQ.md](FAQ.md) - Perguntas frequentes
-- [CLAUDE.md](CLAUDE.md) - Contexto para IA
+- [Arquitetura](docs/arquitetura.mdx) - Arquitetura técnica
+- [Guia do Usuário](docs/guia.mdx) - Guia do usuário
+- [Exemplos](docs/exemplos.mdx) - Exemplos de código
+- [FAQ](docs/faq.mdx) - Perguntas frequentes
+- [Claude Context](docs/maintainer/claude-context.md) - Contexto para IA
 
 ### Documentação Externa
 
@@ -402,7 +415,7 @@ O projeto usa agentes automatizados para releases. Veja [AGENTS.md](AGENTS.md) p
 
 - Consulte [SUPPORT.md](SUPPORT.md)
 - Abra uma [issue](https://github.com/bernardopg/mvp-estetoscopio/issues)
-- Veja [FAQ.md](FAQ.md)
+- Veja [FAQ](docs/faq.mdx)
 
 ---
 

@@ -11,10 +11,12 @@ Este diretório contém os workflows automatizados do projeto.
 **Arquivo**: `ci.yml`
 
 **Quando executa:**
+
 - Push para branches `main` ou `dev`
 - Pull requests para `main`
 
 **O que faz:**
+
 1. **Lint**: Executa ESLint para verificar qualidade do código
 2. **Build**: Compila o projeto Next.js
 3. **Artifacts**: Salva o build por 7 dias
@@ -28,16 +30,19 @@ Este diretório contém os workflows automatizados do projeto.
 **Arquivo**: `wiki-sync.yml`
 
 **Quando executa:**
+
 - Push para `main` que modifica arquivos em `docs/**/*.md`
 - Manualmente via workflow_dispatch
 
 **O que faz:**
+
 1. Copia documentação de `docs/` para o GitHub Wiki
 2. Organiza em páginas estruturadas
 3. Cria sidebar de navegação
 4. Commit e push automático no wiki
 
 **Estrutura do Wiki:**
+
 ```
 wiki/
 ├── Home.md                    # docs/README.md
@@ -152,17 +157,21 @@ Atualmente nenhum secret é necessário (workflows usam GITHUB_TOKEN automático
 ### CI Falhando
 
 **Problema**: Lint errors
+
 - **Solução**: Execute `npm run lint` localmente e corrija
 
 **Problema**: Build errors
+
 - **Solução**: Execute `npm run build` localmente e corrija
 
 ### Wiki Sync Falhando
 
 **Problema**: Wiki não habilitado
+
 - **Solução**: Vá em Settings > Features > Ative "Wikis"
 
 **Problema**: Permissões negadas
+
 - **Solução**: Verifique que Actions tem permissão de escrita:
   - Settings > Actions > General
   - Workflow permissions > "Read and write permissions"
@@ -172,6 +181,7 @@ Atualmente nenhum secret é necessário (workflows usam GITHUB_TOKEN automático
 ## 📊 Status dos Workflows
 
 Veja o status em:
+
 - [Actions Tab](https://github.com/bernardopg/mvp-estetoscopio/actions)
 - Badges no README.md
 

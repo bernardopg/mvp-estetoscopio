@@ -7,6 +7,7 @@ Consolidar e organizar toda a documentação em uma estrutura única, eliminando
 ## 📊 Situação Atual
 
 ### Arquivos na Raiz (12 arquivos .md)
+
 ```
 ├── README.md                    # Essencial (raiz)
 ├── CHANGELOG.md                 # Essencial (raiz)
@@ -23,6 +24,7 @@ Consolidar e organizar toda a documentação em uma estrutura única, eliminando
 ```
 
 ### Arquivos em docs/ (8 arquivos .mdx)
+
 ```
 docs/
 ├── index.mdx                   # Duplicação com README
@@ -36,6 +38,7 @@ docs/
 ```
 
 ### Arquivos em .github/
+
 ```
 .github/
 ├── copilot-instructions.md
@@ -179,20 +182,24 @@ mvp-estetoscopio/
 ## 🚀 Implementação
 
 ### Fase 1: Criar estrutura
+
 - [ ] Criar pastas docs/{user,developer,maintainer,releases}
 - [ ] Criar docs/README.md com índice
 
 ### Fase 2: Migrar arquivos
+
 - [ ] Mover e renomear arquivos
 - [ ] Atualizar links internos
 - [ ] Adicionar frontmatter
 
 ### Fase 3: Scripts
+
 - [ ] Criar script de sincronização wiki
 - [ ] Criar GitHub Action para wiki
 - [ ] Configurar rotas Next.js
 
 ### Fase 4: Limpeza
+
 - [ ] Remover arquivos antigos
 - [ ] Atualizar README.md
 - [ ] Testar todos os links

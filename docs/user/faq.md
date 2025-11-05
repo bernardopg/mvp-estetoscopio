@@ -233,7 +233,7 @@ Para produção, recomendamos usar serviços como:
 
 ### Posso usar em um servidor próprio?
 
-✅ Sim! O código é open source. Veja as instruções no [README.md](README.md#instalação).
+✅ Sim! O código é open source. Veja as instruções no [README](../../README.md#instalação).
 
 ### Qual banco de dados é usado?
 
@@ -247,7 +247,7 @@ Para produção, recomendamos usar serviços como:
 
 ### Posso contribuir com código?
 
-✅ Sim! Veja o guia de contribuição no [README.md](README.md#contribuindo).
+✅ Sim! Veja o guia de contribuição no [README](../../README.md#contribuindo).
 
 ### Onde reporto bugs?
 
@@ -394,10 +394,10 @@ Se desejar, pode adicionar Google Analytics, Plausible, etc.
 
 Consulte a documentação completa:
 
-- 📘 [Guia do Usuário](GUIA_DE_USO.md)
-- 🔧 [Arquitetura Técnica](ARQUITETURA.md)
-- 💡 [Exemplos de Código](EXEMPLOS.md)
-- 📝 [README Principal](README.md)
+- 📘 [Guia do Usuário](./user-guide.md)
+- 🔧 [Arquitetura Técnica](../developer/architecture.md)
+- 💡 [Exemplos de Código](./examples.md)
+- 📝 [README Principal](../../README.md)
 
 Ou entre em contato:
 

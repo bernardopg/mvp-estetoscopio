@@ -18,7 +18,7 @@
 
 ### Frontend
 
-- **Framework**: Next.js 15 (App Router)
+- **Framework**: Next.js 16 (App Router)
 - **React**: 19.2
 - **TypeScript**: 5
 - **Estilização**: Tailwind CSS 4

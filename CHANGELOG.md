@@ -279,9 +279,9 @@ Se você quiser sugerir uma nova feature ou reportar um bug:
 
 - [Repositório GitHub](https://github.com/bernardopg/mvp-estetoscopio)
 - [Documentação Completa](README.md)
-- [Guia do Usuário](GUIA_DE_USO.md)
-- [Arquitetura](ARQUITETURA.md)
-- [Exemplos](EXEMPLOS.md)
+- [Guia do Usuário](docs/guia.mdx)
+- [Arquitetura](docs/arquitetura.mdx)
+- [Exemplos](docs/exemplos.mdx)
 
 ---
 

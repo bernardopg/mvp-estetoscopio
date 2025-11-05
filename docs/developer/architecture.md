@@ -22,7 +22,7 @@ Documentação técnica completa do sistema de flashcards.
 
 ### Frontend
 
-- **Next.js 15** (App Router) - Framework React com SSR/SSG
+- **Next.js 16** (App Router) - Framework React com SSR/SSG
 - **React 19.2** - Biblioteca UI
 - **TypeScript 5** - Tipagem estática
 - **Tailwind CSS 4** - Framework CSS utility-first
@@ -51,7 +51,7 @@ mvp-estetoscopio/
 │   └── uploads/                 # Uploads de mídia (imagens/áudios)
 │
 ├── src/
-│   ├── app/                     # App Router (Next.js 15)
+│   ├── app/                     # App Router (Next.js 16)
 │   │   ├── api/                # API Routes (Backend)
 │   │   │   ├── auth/          # Endpoints de autenticação
 │   │   │   │   ├── login/route.ts
@@ -108,8 +108,8 @@ mvp-estetoscopio/
 ├── tsconfig.json              # Configuração TypeScript
 ├── package.json               # Dependências
 ├── README.md                  # Documentação principal
-├── GUIA_DE_USO.md            # Guia do usuário
-└── EXEMPLOS.md               # Exemplos de código
+├── docs/guia.mdx             # Guia do usuário (MDX)
+└── docs/exemplos.mdx         # Exemplos de código (MDX)
 ```
 
 ---

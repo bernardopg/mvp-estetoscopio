@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'docs/**/*.md'
+      - 'docs/**/*.mdx'
       - '.github/workflows/wiki-sync.yml'
   workflow_dispatch:
 
@@ -46,6 +47,22 @@ jobs:
           # Copiar README principal para Home do wiki
           cp docs/README.md wiki/Home.md
 
+          # Copiar referências adicionais usadas no Home
+          mkdir -p wiki/components
+          cp docs/components/DocComponents.tsx wiki/components/ 2>/dev/null || true
+          cp docs/IMPLEMENTACAO_MDX.md wiki/ 2>/dev/null || true
+
+          # Adicionar arquivo de origem com instruções
+          cat > wiki/_SOURCE.md << 'EOF'
+          # Fonte da Wiki
+
+          - A wiki é sincronizada automaticamente a partir dos arquivos Markdown em `docs/` deste repositório.
+          - A documentação em MDX (`docs/*.mdx`) é a fonte principal para o site de docs e não é copiada para a wiki.
+          - Exceção: `REFERENCIA.md` (na raiz) é a fonte única renderizada em `/docs/referencia` e não é duplicada aqui.
+
+          Se precisar editar conteúdo da wiki, prefira ajustar os arquivos em `docs/` e executar a sincronização.
+          EOF
+
           # Adicionar sidebar ao wiki
           cat > wiki/_Sidebar.md << 'EOF'
           ## 📚 Documentação
@@ -80,4 +97,4 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email github-actions[bot]@users.noreply.github.com
           git add .
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-sync from docs/ [skip ci]" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-sync from docs/ (docs = source of truth; REFERENCIA.md exception) [skip ci]" && git push)
