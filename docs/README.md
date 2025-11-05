@@ -1,200 +1,162 @@
-# Documentação MDX
+# 📚 Documentação - MVP Estetoscópio
 
-Esta pasta contém a documentação do projeto em formato MDX (Markdown + JSX).
+Bem-vindo à documentação completa do MVP Estetoscópio!
 
-## 📁 Estrutura
+---
 
+## 📖 Estrutura
+
+A documentação está organizada em quatro categorias principais:
+
+### 👥 [User](./user/) - Documentação de Usuário
+
+Para usuários finais que querem aprender a usar o sistema:
+
+- **[Getting Started](./user/getting-started.md)** - Primeiros passos
+- **[User Guide](./user/user-guide.md)** - Guia completo de uso
+- **[Examples](./user/examples.md)** - Exemplos práticos
+- **[FAQ](./user/faq.md)** - Perguntas frequentes
+
+### 💻 [Developer](./developer/) - Documentação de Desenvolvedor
+
+Para desenvolvedores que querem contribuir ou entender o código:
+
+- **[Architecture](./developer/architecture.md)** - Arquitetura técnica do sistema
+- **[API Reference](./developer/api-reference.md)** - Referência completa da API
+- **[Migrations](./developer/migrations.md)** - Guia de migrações de banco de dados
+- **[Contributing](../CONTRIBUTING.md)** - Como contribuir
+
+### 🔧 [Maintainer](./maintainer/) - Documentação de Mantenedor
+
+Para mantenedores do projeto:
+
+- **[Agents](./maintainer/agents.md)** - Agentes de automação
+- **[Claude Context](./maintainer/claude-context.md)** - Contexto completo para IA
+- **[Release Guide](./maintainer/release-guide.md)** - Guia de releases
+- **[Release Manager Quickstart](./maintainer/release-manager-quickstart.md)** - Quick start do release manager
+
+### 🚀 [Releases](./releases/) - Notas de Lançamento
+
+Histórico de versões e mudanças:
+
+- **[v1.1.0](./releases/v1.1.0.md)** - Release atual
+
+---
+
+## 🧩 Componentes MDX
+
+Componentes customizados para documentação interativa:
+
+- **[Callout](./components/DocComponents.tsx)** - Avisos e alertas
+- **[Card](./components/DocComponents.tsx)** - Cards de conteúdo
+- **[Step](./components/DocComponents.tsx)** - Passos de tutorial
+- **[CodeBlock](./components/DocComponents.tsx)** - Blocos de código
+- **[FeatureGrid](./components/DocComponents.tsx)** - Grid de features
+
+Veja [IMPLEMENTACAO_MDX.md](./IMPLEMENTACAO_MDX.md) para detalhes técnicos.
+
+---
+
+## 🔍 Navegação Rápida
+
+### Quero...
+
+- **Começar a usar** → [Getting Started](./user/getting-started.md)
+- **Aprender a usar** → [User Guide](./user/user-guide.md)
+- **Ver exemplos** → [Examples](./user/examples.md)
+- **Resolver problemas** → [FAQ](./user/faq.md)
+- **Entender a arquitetura** → [Architecture](./developer/architecture.md)
+- **Ver APIs** → [API Reference](./developer/api-reference.md)
+- **Contribuir** → [Contributing](../CONTRIBUTING.md)
+- **Fazer release** → [Release Guide](./maintainer/release-guide.md)
+
+---
+
+## 📝 Convenções
+
+### Frontmatter
+
+Todos os documentos Markdown usam frontmatter YAML:
+
+```yaml
+---
+title: Título do Documento
+description: Descrição breve
+category: user|developer|maintainer
+tags: [tag1, tag2]
+lastUpdated: 2025-11-05
+---
 ```
-docs/
-├── components/              # Componentes React para documentação
-│   ├── DocComponents.tsx   # Componentes especializados (Callout, Card, Step, etc)
-│   └── mdx-components.tsx  # Componentes base para MDX (h1, h2, p, code, etc)
-├── index.mdx               # Página inicial da documentação
-├── guia.mdx                # Guia de uso completo
-├── faq.mdx                 # Perguntas frequentes
-├── arquitetura.mdx         # Documentação técnica
-└── README.md               # Este arquivo
+
+### Links
+
+Use sempre links relativos:
+
+```markdown
+<!-- Mesmo nível -->
+[Outro Doc](./outro-doc.md)
+
+<!-- Subir um nível -->
+[Doc Pai](../doc-pai.md)
+
+<!-- Entre categorias -->
+[Guia de Usuário](../user/user-guide.md)
 ```
 
-## 🎨 Componentes Disponíveis
+### Componentes MDX
 
-### Callout
-
-Caixas de destaque para informações importantes.
+Componentes disponíveis na documentação:
 
 ```mdx
-<Callout type="info" title="Título opcional">
-Conteúdo da mensagem
+<Callout type="info|warning|success|error">
+Conteúdo do aviso
 </Callout>
-```
 
-**Tipos**: `info`, `warning`, `success`, `error`
-
-### Card
-
-Cartões para organizar conteúdo.
-
-```mdx
-<Card title="Título opcional">
+<Card title="Título">
 Conteúdo do card
 </Card>
-```
 
-### Step
-
-Passos numerados para tutoriais.
-
-```mdx
-<Step number={1} title="Título do passo">
+<Step number={1} title="Passo 1">
 Descrição do passo
 </Step>
 ```
 
-### CodeBlock
+---
 
-Blocos de código com título e linguagem.
+## 🔄 Sincronização
 
-```mdx
-<CodeBlock title="exemplo.ts" language="typescript">
-{`const hello = "world";`}
-</CodeBlock>
-```
+Esta documentação é sincronizada automaticamente com:
 
-### FeatureGrid
+- **GitHub Wiki** - Via GitHub Actions
+- **Site de Docs** - Renderizado como MDX via Next.js
+- **README.md** - Links para seções principais
 
-Grid responsivo para listar recursos.
+---
 
-```mdx
-<FeatureGrid>
-  <Card title="Recurso 1">Descrição</Card>
-  <Card title="Recurso 2">Descrição</Card>
-  <Card title="Recurso 3">Descrição</Card>
-</FeatureGrid>
-```
+## 🤝 Contribuindo com a Documentação
 
-## 📝 Sintaxe MDX
+Para melhorar a documentação:
 
-### Títulos
+1. Edite os arquivos Markdown nesta pasta
+2. Use os componentes MDX quando apropriado
+3. Mantenha o frontmatter atualizado
+4. Valide os links
+5. Siga as convenções de escrita
 
-```mdx
-# H1
-## H2
-### H3
-```
+Veja [CONTRIBUTING.md](../CONTRIBUTING.md) para mais detalhes.
 
-### Texto
+---
 
-```mdx
-**Negrito**
-*Itálico*
-[Link](https://example.com)
-```
+## 📞 Suporte
 
-### Listas
+Precisa de ajuda?
 
-```mdx
-- Item 1
-- Item 2
-  - Subitem 2.1
+- **Issues**: [GitHub Issues](https://github.com/bernardopg/mvp-estetoscopio/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/bernardopg/mvp-estetoscopio/discussions)
+- **Email**: bernardo.gomes@bebitterbebetter.com.br
+- **Instagram**: [@be.pgomes](https://instagram.com/be.pgomes)
 
-1. Item numerado 1
-2. Item numerado 2
-```
+---
 
-### Código
-
-````mdx
-Código inline: `const x = 10`
-
-```typescript
-// Bloco de código
-function hello() {
-  console.log("Hello World");
-}
-```
-````
-
-### Citações
-
-```mdx
-> Esta é uma citação
-```
-
-### Tabelas
-
-```mdx
-| Coluna 1 | Coluna 2 |
-|----------|----------|
-| Valor 1  | Valor 2  |
-```
-
-## 🎯 Como Criar um Novo Documento
-
-1. **Crie o arquivo MDX** em `/docs/nome-do-doc.mdx`
-
-```mdx
-export const metadata = {
-  title: 'Título',
-  description: 'Descrição'
-}
-
-# Título Principal
-
-Conteúdo do documento...
-```
-
-2. **Crie a página Next.js** em `/src/app/docs/nome-do-doc/page.tsx`
-
-```tsx
-import NomeDoc from "@/../../docs/nome-do-doc.mdx";
-
-export const metadata = {
-  title: "Título - MVP Estetoscópio",
-  description: "Descrição do documento",
-};
-
-export default function NomeDocPage() {
-  return <NomeDoc />;
-}
-```
-
-3. **Adicione ao menu** em `/src/app/docs/layout.tsx`
-
-```tsx
-const navItems = [
-  // ... items existentes
-  { href: "/docs/nome-do-doc", icon: IconName, label: "Título" },
-];
-```
-
-## 🎨 Estilização
-
-Todos os componentes MDX já vêm estilizados com Tailwind CSS e suportam dark mode automaticamente.
-
-### Classes CSS disponíveis
-
-- `prose`: Tipografia otimizada para leitura
-- `dark:prose-invert`: Inverte cores no dark mode
-- Classes customizadas nos componentes
-
-## 🔧 Configuração
-
-A configuração do MDX está em:
-
-- `/next.config.ts`: Configuração do `@next/mdx`
-- `/mdx-components.tsx`: Mapeamento de componentes na raiz
-- `/docs/components/`: Componentes customizados
-
-## 💡 Dicas
-
-1. **Use componentes React**: MDX permite misturar Markdown com componentes React
-2. **Metadata**: Sempre adicione metadata para SEO
-3. **Componentize**: Crie componentes reutilizáveis para padrões comuns
-4. **Dark mode**: Todos os componentes devem suportar dark mode
-5. **Acessibilidade**: Use títulos semânticos e alt text em imagens
-
-## 📚 Recursos
-
-- [MDX Documentation](https://mdxjs.com/)
-- [Next.js + MDX](https://nextjs.org/docs/app/building-your-application/configuring/mdx)
-- [Tailwind Typography](https://tailwindcss.com/docs/typography-plugin)
+**Última Atualização**: 05/11/2025
+**Versão da Documentação**: 2.0

@@ -1,0 +1,83 @@
+name: Sync Wiki
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**/*.md'
+      - '.github/workflows/wiki-sync.yml'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    name: Sync to Wiki
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+
+      - name: Checkout wiki
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}.wiki
+          path: wiki
+
+      - name: Sync documentation
+        run: |
+          # Criar estrutura no wiki
+          mkdir -p wiki/user
+          mkdir -p wiki/developer
+          mkdir -p wiki/maintainer
+          mkdir -p wiki/releases
+
+          # Copiar documentação de usuário
+          cp docs/user/*.md wiki/user/ 2>/dev/null || true
+
+          # Copiar documentação de desenvolvedor
+          cp docs/developer/*.md wiki/developer/ 2>/dev/null || true
+
+          # Copiar documentação de mantenedor
+          cp docs/maintainer/*.md wiki/maintainer/ 2>/dev/null || true
+
+          # Copiar release notes
+          cp docs/releases/*.md wiki/releases/ 2>/dev/null || true
+
+          # Copiar README principal para Home do wiki
+          cp docs/README.md wiki/Home.md
+
+          # Adicionar sidebar ao wiki
+          cat > wiki/_Sidebar.md << 'EOF'
+          ## 📚 Documentação
+
+          ### 👥 Usuário
+          - [Getting Started](user/getting-started)
+          - [User Guide](user/user-guide)
+          - [Examples](user/examples)
+          - [FAQ](user/faq)
+
+          ### 💻 Desenvolvedor
+          - [Architecture](developer/architecture)
+          - [API Reference](developer/api-reference)
+          - [Migrations](developer/migrations)
+
+          ### 🔧 Mantenedor
+          - [Agents](maintainer/agents)
+          - [Claude Context](maintainer/claude-context)
+          - [Release Guide](maintainer/release-guide)
+
+          ### 🚀 Releases
+          - [v1.1.0](releases/v1.1.0)
+
+          ---
+
+          [← Voltar ao Repositório](https://github.com/bernardopg/mvp-estetoscopio)
+          EOF
+
+      - name: Commit and push wiki changes
+        working-directory: wiki
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+          git add .
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-sync from docs/ [skip ci]" && git push)

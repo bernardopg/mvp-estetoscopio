@@ -11,14 +11,26 @@
 
 ## 📚 Documentação
 
-| Documento | Descrição |
-|-----------|-----------|
-| **[README.md](README.md)** | Visão geral, instalação e configuração |
-| **[GUIA_DE_USO.md](GUIA_DE_USO.md)** | Guia completo para usuários finais |
-| **[EXEMPLOS.md](EXEMPLOS.md)** | Exemplos de código e uso dos componentes |
-| **[ARQUITETURA.md](ARQUITETURA.md)** | Documentação técnica e arquitetura do sistema |
-| **[FAQ.md](FAQ.md)** | Perguntas frequentes e resolução de problemas |
-| **[CHANGELOG.md](CHANGELOG.md)** | Histórico de versões e mudanças |
+Toda documentação está organizada em [`docs/`](docs/README.md):
+
+### 👥 Para Usuários
+- **[Getting Started](docs/user/getting-started.md)** - Primeiros passos
+- **[User Guide](docs/user/user-guide.md)** - Guia completo
+- **[Examples](docs/user/examples.md)** - Exemplos práticos
+- **[FAQ](docs/user/faq.md)** - Perguntas frequentes
+
+### 💻 Para Desenvolvedores
+- **[Architecture](docs/developer/architecture.md)** - Arquitetura técnica
+- **[API Reference](docs/developer/api-reference.md)** - Referência da API
+- **[Migrations](docs/developer/migrations.md)** - Migrações
+
+### 🔧 Para Mantenedores
+- **[Agents](docs/maintainer/agents.md)** - Agentes de automação
+- **[Release Guide](docs/maintainer/release-guide.md)** - Guia de releases
+
+### 📝 Outros
+- **[CHANGELOG.md](CHANGELOG.md)** - Histórico de versões
+- **[Wiki](https://github.com/bernardopg/mvp-estetoscopio/wiki)** - Documentação completa no GitHub Wiki
 
 ---
 
@@ -682,3 +694,54 @@ Este projeto é open source e está disponível sob a licença MIT.
 Se este projeto foi útil para você, considere dar uma ⭐!
 
 ---
+
+---
+
+## 🤝 Comunidade
+
+### Como Contribuir
+
+Contribuições são bem-vindas! Veja nosso [guia de contribuição](CONTRIBUTING.md) para começar.
+
+- 🐛 [Reportar bugs](https://github.com/bernardopg/mvp-estetoscopio/issues/new?template=bug_report.md)
+- ✨ [Sugerir features](https://github.com/bernardopg/mvp-estetoscopio/issues/new?template=feature_request.md)
+- 📝 [Melhorar documentação](https://github.com/bernardopg/mvp-estetoscopio/issues/new?template=documentation.md)
+- 💬 [Participar das discussões](https://github.com/bernardopg/mvp-estetoscopio/discussions)
+
+### Recursos da Comunidade
+
+- **[Code of Conduct](CODE_OF_CONDUCT.md)** - Nosso código de conduta
+- **[Security Policy](SECURITY.md)** - Política de segurança
+- **[Support](SUPPORT.md)** - Como obter ajuda
+
+### Contato
+
+- **Email**: bernardo.gomes@bebitterbebetter.com.br
+- **Instagram**: [@be.pgomes](https://instagram.com/be.pgomes)
+- **GitHub**: [@bernardopg](https://github.com/bernardopg)
+
+---
+
+## 📄 Licença
+
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+---
+
+## 🙏 Agradecimentos
+
+- Inspirado no [Anki](https://apps.ankiweb.net/)
+- Construído com [Next.js](https://nextjs.org/)
+- UI com [Tailwind CSS](https://tailwindcss.com/)
+
+---
+
+<div align="center">
+
+**[⬆ Voltar ao topo](#-mvp-estetoscópio)**
+
+Desenvolvido com ❤️ por [Bernardo Gomes](https://github.com/bernardopg)
+
+**⭐ Dê uma estrela se este projeto te ajudou!**
+
+</div>

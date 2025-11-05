@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/seu-usuario/mvp-estetoscopio/discussions
+    about: Para discussões gerais, ideias e perguntas da comunidade
+  - name: 🔒 Security Advisory
+    url: https://github.com/seu-usuario/mvp-estetoscopio/security/advisories/new
+    about: Reportar vulnerabilidades de segurança (privado)
+  - name: 📚 Documentação
+    url: https://github.com/seu-usuario/mvp-estetoscopio/blob/main/README.md
+    about: Consulte nossa documentação completa
+  - name: 🆘 Suporte
+    url: https://github.com/seu-usuario/mvp-estetoscopio/blob/main/SUPPORT.md
+    about: Guia de como obter ajuda
