@@ -1,10 +1,14 @@
 "use client";
 
+import TagSelector from "@/components/TagSelector";
 import {
   ArrowLeft,
+  Bookmark,
   FileAudio,
+  Folder,
   Image as ImageIcon,
   Loader2,
+  Palette,
   Plus,
   Save,
   Text,
@@ -222,7 +226,14 @@ export default function CriarBaralho() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ title: titulo, cards: cartas }),
+        body: JSON.stringify({
+          title: titulo,
+          cards: cartas,
+          folder_id: folderId,
+          tags: selectedTags.map((tag) => tag.id),
+          is_bookmarked: isBookmarked,
+          color: deckColor,
+        }),
       });
 
       if (response.ok) {
@@ -474,6 +485,115 @@ export default function CriarBaralho() {
               className="w-full px-4 py-3 border-2 border-zinc-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
               placeholder="Ex: Sons Cardíacos Básicos"
             />
+          </div>
+
+          {/* Organização */}
+          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg">
+            <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-4">
+              Organização
+            </h2>
+            <div className="space-y-4">
+              {/* Pasta */}
+              <div>
+                <label className="flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                  <Folder className="w-4 h-4" />
+                  Pasta
+                </label>
+                <select
+                  value={folderId || ""}
+                  onChange={(e) =>
+                    setFolderId(e.target.value ? Number(e.target.value) : null)
+                  }
+                  className="w-full px-4 py-3 border-2 border-zinc-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                >
+                  <option value="">📂 Sem pasta (raiz)</option>
+                  {folders.map((folder) => (
+                    <option key={folder.id} value={folder.id}>
+                      {folder.icon || "📁"} {folder.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Tags */}
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                  🏷️ Tags
+                </label>
+                <TagSelector
+                  availableTags={allTags}
+                  selectedTags={selectedTags}
+                  onTagsChange={setSelectedTags}
+                  onCreateTag={handleCreateTag}
+                />
+              </div>
+
+              {/* Favorito e Cor */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Favorito */}
+                <div>
+                  <label className="flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">
+                    <Bookmark className="w-4 h-4" />
+                    Favorito
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setIsBookmarked(!isBookmarked)}
+                    className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 flex items-center justify-center gap-2 ${
+                      isBookmarked
+                        ? "bg-amber-50 dark:bg-amber-950/30 border-amber-400 dark:border-amber-600 text-amber-700 dark:text-amber-300"
+                        : "border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:border-amber-400 dark:hover:border-amber-600"
+                    }`}
+                  >
+                    <Bookmark
+                      className={`w-5 h-5 ${
+                        isBookmarked ? "fill-current" : ""
+                      }`}
+                    />
+                    <span className="font-medium">
+                      {isBookmarked ? "Favoritado" : "Marcar como favorito"}
+                    </span>
+                  </button>
+                </div>
+
+                {/* Cor */}
+                <div>
+                  <label className="flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">
+                    <Palette className="w-4 h-4" />
+                    Cor do Baralho
+                  </label>
+                  <div className="flex gap-2 flex-wrap">
+                    {DECK_COLORS.map((colorOption) => (
+                      <button
+                        key={colorOption.value || "default"}
+                        type="button"
+                        onClick={() => setDeckColor(colorOption.value)}
+                        className={`w-12 h-12 rounded-lg border-2 transition-all duration-200 flex items-center justify-center ${
+                          deckColor === colorOption.value
+                            ? "border-purple-500 dark:border-purple-400 ring-2 ring-purple-500/30"
+                            : "border-zinc-300 dark:border-zinc-600 hover:border-purple-400 dark:hover:border-purple-500"
+                        }`}
+                        style={{
+                          backgroundColor: colorOption.value || "#ffffff",
+                        }}
+                        title={colorOption.name}
+                      >
+                        {deckColor === colorOption.value && (
+                          <span className="text-white text-xl font-bold drop-shadow-lg">
+                            ✓
+                          </span>
+                        )}
+                        {!colorOption.value && (
+                          <span className="text-zinc-400 dark:text-zinc-600 text-xs">
+                            Padrão
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Cards Section */}

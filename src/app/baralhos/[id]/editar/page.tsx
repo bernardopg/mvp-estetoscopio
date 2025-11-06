@@ -1,10 +1,14 @@
 "use client";
 
+import TagSelector from "@/components/TagSelector";
 import {
   ArrowLeft,
+  Bookmark,
   FileAudio,
+  Folder,
   Image as ImageIcon,
   Loader2,
+  Palette,
   Plus,
   Save,
   Text,
@@ -28,12 +32,43 @@ type Card = {
   verso: CardContent;
 };
 
+interface FolderType {
+  id: number;
+  name: string;
+  parent_id: number | null;
+  color: string | null;
+  icon: string | null;
+}
+
+interface TagType {
+  id: number;
+  name: string;
+  color: string | null;
+}
+
+const DECK_COLORS = [
+  { name: "Padrão", value: null },
+  { name: "Azul", value: "#3b82f6" },
+  { name: "Verde", value: "#10b981" },
+  { name: "Vermelho", value: "#ef4444" },
+  { name: "Amarelo", value: "#f59e0b" },
+  { name: "Roxo", value: "#8b5cf6" },
+  { name: "Rosa", value: "#ec4899" },
+  { name: "Ciano", value: "#06b6d4" },
+];
+
 export default function EditarBaralho() {
   const params = useParams();
   const router = useRouter();
   const id = params.id as string;
 
   const [titulo, setTitulo] = useState("");
+  const [folderId, setFolderId] = useState<number | null>(null);
+  const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [deckColor, setDeckColor] = useState<string | null>(null);
+  const [folders, setFolders] = useState<FolderType[]>([]);
+  const [allTags, setAllTags] = useState<TagType[]>([]);
   const [cartas, setCartas] = useState<Card[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -41,12 +76,65 @@ export default function EditarBaralho() {
 
   const fileInputRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
 
+  useEffect(() => {
+    fetchFoldersAndTags();
+  }, []);
+
+  const fetchFoldersAndTags = async () => {
+    try {
+      const [foldersRes, tagsRes] = await Promise.all([
+        fetch("/api/folders"),
+        fetch("/api/tags"),
+      ]);
+
+      if (foldersRes.ok) {
+        const foldersData = await foldersRes.json();
+        setFolders(foldersData);
+      }
+
+      if (tagsRes.ok) {
+        const tagsData = await tagsRes.json();
+        setAllTags(tagsData);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar pastas e tags:", error);
+    }
+  };
+
+  const handleCreateTag = async (name: string, color: string) => {
+    try {
+      const response = await fetch("/api/tags", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, color }),
+      });
+
+      if (response.ok) {
+        const newTag = await response.json();
+        setAllTags([...allTags, newTag]);
+        return newTag;
+      }
+      throw new Error("Erro ao criar tag");
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
   const fetchDeck = useCallback(async () => {
     try {
       const response = await fetch(`/api/decks/${id}`);
       if (response.ok) {
         const deck = await response.json();
         setTitulo(deck.title);
+        setFolderId(deck.folder_id);
+        setIsBookmarked(deck.is_bookmarked || false);
+        setDeckColor(deck.color);
+
+        // Carregar tags associadas
+        if (deck.tags && Array.isArray(deck.tags)) {
+          setSelectedTags(deck.tags);
+        }
 
         // Converter cartas antigas (string) para novo formato (CardContent)
         const parsedCards = JSON.parse(deck.cards) as Array<
@@ -206,7 +294,14 @@ export default function EditarBaralho() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ title: titulo, cards: cartas }),
+        body: JSON.stringify({
+          title: titulo,
+          cards: cartas,
+          folder_id: folderId,
+          tags: selectedTags.map((tag) => tag.id),
+          is_bookmarked: isBookmarked,
+          color: deckColor,
+        }),
       });
 
       if (response.ok) {
@@ -494,6 +589,115 @@ export default function EditarBaralho() {
               className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 transition-all"
               placeholder="Ex: Sons Cardíacos Básicos"
             />
+          </div>
+
+          {/* Organização */}
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-zinc-200 dark:border-zinc-800 p-6">
+            <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-4">
+              Organização
+            </h2>
+            <div className="space-y-4">
+              {/* Pasta */}
+              <div>
+                <label className="flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                  <Folder className="w-4 h-4" />
+                  Pasta
+                </label>
+                <select
+                  value={folderId || ""}
+                  onChange={(e) =>
+                    setFolderId(e.target.value ? Number(e.target.value) : null)
+                  }
+                  className="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 transition-all"
+                >
+                  <option value="">📂 Sem pasta (raiz)</option>
+                  {folders.map((folder) => (
+                    <option key={folder.id} value={folder.id}>
+                      {folder.icon || "📁"} {folder.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Tags */}
+              <div>
+                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                  🏷️ Tags
+                </label>
+                <TagSelector
+                  availableTags={allTags}
+                  selectedTags={selectedTags}
+                  onTagsChange={setSelectedTags}
+                  onCreateTag={handleCreateTag}
+                />
+              </div>
+
+              {/* Favorito e Cor */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Favorito */}
+                <div>
+                  <label className="flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">
+                    <Bookmark className="w-4 h-4" />
+                    Favorito
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setIsBookmarked(!isBookmarked)}
+                    className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 flex items-center justify-center gap-2 ${
+                      isBookmarked
+                        ? "bg-amber-50 dark:bg-amber-950/30 border-amber-400 dark:border-amber-600 text-amber-700 dark:text-amber-300"
+                        : "border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-400 hover:border-amber-400 dark:hover:border-amber-600"
+                    }`}
+                  >
+                    <Bookmark
+                      className={`w-5 h-5 ${
+                        isBookmarked ? "fill-current" : ""
+                      }`}
+                    />
+                    <span className="font-medium">
+                      {isBookmarked ? "Favoritado" : "Marcar como favorito"}
+                    </span>
+                  </button>
+                </div>
+
+                {/* Cor */}
+                <div>
+                  <label className="flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">
+                    <Palette className="w-4 h-4" />
+                    Cor do Baralho
+                  </label>
+                  <div className="flex gap-2 flex-wrap">
+                    {DECK_COLORS.map((colorOption) => (
+                      <button
+                        key={colorOption.value || "default"}
+                        type="button"
+                        onClick={() => setDeckColor(colorOption.value)}
+                        className={`w-12 h-12 rounded-lg border-2 transition-all duration-200 flex items-center justify-center ${
+                          deckColor === colorOption.value
+                            ? "border-purple-500 dark:border-purple-400 ring-2 ring-purple-500/30"
+                            : "border-zinc-300 dark:border-zinc-600 hover:border-purple-400 dark:hover:border-purple-500"
+                        }`}
+                        style={{
+                          backgroundColor: colorOption.value || "#ffffff",
+                        }}
+                        title={colorOption.name}
+                      >
+                        {deckColor === colorOption.value && (
+                          <span className="text-white text-xl font-bold drop-shadow-lg">
+                            ✓
+                          </span>
+                        )}
+                        {!colorOption.value && (
+                          <span className="text-zinc-400 dark:text-zinc-600 text-xs">
+                            Padrão
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Cartas */}
