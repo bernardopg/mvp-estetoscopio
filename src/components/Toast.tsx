@@ -1,6 +1,6 @@
 "use client";
 
-import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from "lucide-react";
+import { AlertCircle, AlertTriangle, CheckCircle, Info, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
 export type ToastType = "success" | "error" | "info" | "warning";
@@ -14,7 +14,14 @@ interface ToastProps {
   onClose: (id: string) => void;
 }
 
-const Toast = ({ id, type, title, message, duration = 5000, onClose }: ToastProps) => {
+const Toast = ({
+  id,
+  type,
+  title,
+  message,
+  duration = 5000,
+  onClose,
+}: ToastProps) => {
   const [isVisible, setIsVisible] = useState(true);
 
   const handleClose = useCallback(() => {
@@ -78,7 +85,9 @@ const Toast = ({ id, type, title, message, duration = 5000, onClose }: ToastProp
       className={`
         max-w-sm w-full pointer-events-auto
         transform transition-all duration-300 ease-in-out
-        ${isVisible ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}
+        ${
+          isVisible ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
+        }
       `}
     >
       <div
@@ -88,13 +97,9 @@ const Toast = ({ id, type, title, message, duration = 5000, onClose }: ToastProp
         `}
       >
         <div className="flex items-start">
-          <div className="shrink-0">
-            {getIcon()}
-          </div>
+          <div className="shrink-0">{getIcon()}</div>
           <div className="ml-3 flex-1">
-            <p className={`text-sm font-medium ${getTextColor()}`}>
-              {title}
-            </p>
+            <p className={`text-sm font-medium ${getTextColor()}`}>{title}</p>
             {message && (
               <p className={`mt-1 text-sm ${getTextColor()} opacity-90`}>
                 {message}
