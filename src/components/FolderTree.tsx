@@ -1,5 +1,6 @@
 "use client";
 
+import DroppableFolder from "@/components/DroppableFolder";
 import {
   ChevronDown,
   ChevronRight,
@@ -69,67 +70,69 @@ export default function FolderTree({
 
     return (
       <div key={folder.id} style={{ paddingLeft: `${depth * 12}px` }}>
-        <div
-          className={`group flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all ${
-            isSelected
-              ? "bg-blue-100 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300"
-              : "hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
-          }`}
-          onClick={() => onFolderSelect(folder.id)}
-        >
-          {hasChildren && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleExpand(folder.id);
-              }}
-              className="p-0.5 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded transition-colors"
-            >
-              {isExpanded ? (
-                <ChevronDown className="w-4 h-4" />
-              ) : (
-                <ChevronRight className="w-4 h-4" />
-              )}
-            </button>
-          )}
+        <DroppableFolder id={folder.id}>
+          <div
+            className={`group flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all ${
+              isSelected
+                ? "bg-blue-100 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300"
+                : "hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+            }`}
+            onClick={() => onFolderSelect(folder.id)}
+          >
+            {hasChildren && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleExpand(folder.id);
+                }}
+                className="p-0.5 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded transition-colors"
+              >
+                {isExpanded ? (
+                  <ChevronDown className="w-4 h-4" />
+                ) : (
+                  <ChevronRight className="w-4 h-4" />
+                )}
+              </button>
+            )}
 
-          {!hasChildren && <div className="w-5" />}
+            {!hasChildren && <div className="w-5" />}
 
-          {isExpanded ? (
-            <FolderOpen
-              className="w-4 h-4"
-              style={{ color: folder.color || undefined }}
-            />
-          ) : (
-            <Folder
-              className="w-4 h-4"
-              style={{ color: folder.color || undefined }}
-            />
-          )}
+            {isExpanded ? (
+              <FolderOpen
+                className="w-4 h-4"
+                style={{ color: folder.color || undefined }}
+              />
+            ) : (
+              <Folder
+                className="w-4 h-4"
+                style={{ color: folder.color || undefined }}
+              />
+            )}
 
-          <span className="flex-1 text-sm font-medium truncate">
-            {folder.name}
-          </span>
-
-          {folder.deckCount !== undefined && folder.deckCount > 0 && (
-            <span className="text-xs text-zinc-500 dark:text-zinc-500">
-              {folder.deckCount}
+            <span className="flex-1 text-sm font-medium truncate">
+              {folder.name}
             </span>
-          )}
 
-          {onCreateFolder && !hideCreateButton && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onCreateFolder(folder.id);
-              }}
-              className="opacity-0 group-hover:opacity-100 p-1 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded transition-all"
-              title="Criar subpasta"
-            >
-              <Plus className="w-3 h-3" />
-            </button>
-          )}
-        </div>
+            {folder.deckCount !== undefined && folder.deckCount > 0 && (
+              <span className="text-xs text-zinc-500 dark:text-zinc-500">
+                {folder.deckCount}
+              </span>
+            )}
+
+            {onCreateFolder && !hideCreateButton && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onCreateFolder(folder.id);
+                }}
+                className="opacity-0 group-hover:opacity-100 p-1 hover:bg-zinc-200 dark:hover:bg-zinc-700 rounded transition-all"
+                title="Criar subpasta"
+              >
+                <Plus className="w-3 h-3" />
+              </button>
+            )}
+          </div>
+        </DroppableFolder>
 
         {hasChildren && isExpanded && folder.children && (
           <div className="mt-1">

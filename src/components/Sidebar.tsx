@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Bell,
   BookOpen,
   ChevronDown,
   ChevronRight,
@@ -16,11 +17,12 @@ import {
   Plus,
   Sparkles,
   User,
+  Users,
   X,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface NavItem {
   href: string;
@@ -51,6 +53,18 @@ const navItems: NavSection[] = [
         label: "Novo Baralho",
         icon: Plus,
         description: "Adicionar deck",
+      },
+      {
+        href: "/comunidades",
+        label: "Comunidades",
+        icon: Users,
+        description: "Compartilhe e descubra baralhos",
+      },
+      {
+        href: "/perfil/notificacoes",
+        label: "Notificações",
+        icon: Bell,
+        description: "Suas notificações",
       },
       {
         href: "/perfil",
@@ -133,11 +147,32 @@ export default function Sidebar() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
+  const [unreadCount, setUnreadCount] = useState<number>(0);
   const [collapsedSections, setCollapsedSections] = useState<
     Record<string, boolean>
   >({
     Documentação: true, // Inicialmente colapsado
   });
+
+  // Buscar contagem de notificações não lidas
+  useEffect(() => {
+    const fetchUnreadCount = async () => {
+      try {
+        const res = await fetch("/api/notifications?is_read=0&limit=1");
+        if (res.ok) {
+          const data = await res.json();
+          setUnreadCount(data.unreadCount || 0);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar notificações:", error);
+      }
+    };
+
+    fetchUnreadCount();
+    // Atualizar a cada 30 segundos
+    const interval = setInterval(fetchUnreadCount, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === href;
@@ -255,6 +290,10 @@ export default function Sidebar() {
                   <ul className="space-y-1">
                     {section.items.map((item) => {
                       const active = isActive(item.href);
+                      const isNotifications =
+                        item.href === "/perfil/notificacoes";
+                      const showBadge = isNotifications && unreadCount > 0;
+
                       return (
                         <li key={item.href}>
                           <Link
@@ -266,13 +305,20 @@ export default function Sidebar() {
                                 : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-100 dark:hover:bg-zinc-800/50"
                             }`}
                           >
-                            <item.icon
-                              className={`w-5 h-5 transition-transform duration-200 ${
-                                active
-                                  ? "scale-110"
-                                  : "group-hover:scale-110 group-hover:rotate-3"
-                              }`}
-                            />
+                            <div className="relative">
+                              <item.icon
+                                className={`w-5 h-5 transition-transform duration-200 ${
+                                  active
+                                    ? "scale-110"
+                                    : "group-hover:scale-110 group-hover:rotate-3"
+                                }`}
+                              />
+                              {showBadge && (
+                                <span className="absolute -top-1.5 -right-1.5 flex items-center justify-center w-4 h-4 text-[10px] font-bold text-white bg-red-500 rounded-full animate-pulse">
+                                  {unreadCount > 9 ? "9+" : unreadCount}
+                                </span>
+                              )}
+                            </div>
                             <div className="flex-1">
                               <div>{item.label}</div>
                               {!active && (

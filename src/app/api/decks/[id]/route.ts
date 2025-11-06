@@ -48,7 +48,16 @@ export async function PUT(
       return NextResponse.json({ error: "ID inválido" }, { status: 400 });
     }
 
-    const { title, cards, category } = await request.json();
+    const {
+      title,
+      cards,
+      category,
+      folder_id,
+      tags,
+      is_bookmarked,
+      color,
+      icon,
+    } = await request.json();
     if (!title || !Array.isArray(cards)) {
       console.error("Dados inválidos no PUT:", { title, cards });
       return NextResponse.json(
@@ -57,18 +66,46 @@ export async function PUT(
       );
     }
 
+    // Atualizar o deck com todos os campos
     const result = statements.updateDeck.run(
       title,
       JSON.stringify(cards),
       category || null,
+      folder_id || null,
+      color || null,
+      icon || null,
+      is_bookmarked ? 1 : 0,
       id,
       DEFAULT_USER_ID
     );
+
     if (result.changes === 0) {
       return NextResponse.json(
         { error: "Baralho não encontrado" },
         { status: 404 }
       );
+    }
+
+    // Atualizar tags: remover todas e adicionar as novas
+    if (Array.isArray(tags)) {
+      // Buscar tags atuais
+      const currentTags = statements.getDeckTags.all(id) as Array<{
+        id: number;
+      }>;
+
+      // Remover tags antigas
+      for (const tag of currentTags) {
+        statements.removeTagFromDeck.run(id, tag.id);
+      }
+
+      // Adicionar novas tags
+      for (const tagId of tags) {
+        try {
+          statements.addTagToDeck.run(id, tagId);
+        } catch (error) {
+          console.error(`Erro ao adicionar tag ${tagId} ao deck:`, error);
+        }
+      }
     }
 
     const updatedDeck = statements.getDeck.get(id, DEFAULT_USER_ID);

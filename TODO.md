@@ -23,7 +23,7 @@
   - Salvamento em `/public/uploads/avatars/`
   - Exclusão automática de avatar antigo
 
-### v1.2 (Próxima versão)
+### v1.2 (Concluído ✅)
 
 - [x] Sistema de repetição espaçada aprimorado (algoritmo SM-2)
   - Implementação do algoritmo SM-2 oficial
@@ -72,52 +72,146 @@
   - Seção Exemplos (Demo Flashcards)
   - Seção Documentação (8 páginas)
   - Ícones apropriados para cada rota
-- [ ] Modais de gerenciamento
-  - Modal para criar/editar pastas
-  - Modal para mover baralhos entre pastas
-- [ ] Atualizar formulários de baralhos
-  - Adicionar seletor de pasta em criar/editar
-  - Integrar TagSelector em criar/editar
-  - Toggle de favorito
-  - Seletor de cor e ícone
-- [ ] Completar APIs de organização
-  - PUT/DELETE /api/tags/[id]
-  - Atualizar GET /api/decks para incluir tags/folder (JOIN)
-  - Atualizar POST/PUT /api/decks para salvar tags
-- [ ] Atalhos de teclado numéricos para avaliação (1-4)
-- [ ] Modo noturno automático (baseado no horário do sistema)
+- [x] Modais de gerenciamento
+  - Modal para criar/editar pastas (FolderModal.tsx - 265 linhas)
+  - Modal para mover baralhos entre pastas (MoveDeckModal.tsx - 265 linhas)
+- [x] Atualizar formulários de baralhos
+  - Adicionar seletor de pasta em criar/editar ✅
+  - Integrar TagSelector em criar/editar ✅
+  - Toggle de favorito ✅
+  - Seletor de cor e ícone ✅
+- [x] Completar APIs de organização
+  - PUT/DELETE /api/tags/[id] ✅
+  - Atualizar GET /api/decks para incluir tags/folder (JOIN) ✅
+  - Atualizar POST/PUT /api/decks para salvar tags ✅
 - [ ] Integração de email para recuperação de senha
   - Configuração SMTP (Nodemailer/SendGrid)
   - Templates de email profissionais
-  - Testes de envio
-- [ ] Drag-and-drop entre pastas (opcional)
-- [ ] Atalhos de teclado (Ctrl+K busca, Ctrl+N novo)
+  - Testes de envio e entrega
+- [x] Drag-and-drop entre pastas
+  - Instalado @dnd-kit/core, @dnd-kit/sortable, @dnd-kit/utilities
+  - Criado endpoint PATCH /api/decks/[id]/move
+  - Componentes DraggableDeckCard e DroppableFolder
+  - Integração completa na página /baralhos
+  - Suporte para mover entre pastas e para raiz
+  - Atualização otimista com rollback em erro
+  - Visual feedback durante drag (opacidade, overlay)
+- [x] Sistema de comunidades e compartilhamento de baralhos
+  - Banco de dados completo (4 tabelas + 6 índices)
+  - APIs REST (16 endpoints)
+  - Sistema de permissões (4 papéis + 3 níveis)
+  - Componentes UI (CommunityCard)
+  - Páginas (/comunidades e /comunidades/criar)
+  - TypeScript types (4 interfaces)
+  - Documentação completa
+  - Testes automatizados (100% passaram)
+- [x] Página de detalhes da comunidade (/comunidades/[id])
+  - Visualização completa de informações
+  - Abas de baralhos e membros
+  - Botões de ação (entrar/sair/gerenciar)
+  - Sistema de badges por papel (creator/admin/moderator)
+  - Clonar deck diretamente da comunidade
+- [x] Modais de compartilhamento e gerenciamento
+  - ShareDeckModal com seleção de comunidade
+  - 3 níveis de permissão (view/edit/clone)
+  - Toggle de comentários
+  - Validação completa
+- [x] Sistema de comentários UI
+  - CommentsList com hierarquia de respostas
+  - CommentForm com validação
+  - Edição e exclusão de próprios comentários
+  - Suporte a comentários aninhados (até 3 níveis)
+  - API REST completa (GET/POST/PATCH/DELETE)
+- [x] Sistema de notificações básico
+  - Tabela `notifications` no banco de dados ✅
+  - API REST para notificações (GET/POST/PATCH/DELETE) ✅
+  - Badge de contagem no Sidebar ✅
+  - Centro de notificações no perfil (/perfil/notificacoes) ✅
+  - Marcar como lida/não lida ✅
+  - Limpar todas as notificações ✅
+  - Polling automático a cada 30 segundos ✅
+- [x] Notificações de comunidades
+  - Notificar quando alguém compartilha deck ✅
+  - Notificar quando alguém comenta ✅
+  - Notificar respostas aos seus comentários ✅
+  - Helper functions (notifyDeckShared, notifyNewComment, notifyCommentReply) ✅
+- [x] Exportação/importação de baralhos
+  - Exportar para JSON com metadados ✅
+  - Importar de JSON com validação ✅
+  - Preview antes de importar ✅
+  - API completa (GET /api/decks/[id]/export, POST /api/decks/import) ✅
+  - UI com botões de exportar e página de importar ✅
+  - Download automático de arquivo JSON ✅
+- [ ] Integração de email para recuperação de senha
+  - Configuração SMTP (Nodemailer/SendGrid)
+  - Templates de email profissionais
+  - Testes de envio e entrega
+
+### v1.3 (Planejado)
+
+- [ ] Suporte ao formato Anki (.apkg)
+  - Parser de arquivos .apkg
+  - Conversão de notas Anki para flashcards
+  - Exportação para formato .apkg
+- [ ] Configurações de notificações
+  - Ativar/desativar notificações por tipo
+  - Preferências de notificações de comunidades
+  - Página de configurações em /perfil/configuracoes
 
 ### v2.0 (Futuro)
 
-- [ ] Exportação/importação de baralhos (JSON, CSV, Anki)
-- [ ] Compartilhamento de baralhos entre usuários
-- [ ] Tags e categorias para organização
+- [ ] Sistema de notificações em tempo real
+  - WebSockets para notificações push
+  - Alertas instantâneos para comentários e compartilhamentos
+  - Notificações desktop (Web Notifications API)
+- [ ] Sistema de amizades entre usuários
+  - Adicionar/remover amigos
+  - Listagem de amigos na página de perfil
+  - Feed de atividades dos amigos
+  - Compartilhamento de baralhos entre amigos
+  - Sistema de bloqueio de usuários
+  - Configurações de privacidade
+- [ ] Sistema de mensagens privadas
+  - Chat em tempo real entre amigos
+  - Histórico de mensagens
+  - Suporte a emojis
+  - Notificações de novas mensagens
 - [ ] Busca avançada e filtros
+  - Busca global por conteúdo de cards
+  - Filtros combinados (tags, pastas, datas)
+  - Busca em comunidades
 - [ ] Sistema de conquistas e gamificação
+  - Badges e conquistas
+  - Sistema de pontos (XP)
+  - Níveis de usuário
+  - Desafios diários/semanais
+- [ ] Exportação/importação avançada
+  - Suporte completo para Anki (.apkg)
+  - Exportar para CSV
+  - Importar de Quizlet
 - [ ] Migração para PostgreSQL
 - [ ] Sistema de cache com Redis
 - [ ] Rate limiting nas APIs
 - [ ] Upload para S3 ou Cloudinary
-- [ ] Testes unitários e de integração
+- [ ] Testes unitários e de integração (Jest + React Testing Library)
 
 ### v3.0 (Longo Prazo)
 
 - [ ] App mobile nativo (React Native)
-- [ ] Sincronização offline (PWA)
-- [ ] Suporte a múltiplos idiomas (i18n)
+- [ ] Sincronização offline (PWA com Service Workers)
+- [ ] Suporte a múltiplos idiomas (i18n com next-intl)
 - [ ] Testes E2E completos (Playwright)
-- [ ] Editor de cards WYSIWYG
+- [ ] Editor de cards WYSIWYG (TipTap ou Slate)
 - [ ] Suporte a LaTeX para fórmulas matemáticas
 - [ ] Integração com APIs educacionais
-- [ ] Sistema de notificações push
 - [ ] Backup automático e restore
 - [ ] Modo de estudo em grupo/colaborativo
+- [ ] Baralhos colaborativos em tempo real
+- [ ] Sugestões de amigos com base em interesses
+- [ ] Integração com redes sociais
+- [ ] IA para geração de flashcards (OpenAI/Anthropic)
+- [ ] Reconhecimento de voz para estudo
+- [ ] Estatísticas avançadas com ML (previsão de retenção)
 
 ### Melhorias Técnicas (Contínuas)
 

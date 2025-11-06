@@ -1,6 +1,7 @@
-import Sidebar from "@/components/Sidebar";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Sidebar from "../components/Sidebar";
+import { ToastProvider } from "../components/ToastContainer";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -28,8 +29,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Sidebar />
-        <main className="lg:ml-72 min-h-screen">{children}</main>
+        <ToastProvider>
+          <Sidebar />
+          <main className="lg:ml-72 min-h-screen">{children}</main>
+        </ToastProvider>
       </body>
     </html>
   );

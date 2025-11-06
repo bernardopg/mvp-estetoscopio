@@ -5,6 +5,42 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [Não Lançado]
+
+### 🐛 Corrigido
+
+#### Correções de TypeScript
+
+- **API Anki Export**: Corrigido import de `auth` para `getAuthUser` em `/api/anki/export/route.ts`
+- **API Anki Import**: Corrigido import de `auth` para `getAuthUser` em `/api/anki/import/route.ts`
+- **Anki Export Library**: Corrigido erro de sintaxe na interface `AnkiExportData` (faltava `>` no tipo `Array`)
+- **Anki Parser Library**:
+  - Removido uso de `any` em `Record<string, any>`, substituído por `Record<string, string>`
+  - Criada interface `FieldDef` para tipar corretamente campos do Anki
+  - Corrigido acesso a arquivos do ZIP: `Object.values(zip.files).find(...)` em vez de `zip.files.find(...)`
+  - Alterado `let` para `const` em variáveis `notes` e `mediaFiles` que não são reatribuídas
+- **Página de Comunidade**:
+  - Removido uso de `await` fora de função async no import dinâmico
+  - Implementada função local `showErrorToast` usando `useCallback`
+  - Corrigido tratamento de erros em blocos `catch` com verificação de tipo `Error`
+  - Adicionado `showErrorToast` às dependências do `useCallback`
+  - Removido import não utilizado `setToastContext`
+- **ToastContainer**:
+  - Removido uso de `any` em `window`, criada interface `WindowWithToast` com tipagem adequada
+  - Envolvido funções `showToast` e `removeToast` em `useCallback` para evitar re-renders
+  - Adicionado import de `useCallback` do React
+- **Layout**:
+  - Removido import não utilizado `setToastContext`
+  - Corrigido import de CSS: `import "./globals.css"` em vez de `import styles from "./globals.css"`
+- **ShareDeckModal**: Substituído `<a>` por `<Link>` do Next.js para navegação interna
+
+#### Qualidade de Código
+
+- Eliminados todos os usos de `any` (TypeScript strict mode)
+- Adicionada tipagem explícita em todos os parâmetros de função
+- Corrigida lógica de tratamento de erros com verificação de tipos
+- Melhorada performance com `useCallback` em componentes React
+
 ## [1.1.0] - 2025-11-05
 
 ### ✨ Adicionado
