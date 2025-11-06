@@ -266,3 +266,88 @@ export function getIntervalColor(days: number): string {
     return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
   return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
 }
+
+/**
+ * Interface para rastrear o progresso de estudo de um card específico
+ */
+export interface CardProgress {
+  cardIndex: number;
+  easeFactor: number;
+  interval: number;
+  repetitions: number;
+  nextReviewDate: Date | null;
+  lastReviewed: Date | null;
+  difficulty: DifficultyLevel | null;
+}
+
+/**
+ * Inicializar progresso para um novo card
+ */
+export function initializeCardProgress(cardIndex: number): CardProgress {
+  return {
+    cardIndex,
+    easeFactor: 2.5,
+    interval: 0,
+    repetitions: 0,
+    nextReviewDate: null,
+    lastReviewed: null,
+    difficulty: null,
+  };
+}
+
+/**
+ * Calcular próxima revisão baseado no progresso atual e dificuldade escolhida
+ */
+export function calculateNextReview(
+  currentProgress: CardProgress,
+  difficulty: DifficultyLevel
+): CardProgress {
+  const quality = difficultyToQuality(difficulty);
+  const result = calculateSM2(
+    quality,
+    currentProgress.repetitions,
+    currentProgress.easeFactor,
+    currentProgress.interval
+  );
+
+  return {
+    ...currentProgress,
+    easeFactor: result.easeFactor,
+    interval: result.interval,
+    repetitions: result.repetitions,
+    nextReviewDate: result.nextReviewDate,
+    lastReviewed: new Date(),
+    difficulty,
+  };
+}
+
+/**
+ * Carregar progresso salvo do localStorage
+ */
+export function loadProgress(deckId: string): CardProgress[] | null {
+  if (typeof window === "undefined") return null;
+
+  const saved = localStorage.getItem(`deck-progress-${deckId}`);
+  if (!saved) return null;
+
+  try {
+    const progress = JSON.parse(saved);
+    // Converter strings de data de volta para Date
+    return progress.map((p: CardProgress) => ({
+      ...p,
+      nextReviewDate: p.nextReviewDate ? new Date(p.nextReviewDate) : null,
+      lastReviewed: p.lastReviewed ? new Date(p.lastReviewed) : null,
+    }));
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Salvar progresso no localStorage
+ */
+export function saveProgress(deckId: string, progress: CardProgress[]): void {
+  if (typeof window === "undefined") return;
+
+  localStorage.setItem(`deck-progress-${deckId}`, JSON.stringify(progress));
+}

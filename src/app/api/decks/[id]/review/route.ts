@@ -8,9 +8,9 @@ import {
 import { NextRequest, NextResponse } from "next/server";
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 interface ReviewRequest {
@@ -23,7 +23,7 @@ interface ReviewRequest {
  *
  * Registra uma revisão de card usando o algoritmo SM-2
  */
-export async function POST(request: NextRequest, { params }: RouteParams) {
+export async function POST(request: NextRequest, context: RouteParams) {
   try {
     const user = await getAuthUser();
 
@@ -31,6 +31,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
     }
 
+    const params = await context.params;
     const deckId = parseInt(params.id);
     if (isNaN(deckId)) {
       return NextResponse.json(
@@ -134,7 +135,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
  *
  * Busca estatísticas de revisão e cards devidos
  */
-export async function GET(request: NextRequest, { params }: RouteParams) {
+export async function GET(request: NextRequest, context: RouteParams) {
   try {
     const user = await getAuthUser();
 
@@ -142,6 +143,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
     }
 
+    const params = await context.params;
     const deckId = parseInt(params.id);
     if (isNaN(deckId)) {
       return NextResponse.json(
