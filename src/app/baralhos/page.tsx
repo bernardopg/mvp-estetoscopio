@@ -3,6 +3,7 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
 import DraggableDeckCard from "@/components/DraggableDeckCard";
 import DroppableFolder from "@/components/DroppableFolder";
+import FolderModal from "@/components/FolderModal";
 import FolderTree from "@/components/FolderTree";
 import {
   DndContext,
@@ -100,6 +101,13 @@ export default function Baralhos() {
     isOpen: false,
     deckId: null,
     deckTitle: "",
+  });
+  const [folderModal, setFolderModal] = useState<{
+    isOpen: boolean;
+    parentId: number | null;
+  }>({
+    isOpen: false,
+    parentId: null,
   });
 
   useEffect(() => {
@@ -212,6 +220,32 @@ export default function Baralhos() {
     } catch (error) {
       console.error("Erro:", error);
       alert("Erro ao deletar baralho.");
+    }
+  };
+
+  const handleCreateFolder = async (folderData: {
+    name: string;
+    parent_id: number | null;
+    color: string | null;
+    icon: string | null;
+  }) => {
+    try {
+      const res = await fetch("/api/folders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(folderData),
+      });
+
+      if (!res.ok) {
+        throw new Error("Erro ao criar pasta");
+      }
+
+      // Recarregar dados
+      await fetchData();
+      setFolderModal({ isOpen: false, parentId: null });
+    } catch (error) {
+      console.error("Erro ao criar pasta:", error);
+      alert("Erro ao criar pasta. Tente novamente.");
     }
   };
 
@@ -711,8 +745,7 @@ export default function Baralhos() {
                     setSelectedFolder(id === selectedFolder ? null : id)
                   }
                   onCreateFolder={(parentId) => {
-                    console.log("Criar pasta em:", parentId);
-                    // TODO: Implementar modal de criação
+                    setFolderModal({ isOpen: true, parentId });
                   }}
                 />
 
@@ -908,6 +941,14 @@ export default function Baralhos() {
           </div>
         )}
       </div>
+
+      {/* Modal de Criação de Pasta */}
+      <FolderModal
+        isOpen={folderModal.isOpen}
+        onClose={() => setFolderModal({ isOpen: false, parentId: null })}
+        onSave={handleCreateFolder}
+        folders={folders}
+      />
 
       {/* Drag Overlay */}
       <DragOverlay>

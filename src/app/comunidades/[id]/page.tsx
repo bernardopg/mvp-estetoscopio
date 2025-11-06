@@ -1,5 +1,6 @@
 "use client";
 
+import { useToast } from "@/components/ToastContainer";
 import {
   ArrowLeft,
   BookOpen,
@@ -67,6 +68,7 @@ export default function CommunityDetailPage() {
   const params = useParams();
   const router = useRouter();
   const communityId = params.id as string;
+  const { showToast } = useToast();
 
   const [community, setCommunity] = useState<Community | null>(null);
   const [members, setMembers] = useState<Member[]>([]);
@@ -74,12 +76,6 @@ export default function CommunityDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"decks" | "members">("decks");
-
-  // Função para exibir toast de erro
-  const showErrorToast = useCallback((title: string, message: string) => {
-    console.error(`${title}: ${message}`);
-    // TODO: Implementar toast real
-  }, []);
 
   const loadCommunityData = useCallback(async () => {
     try {
@@ -111,11 +107,11 @@ export default function CommunityDetailPage() {
       const errorMessage =
         err instanceof Error ? err.message : "Erro ao carregar dados";
       setError(errorMessage);
-      showErrorToast("Erro ao carregar dados", errorMessage);
+      showToast("error", "Erro ao carregar dados", errorMessage);
     } finally {
       setLoading(false);
     }
-  }, [communityId, showErrorToast]);
+  }, [communityId, showToast]);
 
   useEffect(() => {
     loadCommunityData();
@@ -134,11 +130,15 @@ export default function CommunityDetailPage() {
 
       // Recarregar dados
       await loadCommunityData();
-      showErrorToast("Sucesso!", "Você entrou na comunidade com sucesso!");
+      showToast(
+        "success",
+        "Sucesso!",
+        "Você entrou na comunidade com sucesso!"
+      );
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "Erro ao entrar na comunidade";
-      showErrorToast("Erro ao entrar na comunidade", errorMessage);
+      showToast("error", "Erro ao entrar na comunidade", errorMessage);
     }
   };
 
@@ -157,11 +157,11 @@ export default function CommunityDetailPage() {
 
       // Redirecionar para lista de comunidades
       router.push("/comunidades");
-      showErrorToast("Sucesso!", "Você saiu da comunidade com sucesso!");
+      showToast("success", "Sucesso!", "Você saiu da comunidade com sucesso!");
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "Erro ao sair da comunidade";
-      showErrorToast("Erro ao sair da comunidade", errorMessage);
+      showToast("error", "Erro ao sair da comunidade", errorMessage);
     }
   };
 
@@ -176,12 +176,12 @@ export default function CommunityDetailPage() {
         throw new Error(error.error || "Erro ao clonar baralho");
       }
 
-      showErrorToast("Sucesso!", "Baralho clonado com sucesso!");
+      showToast("success", "Sucesso!", "Baralho clonado com sucesso!");
       router.push("/baralhos");
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : "Erro ao clonar baralho";
-      showErrorToast("Erro ao clonar baralho", errorMessage);
+      showToast("error", "Erro ao clonar baralho", errorMessage);
     }
   };
 

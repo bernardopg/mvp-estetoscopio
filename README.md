@@ -2,7 +2,7 @@
 
 # 🎴 MVP Estetoscópio
 
-### Sistema de Flashcards com Repetição Espaçada
+## Sistema de Flashcards com Repetição Espaçada
 
 Plataforma moderna de estudos inspirada no Anki, construída com Next.js 16, TypeScript e SQLite. Crie baralhos personalizados com texto, imagens e áudio, e estude de forma inteligente com algoritmo SM-2.
 
@@ -19,7 +19,9 @@ Plataforma moderna de estudos inspirada no Anki, construída com Next.js 16, Typ
 
 ## 📖 Sobre o Projeto
 
-O **MVP Estetoscópio** é uma plataforma web para estudos baseada em flashcards que utiliza o **algoritmo de repetição espaçada SM-2** para otimizar a retenção de conhecimento. O sistema calcula automaticamente os melhores intervalos para revisar cada card, maximizando o aprendizado com o mínimo de tempo.
+O **MVP Estetoscópio** é uma plataforma web moderna para estudos baseada em flashcards que utiliza o **algoritmo de repetição espaçada SM-2** para otimizar a retenção de conhecimento. O sistema calcula automaticamente os melhores intervalos para revisar cada card, maximizando o aprendizado com o mínimo de tempo.
+
+Além do sistema de flashcards tradicional, o Estetoscópio oferece **comunidades para compartilhamento de decks**, **sistema de pastas e tags para organização**, **notificações inteligentes** e uma **interface moderna e responsiva** com suporte completo a dark mode.
 
 ### 💡 Por que usar repetição espaçada?
 
@@ -29,106 +31,48 @@ A repetição espaçada é uma técnica de aprendizado baseada em revisar inform
 
 <table>
 <tr>
-<td width="33%">
+<td width="25%">
 
 #### 🎴 Flashcards Multimídia
-- Texto com suporte Markdown
+
+- Texto com Markdown
 - Imagens (JPEG, PNG, GIF)
 - Áudio (MP3, WAV, OGG)
 - Animação 3D de flip
 
 </td>
-<td width="33%">
+<td width="25%">
 
 #### 🧠 Repetição Espaçada
+
 - Algoritmo SM-2
-- Cálculo automático de intervalos
+- Intervalos automáticos
 - 4 níveis de dificuldade
 - Tracking de progresso
 
 </td>
-<td width="33%">
+<td width="25%">
 
 #### 📊 Organização
+
 - Sistema de pastas
-- Tags personalizadas
-- Cores e ícones
-- Favoritos
+- Tags com cores
+- Ícones personalizados
+- Favoritos e filtros
+
+</td>
+<td width="25%">
+
+#### 🌐 Comunidades
+
+- Compartilhar decks
+- Comentários
+- Notificações
+- Clonar baralhos
 
 </td>
 </tr>
 </table>
-
----
-
-## 🎯 Como Funciona
-
-```mermaid
-graph LR
-    A[👤 Criar Conta] --> B[📝 Criar Baralho]
-    B --> C[➕ Adicionar Cards]
-    C --> D[📚 Estudar]
-    D --> E{Como foi?}
-    E -->|😰 Novamente| F[1 dia]
-    E -->|😐 Difícil| G[3 dias]
-    E -->|🙂 Bom| H[7 dias]
-    E -->|😄 Fácil| I[14 dias]
-    F --> J[🔄 Revisar]
-    G --> J
-    H --> J
-    I --> J
-    J --> E
-```
-
-### Fluxo do Usuário
-
-```mermaid
-flowchart TD
-    Start([🏠 Página Inicial]) --> Login{Tem conta?}
-    Login -->|Não| Signup[📝 Criar Conta]
-    Login -->|Sim| Auth[🔐 Fazer Login]
-    Signup --> Auth
-    Auth --> Dashboard[📊 Dashboard]
-
-    Dashboard --> ViewDecks[📚 Ver Baralhos]
-    Dashboard --> CreateDeck[➕ Criar Baralho]
-    Dashboard --> Profile[👤 Perfil]
-
-    CreateDeck --> AddCards[🃏 Adicionar Cards]
-    AddCards -->|Texto| TextCard[📝 Card de Texto]
-    AddCards -->|Imagem| ImageCard[🖼️ Card de Imagem]
-    AddCards -->|Áudio| AudioCard[🎵 Card de Áudio]
-
-    TextCard --> SaveDeck[💾 Salvar Baralho]
-    ImageCard --> SaveDeck
-    AudioCard --> SaveDeck
-
-    SaveDeck --> ViewDecks
-    ViewDecks --> Study[📖 Estudar]
-
-    Study --> ShowFront[👁️ Ver Frente]
-    ShowFront --> Flip[🔄 Virar Card]
-    Flip --> Rate{⭐ Avaliar}
-
-    Rate -->|😰| Again[Novamente - 1 dia]
-    Rate -->|😐| Hard[Difícil - Aumenta pouco]
-    Rate -->|🙂| Good[Bom - Dobra intervalo]
-    Rate -->|😄| Easy[Fácil - Muito mais tempo]
-
-    Again --> NextCard{Mais cards?}
-    Hard --> NextCard
-    Good --> NextCard
-    Easy --> NextCard
-
-    NextCard -->|Sim| ShowFront
-    NextCard -->|Não| Complete[✅ Sessão Completa]
-    Complete --> Dashboard
-
-    style Start fill:#e1f5ff
-    style Dashboard fill:#fff7e6
-    style Study fill:#e6f7ff
-    style Complete fill:#d4edda
-```
 
 ---
 
@@ -281,20 +225,45 @@ Toda a documentação detalhada está disponível na **[Wiki do Projeto](https:/
 
 ## 🗺️ Roadmap
 
-### v1.2 (Em Desenvolvimento)
+### v1.1.0 (Atual) ✅
 
+- [x] Sistema de autenticação completo (JWT + cookies)
+- [x] CRUD de baralhos e flashcards
+- [x] Sistema de repetição espaçada (algoritmo SM-2)
+- [x] Upload de mídia (imagens e áudio)
+- [x] Dashboard com estatísticas
+- [x] Sistema de pastas e organização
+- [x] Tags personalizadas com cores
+- [x] Sistema de comunidades
+- [x] Compartilhamento de decks
+- [x] Comentários em decks compartilhados
+- [x] Sistema de notificações
+- [x] Configurações de notificações
+- [x] Documentação MDX interativa
+- [x] Sidebar collapsable e responsiva
+- [x] UI/UX moderna e polida
+- [x] Dark mode completo
+- [x] Responsividade mobile
+
+### v1.2.0 (Em Desenvolvimento) 🚧
+
+- [x] Export/Import de baralhos (Anki .apkg)
+- [ ] Estatísticas avançadas com gráficos (Charts.js/Recharts)
 - [ ] PWA (Progressive Web App) para uso offline
-- [ ] Estatísticas avançadas com gráficos
-- [ ] Export/Import de baralhos (JSON, CSV, Anki)
-- [ ] Sistema de compartilhamento de baralhos
+- [ ] Sistema de busca global
+- [ ] Filtros avançados de baralhos
+- [ ] Modo de estudo personalizado
+- [ ] Suporte a LaTeX para fórmulas matemáticas
 
-### v2.0 (Futuro)
+### v2.0 (Planejado) 🔮
 
 - [ ] App mobile nativo (React Native)
-- [ ] Sincronização multi-dispositivo
+- [ ] Sincronização multi-dispositivo (Firebase/Supabase)
 - [ ] Sistema de conquistas e gamificação
-- [ ] Suporte a LaTeX para fórmulas matemáticas
 - [ ] Editor WYSIWYG para cards
+- [ ] Temas personalizados
+- [ ] API pública para integrações
+- [ ] Plugin system para extensões
 
 **Veja o roadmap completo**: [CHANGELOG.md](CHANGELOG.md)
 
@@ -338,9 +307,9 @@ Este projeto está licenciado sob a [Licença MIT](LICENSE) - veja o arquivo LIC
 
 ## 📞 Contato
 
-**Bernardo Gomes**
+### Bernardo Gomes
 
-- 📧 Email: bernardo.gomes@bebitterbebetter.com.br
+- 📧 Email: <bernardo.gomes@bebitterbebetter.com.br>
 - 🐙 GitHub: [@bernardopg](https://github.com/bernardopg)
 - 📷 Instagram: [@be.pgomes](https://instagram.com/be.pgomes)
 

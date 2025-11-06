@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         <ToastProvider>
           <Sidebar />
-          <main className="lg:ml-72 min-h-screen">{children}</main>
+          <main className="main-content min-h-screen">{children}</main>
         </ToastProvider>
       </body>
     </html>

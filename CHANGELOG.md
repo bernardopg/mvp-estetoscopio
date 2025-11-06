@@ -7,6 +7,136 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ## [Não Lançado]
 
+### ✨ Adicionado
+
+#### UI/UX Aprimorado - Modal de Criação de Pasta
+
+- **FolderModal Completamente Redesenhado e Otimizado para Telas Pequenas**
+  - **Responsividade Completa**:
+    - Padding adaptativo: `p-2` (mobile) → `p-4` (desktop)
+    - Largura máxima reduzida: `max-w-lg` → `max-w-md` (mais compacto)
+    - Altura máxima controlada: `max-h-[90vh]` com scroll interno
+    - Header sticky que permanece visível ao rolar
+    - **Scrollbar customizado**: Estilo moderno e minimalista (6px de largura)
+  - **Tamanhos Responsivos**:
+    - Ícone header: `w-10 h-10` (mobile) → `w-11 h-11` (sm+)
+    - Fontes: `text-lg` (mobile) → `text-xl` (sm+) no título
+    - Inputs: `py-2` (mobile) → `py-2.5` (sm+)
+    - Botões: `py-2.5` (mobile) → `py-3` (sm+)
+    - Cores: `h-9` (mobile) → `h-10` (sm+)
+    - Ícones: `h-11` (mobile) → `h-12` (sm+)
+  - **Espaçamentos Otimizados**:
+    - Gaps reduzidos em mobile: `gap-1.5` → `gap-2` (sm+)
+    - Espaçamento entre seções: `space-y-4` → `space-y-5` (sm+)
+    - Padding do form: `p-4` → `p-5` (sm+)
+  - **Grid Compacto**:
+    - Cores sempre em 4 colunas (removido grid-cols-8 para simplicidade)
+    - Ícones em 4 colunas (consistente em todos os tamanhos)
+  - **Texto Adaptativo**:
+    - Labels: `text-xs` (mobile) → `text-sm` (sm+)
+    - Inputs: `text-sm` (mobile) → `text-base` (sm+)
+    - Truncate em textos longos para evitar quebra de layout
+  - **Loading State Mobile-Friendly**:
+    - Spinner menor em mobile: `w-4 h-4` → `w-5 h-5` (sm+)
+    - Texto "Salvando..." oculto em telas muito pequenas (xs:hidden)
+  - **Header melhorado**: Ícone com gradiente vibrante e subtítulo descritivo
+  - **Inputs modernos**: Bordas mais grossas, padding aumentado, cantos arredondados
+  - **Select customizado**: Arrow SVG customizada, melhor aparência
+  - **Seletor de cores aprimorado**: Hover com scale, bordas evidentes, sombras
+  - **Seletor de ícones com componentes reais**: Ícones Lucide renderizados
+  - **Mensagens de erro melhoradas**: Ícone de alerta, animação slide-in
+  - **Botões aprimorados**: Gradiente, sombras coloridas, active scale
+  - **Melhor feedback visual**: Animações de entrada, click fora para fechar
+  - **Acessibilidade**: aria-labels, labels semânticos, focus states
+
+#### Sidebar Redesenhado (UX/UI Melhorado)
+
+- **Componente Sidebar Completamente Reformulado**
+  - Nova organização em 4 categorias principais: Menu Principal, Criação, Conta, Documentação
+  - Modo compacto/collapsable com estado persistente em localStorage
+  - Largura dinâmica: 72 (expandido) ↔ 20 (colapsado)
+  - **Sistema de responsividade**: Variável CSS `--sidebar-width` atualizada dinamicamente
+  - **Layout adaptativo**: Conteúdo principal ajusta margem automaticamente com transição suave
+  - **UX Melhorada no Modo Colapsado**:
+    - Headers de seção removidos quando colapsado (eliminando confusão)
+    - Apenas ícones de itens são exibidos (mais intuitivos)
+    - Separadores visuais entre categorias para melhor organização
+    - Tooltips descritivos aprimorados com nome e descrição completa
+  - Ícones para seções facilitando navegação no modo colapsado
+  - Transições suaves e animações polidas
+  - Gradiente moderno e sombras aprimoradas
+  - Scrollbar customizada com estilo minimalista
+  - Badge de notificações com contador animado
+  - Botão de colapso/expansão para desktop (canto superior direito)
+  - Indicadores visuais de seção ativa (ponto azul pulsante)
+  - Seções colapsáveis com chevrons e estado padrão configurável
+  - Footer com botões de Perfil e Logout estilizados
+  - Responsividade completa: overlay mobile com backdrop blur
+  - Melhor acessibilidade com aria-labels e títulos descritivos
+  - Configurações agora acessíveis no menu Conta (antes ausente)
+
+#### Sistema de Exportação Anki
+
+- **API Anki Export**: Implementada busca real de flashcards do banco de dados
+  - Busca deck por ID com autenticação do usuário
+  - Filtra cards específicos baseado em IDs fornecidos
+  - Suporte para todos os tipos de conteúdo: texto, imagem e áudio
+  - Conversão automática de cards com imagem para HTML `<img>`
+  - Conversão automática de cards com áudio para formato Anki `[sound:...]`
+  - Nome de arquivo gerado baseado no título do deck
+  - Validação completa de deck e permissões de usuário
+
+#### Sistema de Notificações Toast
+
+- **Página de Comunidade**: Implementado sistema de toast real usando `useToast` hook
+  - Removida implementação temporária com `console.error`
+  - Toasts de sucesso para ações bem-sucedidas (entrar, sair, clonar deck)
+  - Toasts de erro com mensagens detalhadas
+  - Integração completa com `ToastProvider` e `ToastContext`
+  - Notificações visuais em tempo real para o usuário
+
+#### Gerenciamento de Pastas
+
+- **Página de Baralhos**: Implementado modal de criação de pastas
+  - Modal completo integrado com `FolderModal` component
+  - Função `handleCreateFolder` para criar novas pastas via API
+  - Suporte para criação de subpastas com `parent_id`
+  - Seleção de cor e ícone personalizados
+  - Recarregamento automático dos dados após criação
+  - Integração perfeita com `FolderTree` component
+
+#### Sistema de Configurações de Notificações
+
+- **API de Configurações**: Implementada API completa para gerenciar preferências de notificações
+  - Nova tabela `notification_settings` no banco de dados
+  - Endpoint GET `/api/user/notification-settings` para buscar configurações
+  - Endpoint PUT `/api/user/notification-settings` para atualizar configurações
+  - Criação automática de configurações padrão para novos usuários
+  - Conversão entre formatos booleano (frontend) e inteiro (database)
+  - Validação completa de dados de entrada
+
+- **Página de Configurações**: Integração completa com backend
+  - Carregamento de configurações via API ao montar o componente
+  - Salvamento de preferências via PUT request
+  - Conversão automática entre formato da API (inteiros) e UI (booleanos)
+  - localStorage como backup em caso de erro na API
+  - Tratamento de erros robusto com fallback gracioso
+  - Interface responsiva com 6 tipos de notificações configuráveis
+
+- **Página de Configurações**: Integração completa com backend
+  - Carregamento de configurações da API ao abrir a página
+  - Salvamento persistente no banco de dados
+  - Backup em localStorage para resiliência
+  - 6 tipos de notificações configuráveis:
+    - Notificações por Email
+    - Notificações de Comunidades
+    - Notificações de Comentários
+    - Compartilhamento de Decks
+    - Novos Seguidores
+    - Lembretes de Estudo
+  - Feedback visual com mensagem de sucesso
+  - Tratamento de erros robusto
+
 ### 🐛 Corrigido
 
 #### Correções de TypeScript

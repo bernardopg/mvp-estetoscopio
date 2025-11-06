@@ -247,6 +247,20 @@ db.exec(`
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
   );
 
+  CREATE TABLE IF NOT EXISTS notification_settings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL UNIQUE,
+    email_notifications INTEGER DEFAULT 1, -- 0 = desativado, 1 = ativado
+    community_notifications INTEGER DEFAULT 1,
+    comment_notifications INTEGER DEFAULT 1,
+    deck_share_notifications INTEGER DEFAULT 1,
+    new_follower_notifications INTEGER DEFAULT 1,
+    study_reminders INTEGER DEFAULT 1,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+  );
+
   -- Índices para melhorar performance de consultas
   CREATE INDEX IF NOT EXISTS idx_decks_folder ON decks(folder_id);
   CREATE INDEX IF NOT EXISTS idx_decks_bookmarked ON decks(user_id, is_bookmarked);
@@ -556,4 +570,30 @@ export const statements = {
     "UPDATE deck_comments SET comment = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?"
   ),
   deleteDeckComment: db.prepare("DELETE FROM deck_comments WHERE id = ?"),
+  // Notification Settings statements
+  getNotificationSettings: db.prepare(
+    "SELECT * FROM notification_settings WHERE user_id = ?"
+  ),
+  createNotificationSettings: db.prepare(`
+    INSERT INTO notification_settings (
+      user_id,
+      email_notifications,
+      community_notifications,
+      comment_notifications,
+      deck_share_notifications,
+      new_follower_notifications,
+      study_reminders
+    ) VALUES (?, ?, ?, ?, ?, ?, ?)
+  `),
+  updateNotificationSettings: db.prepare(`
+    UPDATE notification_settings
+    SET email_notifications = ?,
+        community_notifications = ?,
+        comment_notifications = ?,
+        deck_share_notifications = ?,
+        new_follower_notifications = ?,
+        study_reminders = ?,
+        updated_at = CURRENT_TIMESTAMP
+    WHERE user_id = ?
+  `),
 };

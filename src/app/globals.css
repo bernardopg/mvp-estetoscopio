@@ -11,6 +11,10 @@
   /* variáveis de fonte; usam as variáveis injetadas pelo next/font como primeira opção e fallbacks de sistema */
   --font-sans: var(--font-geist-sans, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial);
   --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono");
+
+  /* Largura da sidebar (dinâmica) */
+  --sidebar-width: 288px;
+  /* padrão expandido */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,6 +32,14 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Responsividade do layout com sidebar dinâmica */
+@media (min-width: 1024px) {
+  .main-content {
+    margin-left: var(--sidebar-width);
+    transition: margin-left 300ms ease;
+  }
 }
 
 /* Estilo e animação do Flashcard (flip 3D ao estilo Anki) */
@@ -54,4 +66,32 @@ body {
   position: absolute;
   inset: 0;
   transform: rotateY(180deg);
+}
+
+/* Custom Scrollbar para Sidebar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #d4d4d8;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a1a1aa;
+}
+
+@media (prefers-color-scheme: dark) {
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #3f3f46;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #52525b;
+  }
 }
