@@ -4,6 +4,7 @@ import {
   BookOpen,
   ChevronDown,
   ChevronRight,
+  Code2,
   FileText,
   GraduationCap,
   Home,
@@ -52,8 +53,20 @@ const navItems: NavSection[] = [
         description: "Adicionar deck",
       },
       {
+        href: "/perfil",
+        label: "Perfil",
+        icon: User,
+        description: "Configurações e estatísticas",
+      },
+    ],
+  },
+  {
+    section: "Exemplos",
+    collapsible: true,
+    items: [
+      {
         href: "/flashcards",
-        label: "Demo",
+        label: "Demo Flashcards",
         icon: Sparkles,
         description: "Veja exemplos",
       },
@@ -64,10 +77,22 @@ const navItems: NavSection[] = [
     collapsible: true,
     items: [
       {
+        href: "/docs",
+        label: "Visão Geral",
+        icon: BookOpen,
+        description: "Introdução à documentação",
+      },
+      {
         href: "/docs/guia",
         label: "Guia de Uso",
         icon: BookOpen,
         description: "Como usar o sistema",
+      },
+      {
+        href: "/docs/exemplos",
+        label: "Exemplos",
+        icon: Lightbulb,
+        description: "Exemplos de código",
       },
       {
         href: "/docs/faq",
@@ -76,10 +101,16 @@ const navItems: NavSection[] = [
         description: "Perguntas frequentes",
       },
       {
-        href: "/docs/exemplos",
-        label: "Exemplos",
-        icon: Lightbulb,
-        description: "Exemplos de código",
+        href: "/docs/api",
+        label: "API",
+        icon: Code2,
+        description: "Referência de API",
+      },
+      {
+        href: "/docs/referencia",
+        label: "Referência Completa",
+        icon: FileText,
+        description: "Documentação completa",
       },
       {
         href: "/docs/arquitetura",

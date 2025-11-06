@@ -5,6 +5,49 @@ import path from "path";
 const dbPath = path.join(process.cwd(), "mvp-estetoscopio.db");
 const db = new Database(dbPath);
 
+// Função auxiliar para verificar se uma coluna existe
+function columnExists(tableName: string, columnName: string): boolean {
+  const result = db.prepare(`PRAGMA table_info(${tableName})`).all() as Array<{
+    name: string;
+  }>;
+  return result.some((col) => col.name === columnName);
+}
+
+// Migração: Adicionar novas colunas à tabela decks se não existirem
+function migrateDecksTable() {
+  const decksTableExists = db
+    .prepare(
+      "SELECT name FROM sqlite_master WHERE type='table' AND name='decks'"
+    )
+    .get();
+
+  if (decksTableExists) {
+    // Adicionar colunas uma por vez se não existirem
+    if (!columnExists("decks", "folder_id")) {
+      db.exec("ALTER TABLE decks ADD COLUMN folder_id INTEGER DEFAULT NULL");
+      console.log("✓ Adicionada coluna folder_id à tabela decks");
+    }
+
+    if (!columnExists("decks", "color")) {
+      db.exec("ALTER TABLE decks ADD COLUMN color TEXT DEFAULT NULL");
+      console.log("✓ Adicionada coluna color à tabela decks");
+    }
+
+    if (!columnExists("decks", "icon")) {
+      db.exec("ALTER TABLE decks ADD COLUMN icon TEXT DEFAULT NULL");
+      console.log("✓ Adicionada coluna icon à tabela decks");
+    }
+
+    if (!columnExists("decks", "is_bookmarked")) {
+      db.exec("ALTER TABLE decks ADD COLUMN is_bookmarked INTEGER DEFAULT 0");
+      console.log("✓ Adicionada coluna is_bookmarked à tabela decks");
+    }
+  }
+}
+
+// Executar migrações ANTES de criar tabelas com foreign keys
+migrateDecksTable();
+
 // Criar tabelas se não existirem
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
@@ -16,15 +59,53 @@ db.exec(`
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
+  CREATE TABLE IF NOT EXISTS folders (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    parent_id INTEGER DEFAULT NULL, -- Para hierarquia de pastas
+    color TEXT DEFAULT NULL, -- Cor personalizada da pasta
+    icon TEXT DEFAULT NULL, -- Ícone da pasta
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (parent_id) REFERENCES folders (id) ON DELETE CASCADE
+  );
+
   CREATE TABLE IF NOT EXISTS decks (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     title TEXT NOT NULL,
     cards TEXT NOT NULL, -- JSON string com estrutura: [{frente: {type, content}, verso: {type, content}}]
-    category TEXT DEFAULT NULL, -- Categoria/bookmark do deck
+    category TEXT DEFAULT NULL, -- Categoria/bookmark do deck (DEPRECATED - usar tags)
+    folder_id INTEGER DEFAULT NULL, -- Pasta onde o deck está organizado
+    color TEXT DEFAULT NULL, -- Cor personalizada do deck (hex)
+    icon TEXT DEFAULT NULL, -- Ícone do deck (emoji ou nome do lucide icon)
+    is_bookmarked INTEGER DEFAULT 0, -- 0 = não marcado, 1 = marcado como favorito
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    FOREIGN KEY (folder_id) REFERENCES folders (id) ON DELETE SET NULL
+  );
+
+  CREATE TABLE IF NOT EXISTS tags (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    color TEXT DEFAULT NULL, -- Cor da tag (hex)
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, name),
     FOREIGN KEY (user_id) REFERENCES users (id)
+  );
+
+  CREATE TABLE IF NOT EXISTS deck_tags (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    deck_id INTEGER NOT NULL,
+    tag_id INTEGER NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(deck_id, tag_id),
+    FOREIGN KEY (deck_id) REFERENCES decks (id) ON DELETE CASCADE,
+    FOREIGN KEY (tag_id) REFERENCES tags (id) ON DELETE CASCADE
   );
 
   CREATE TABLE IF NOT EXISTS deck_progress (
@@ -98,6 +179,12 @@ db.exec(`
   );
 
   -- Índices para melhorar performance de consultas
+  CREATE INDEX IF NOT EXISTS idx_decks_folder ON decks(folder_id);
+  CREATE INDEX IF NOT EXISTS idx_decks_bookmarked ON decks(user_id, is_bookmarked);
+  CREATE INDEX IF NOT EXISTS idx_folders_parent ON folders(parent_id);
+  CREATE INDEX IF NOT EXISTS idx_folders_user ON folders(user_id);
+  CREATE INDEX IF NOT EXISTS idx_deck_tags_deck ON deck_tags(deck_id);
+  CREATE INDEX IF NOT EXISTS idx_deck_tags_tag ON deck_tags(tag_id);
   CREATE INDEX IF NOT EXISTS idx_study_sessions_user_date ON study_sessions(user_id, session_date);
   CREATE INDEX IF NOT EXISTS idx_study_sessions_deck ON study_sessions(deck_id);
   CREATE INDEX IF NOT EXISTS idx_card_reviews_user_deck ON card_reviews(user_id, deck_id);
@@ -227,4 +314,64 @@ export const statements = {
       )
     )
   `),
+  // Folders statements
+  getFolders: db.prepare(
+    "SELECT * FROM folders WHERE user_id = ? ORDER BY name ASC"
+  ),
+  getFolder: db.prepare("SELECT * FROM folders WHERE id = ? AND user_id = ?"),
+  getFoldersByParent: db.prepare(
+    "SELECT * FROM folders WHERE user_id = ? AND parent_id IS ? ORDER BY name ASC"
+  ),
+  createFolder: db.prepare(
+    "INSERT INTO folders (user_id, name, parent_id, color, icon) VALUES (?, ?, ?, ?, ?)"
+  ),
+  updateFolder: db.prepare(
+    "UPDATE folders SET name = ?, parent_id = ?, color = ?, icon = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?"
+  ),
+  deleteFolder: db.prepare("DELETE FROM folders WHERE id = ? AND user_id = ?"),
+  moveDeckToFolder: db.prepare(
+    "UPDATE decks SET folder_id = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?"
+  ),
+  // Tags statements
+  getTags: db.prepare("SELECT * FROM tags WHERE user_id = ? ORDER BY name ASC"),
+  getTag: db.prepare("SELECT * FROM tags WHERE id = ? AND user_id = ?"),
+  getTagByName: db.prepare("SELECT * FROM tags WHERE user_id = ? AND name = ?"),
+  createTag: db.prepare(
+    "INSERT INTO tags (user_id, name, color) VALUES (?, ?, ?)"
+  ),
+  updateTag: db.prepare(
+    "UPDATE tags SET name = ?, color = ? WHERE id = ? AND user_id = ?"
+  ),
+  deleteTag: db.prepare("DELETE FROM tags WHERE id = ? AND user_id = ?"),
+  // Deck Tags statements
+  addTagToDeck: db.prepare(
+    "INSERT INTO deck_tags (deck_id, tag_id) VALUES (?, ?) ON CONFLICT DO NOTHING"
+  ),
+  removeTagFromDeck: db.prepare(
+    "DELETE FROM deck_tags WHERE deck_id = ? AND tag_id = ?"
+  ),
+  getDeckTags: db.prepare(`
+    SELECT tags.* FROM tags
+    INNER JOIN deck_tags ON tags.id = deck_tags.tag_id
+    WHERE deck_tags.deck_id = ?
+    ORDER BY tags.name ASC
+  `),
+  getDecksByTag: db.prepare(`
+    SELECT decks.* FROM decks
+    INNER JOIN deck_tags ON decks.id = deck_tags.deck_id
+    WHERE deck_tags.tag_id = ? AND decks.user_id = ?
+    ORDER BY decks.updated_at DESC
+  `),
+  clearDeckTags: db.prepare("DELETE FROM deck_tags WHERE deck_id = ?"),
+  // Bookmarks statements
+  toggleBookmark: db.prepare(
+    "UPDATE decks SET is_bookmarked = NOT is_bookmarked, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?"
+  ),
+  getBookmarkedDecks: db.prepare(
+    "SELECT * FROM decks WHERE user_id = ? AND is_bookmarked = 1 ORDER BY updated_at DESC"
+  ),
+  // Deck with metadata statements
+  updateDeckMetadata: db.prepare(
+    "UPDATE decks SET title = ?, cards = ?, category = ?, folder_id = ?, color = ?, icon = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?"
+  ),
 };

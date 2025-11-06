@@ -12,7 +12,7 @@ Você é o Documentation Agent do projeto MVP Estetoscópio. Sua missão é mant
 
 ## Contexto do Projeto
 
-- **Framework**: Next.js 15 com TypeScript
+- **Framework**: Next.js 16 com TypeScript
 - **Documentação Markdown**: README.md, CHANGELOG.md, ARQUITETURA.md, GUIA_DE_USO.md, EXEMPLOS.md, FAQ.md, REFERENCIA.md, CLAUDE.md, AGENTS.md
 - **Documentação MDX**: `/docs/*.mdx` (index, guia, api, arquitetura, exemplos, faq, changelog, referencia)
 - **Componentes MDX Customizados**: `<Callout>`, `<Card>`, `<Step>`, `<CodeBlock>`

@@ -15,7 +15,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type CardContent = {
   type: "text" | "image" | "audio";
@@ -28,9 +28,40 @@ type Card = {
   verso: CardContent;
 };
 
+interface FolderType {
+  id: number;
+  name: string;
+  parent_id: number | null;
+  color: string | null;
+  icon: string | null;
+}
+
+interface TagType {
+  id: number;
+  name: string;
+  color: string | null;
+}
+
+const DECK_COLORS = [
+  { name: "Padrão", value: null },
+  { name: "Azul", value: "#3b82f6" },
+  { name: "Verde", value: "#10b981" },
+  { name: "Vermelho", value: "#ef4444" },
+  { name: "Amarelo", value: "#f59e0b" },
+  { name: "Roxo", value: "#8b5cf6" },
+  { name: "Rosa", value: "#ec4899" },
+  { name: "Ciano", value: "#06b6d4" },
+];
+
 export default function CriarBaralho() {
   const router = useRouter();
   const [titulo, setTitulo] = useState("");
+  const [folderId, setFolderId] = useState<number | null>(null);
+  const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [deckColor, setDeckColor] = useState<string | null>(null);
+  const [folders, setFolders] = useState<FolderType[]>([]);
+  const [allTags, setAllTags] = useState<TagType[]>([]);
   const [cartas, setCartas] = useState<Card[]>([
     {
       frente: { type: "text", content: "" },
@@ -41,6 +72,51 @@ export default function CriarBaralho() {
   const [uploading, setUploading] = useState<string | null>(null);
 
   const fileInputRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
+
+  useEffect(() => {
+    fetchFoldersAndTags();
+  }, []);
+
+  const fetchFoldersAndTags = async () => {
+    try {
+      const [foldersRes, tagsRes] = await Promise.all([
+        fetch("/api/folders"),
+        fetch("/api/tags"),
+      ]);
+
+      if (foldersRes.ok) {
+        const foldersData = await foldersRes.json();
+        setFolders(foldersData);
+      }
+
+      if (tagsRes.ok) {
+        const tagsData = await tagsRes.json();
+        setAllTags(tagsData);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar pastas e tags:", error);
+    }
+  };
+
+  const handleCreateTag = async (name: string, color: string) => {
+    try {
+      const response = await fetch("/api/tags", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, color }),
+      });
+
+      if (response.ok) {
+        const newTag = await response.json();
+        setAllTags([...allTags, newTag]);
+        return newTag;
+      }
+      throw new Error("Erro ao criar tag");
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
   const adicionarCarta = () => {
     setCartas([
