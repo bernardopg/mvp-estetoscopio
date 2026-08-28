@@ -1,6 +1,7 @@
 "use client";
 
 import TagSelector from "@/components/TagSelector";
+import { useToast } from "@/components/ToastContainer";
 import {
   ArrowLeft,
   Bookmark,
@@ -61,6 +62,7 @@ export default function EditarBaralho() {
   const params = useParams();
   const router = useRouter();
   const id = params.id as string;
+  const { showToast } = useToast();
 
   const [titulo, setTitulo] = useState("");
   const [folderId, setFolderId] = useState<number | null>(null);
@@ -75,10 +77,6 @@ export default function EditarBaralho() {
   const [uploading, setUploading] = useState<string | null>(null);
 
   const fileInputRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
-
-  useEffect(() => {
-    fetchFoldersAndTags();
-  }, []);
 
   const fetchFoldersAndTags = async () => {
     try {
@@ -100,6 +98,12 @@ export default function EditarBaralho() {
       console.error("Erro ao buscar pastas e tags:", error);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      await fetchFoldersAndTags();
+    })();
+  }, []);
 
   const handleCreateTag = async (name: string, color: string) => {
     try {
@@ -170,19 +174,23 @@ export default function EditarBaralho() {
         });
         setCartas(convertedCards);
       } else {
-        alert("Baralho não encontrado");
+        showToast("error", "Baralho não encontrado", "Redirecionando para a lista de baralhos");
         router.push("/baralhos");
       }
     } catch (error) {
       console.error("Erro:", error);
-      alert("Erro ao carregar baralho");
+      showToast("error", "Erro ao carregar baralho", "Não foi possível carregar os dados");
     } finally {
       setLoading(false);
     }
-  }, [id, router]);
+  }, [id, router, showToast]);
 
   useEffect(() => {
-    if (id) fetchDeck();
+    if (id) {
+      (async () => {
+        await fetchDeck();
+      })();
+    }
   }, [id, fetchDeck]);
 
   const adicionarCarta = () => {
@@ -236,27 +244,62 @@ export default function EditarBaralho() {
     file: File
   ) => {
     const key = `${index}-${lado}`;
+
+    // Validate file size (10MB limit)
+    const MAX_FILE_SIZE = 10 * 1024 * 1024;
+    if (file.size > MAX_FILE_SIZE) {
+      showToast("error", "Arquivo muito grande", "Tamanho máximo: 10MB");
+      return;
+    }
+
+    // Validate file type
+    const validImageTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    const validAudioTypes = ["audio/mpeg", "audio/mp3", "audio/wav", "audio/ogg"];
+    const cardContent = cartas[index][lado];
+
+    if (cardContent.type === "image" && !validImageTypes.includes(file.type)) {
+      showToast("error", "Tipo de imagem não suportado", "Use JPG, PNG, WebP ou GIF");
+      return;
+    }
+
+    if (cardContent.type === "audio" && !validAudioTypes.includes(file.type)) {
+      showToast("error", "Tipo de áudio não suportado", "Use MP3, WAV ou OGG");
+      return;
+    }
+
     setUploading(key);
 
     try {
       const formData = new FormData();
       formData.append("file", file);
 
+      // Add timeout to prevent hanging requests
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
       const response = await fetch("/api/upload", {
         method: "POST",
         body: formData,
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       if (response.ok) {
         const data = await response.json();
         atualizarConteudo(index, lado, data.url);
+        showToast("success", "Upload concluído", "Arquivo enviado com sucesso");
       } else {
         const error = await response.json();
-        alert(`Erro no upload: ${error.error}`);
+        showToast("error", "Erro no upload", error.error || "Erro desconhecido");
       }
     } catch (error) {
       console.error("Erro:", error);
-      alert("Erro ao fazer upload do arquivo");
+      if (error instanceof Error && error.name === "AbortError") {
+        showToast("error", "Upload cancelado", "Tempo limite excedido (30s)");
+      } else {
+        showToast("error", "Erro ao fazer upload", "Verifique sua conexão e tente novamente");
+      }
     } finally {
       setUploading(null);
     }
@@ -268,12 +311,12 @@ export default function EditarBaralho() {
 
   const salvarBaralho = async () => {
     if (!titulo.trim()) {
-      alert("Por favor, insira um título para o baralho.");
+      showToast("warning", "Título obrigatório", "Por favor, insira um título para o baralho");
       return;
     }
 
     if (cartas.length === 0) {
-      alert("Por favor, adicione pelo menos uma carta.");
+      showToast("warning", "Adicione cartas", "Por favor, adicione pelo menos uma carta");
       return;
     }
 
@@ -283,7 +326,7 @@ export default function EditarBaralho() {
     );
 
     if (cartasInvalidas) {
-      alert("Por favor, preencha o conteúdo de todas as cartas.");
+      showToast("warning", "Cartas incompletas", "Por favor, preencha o conteúdo de todas as cartas");
       return;
     }
 
@@ -305,15 +348,15 @@ export default function EditarBaralho() {
       });
 
       if (response.ok) {
-        alert("Baralho atualizado com sucesso!");
+        showToast("success", "Baralho atualizado!", "Suas alterações foram salvas com sucesso");
         router.push("/baralhos");
       } else {
         const error = await response.json();
-        alert(`Erro ao salvar: ${error.error}`);
+        showToast("error", "Erro ao salvar", error.error || "Erro desconhecido");
       }
     } catch (error) {
       console.error("Erro:", error);
-      alert("Erro ao conectar com o servidor.");
+      showToast("error", "Erro ao conectar", "Verifique sua conexão com o servidor");
     } finally {
       setSaving(false);
     }

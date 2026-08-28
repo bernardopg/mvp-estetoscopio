@@ -1,16 +1,34 @@
+import { getAuthUser } from "@/lib/auth";
 import { statements } from "@/lib/db";
 import { mkdir, writeFile } from "fs/promises";
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 
+// Maximum file size: 10MB
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
 export async function POST(request: NextRequest) {
   try {
+    // Verify authentication
+    const user = await getAuthUser();
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const formData = await request.formData();
     const file = formData.get("file") as File;
 
     if (!file) {
       return NextResponse.json(
         { error: "Nenhum arquivo enviado" },
+        { status: 400 }
+      );
+    }
+
+    // Validate file size
+    if (file.size > MAX_FILE_SIZE) {
+      return NextResponse.json(
+        { error: "Arquivo muito grande. Tamanho máximo: 10MB" },
         { status: 400 }
       );
     }

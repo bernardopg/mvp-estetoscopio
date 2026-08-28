@@ -1,6 +1,7 @@
 "use client";
 
 import TagSelector from "@/components/TagSelector";
+import { useToast } from "@/components/ToastContainer";
 import {
   ArrowLeft,
   Bookmark,
@@ -59,6 +60,7 @@ const DECK_COLORS = [
 
 export default function CriarBaralho() {
   const router = useRouter();
+  const { showToast } = useToast();
   const [titulo, setTitulo] = useState("");
   const [folderId, setFolderId] = useState<number | null>(null);
   const [selectedTags, setSelectedTags] = useState<TagType[]>([]);
@@ -76,10 +78,6 @@ export default function CriarBaralho() {
   const [uploading, setUploading] = useState<string | null>(null);
 
   const fileInputRefs = useRef<{ [key: string]: HTMLInputElement | null }>({});
-
-  useEffect(() => {
-    fetchFoldersAndTags();
-  }, []);
 
   const fetchFoldersAndTags = async () => {
     try {
@@ -101,6 +99,12 @@ export default function CriarBaralho() {
       console.error("Erro ao buscar pastas e tags:", error);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      await fetchFoldersAndTags();
+    })();
+  }, []);
 
   const handleCreateTag = async (name: string, color: string) => {
     try {
@@ -169,27 +173,62 @@ export default function CriarBaralho() {
     lado: "frente" | "verso"
   ) => {
     const uploadKey = `${index}-${lado}`;
+
+    // Validate file size (10MB limit)
+    const MAX_FILE_SIZE = 10 * 1024 * 1024;
+    if (file.size > MAX_FILE_SIZE) {
+      showToast("error", "Arquivo muito grande", "Tamanho máximo: 10MB");
+      return;
+    }
+
+    // Validate file type
+    const validImageTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    const validAudioTypes = ["audio/mpeg", "audio/mp3", "audio/wav", "audio/ogg"];
+    const cardContent = cartas[index][lado];
+
+    if (cardContent.type === "image" && !validImageTypes.includes(file.type)) {
+      showToast("error", "Tipo de imagem não suportado", "Use JPG, PNG, WebP ou GIF");
+      return;
+    }
+
+    if (cardContent.type === "audio" && !validAudioTypes.includes(file.type)) {
+      showToast("error", "Tipo de áudio não suportado", "Use MP3, WAV ou OGG");
+      return;
+    }
+
     setUploading(uploadKey);
 
     try {
       const formData = new FormData();
       formData.append("file", file);
 
+      // Add timeout to prevent hanging requests
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
       const response = await fetch("/api/upload", {
         method: "POST",
         body: formData,
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       if (response.ok) {
         const data = await response.json();
         atualizarConteudo(index, lado, data.url);
+        showToast("success", "Upload concluído", "Arquivo enviado com sucesso");
       } else {
         const error = await response.json();
-        alert(`Erro no upload: ${error.error}`);
+        showToast("error", "Erro no upload", error.error || "Erro desconhecido");
       }
     } catch (error) {
       console.error("Erro:", error);
-      alert("Erro ao fazer upload do arquivo.");
+      if (error instanceof Error && error.name === "AbortError") {
+        showToast("error", "Upload cancelado", "Tempo limite excedido (30s)");
+      } else {
+        showToast("error", "Erro ao fazer upload", "Verifique sua conexão e tente novamente");
+      }
     } finally {
       setUploading(null);
     }
@@ -206,7 +245,7 @@ export default function CriarBaralho() {
 
   const salvarBaralho = async () => {
     if (!titulo.trim()) {
-      alert("Por favor, insira um título para o baralho.");
+      showToast("warning", "Título obrigatório", "Por favor, insira um título para o baralho");
       return;
     }
 
@@ -214,7 +253,7 @@ export default function CriarBaralho() {
       cartas.length === 0 ||
       cartas.some((c) => !c.frente.content.trim() || !c.verso.content.trim())
     ) {
-      alert("Por favor, preencha todas as cartas.");
+      showToast("warning", "Cartas incompletas", "Por favor, preencha todas as cartas");
       return;
     }
 
@@ -237,15 +276,15 @@ export default function CriarBaralho() {
       });
 
       if (response.ok) {
-        alert("Baralho criado com sucesso!");
+        showToast("success", "Baralho criado!", "Seu novo baralho foi criado com sucesso");
         router.push("/baralhos");
       } else {
         const error = await response.json();
-        alert(`Erro ao salvar: ${error.error}`);
+        showToast("error", "Erro ao salvar", error.error || "Erro desconhecido");
       }
     } catch (error) {
       console.error("Erro:", error);
-      alert("Erro ao conectar com o servidor.");
+      showToast("error", "Erro ao conectar", "Verifique sua conexão com o servidor");
     } finally {
       setSaving(false);
     }
