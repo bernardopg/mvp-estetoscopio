@@ -1,4 +1,5 @@
 import { statements } from "@/lib/db";
+import { isEmailConfigured, sendPasswordResetEmail } from "@/lib/mailer";
 import crypto from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -41,26 +42,30 @@ export async function POST(request: NextRequest) {
     // Limpar tokens expirados
     statements.deleteExpiredTokens.run();
 
-    // TODO: Integrar com serviço de email
-    // Por enquanto, retornamos o token para fins de desenvolvimento
     const resetLink = `${
       process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
     }/redefinir-senha?token=${token}`;
 
-    console.log("🔐 Link de recuperação de senha:", resetLink);
-    console.log("📧 Email:", email);
-    console.log("👤 Usuário:", user.name);
-
-    // Em produção, você enviaria um email aqui
-    // Exemplo com nodemailer:
-    // await sendEmail({
-    //   to: email,
-    //   subject: 'Recuperação de Senha - MVP Estetoscópio',
-    //   html: `<p>Olá ${user.name},</p>
-    //          <p>Clique no link abaixo para redefinir sua senha:</p>
-    //          <a href="${resetLink}">${resetLink}</a>
-    //          <p>Este link expira em 1 hora.</p>`
-    // });
+    // Enviar email se o SMTP estiver configurado; caso contrário, apenas
+    // registrar o link no log (modo desenvolvimento).
+    if (isEmailConfigured()) {
+      try {
+        await sendPasswordResetEmail({
+          to: user.email,
+          name: user.name,
+          resetLink,
+        });
+      } catch (emailError) {
+        // Não vazar detalhes do erro para o usuário (segurança);
+        // registrar para diagnóstico do servidor.
+        console.error("Erro ao enviar email de recuperação:", emailError);
+      }
+    } else {
+      console.log("⚠️  SMTP não configurado (SMTP_HOST/SMTP_USER/SMTP_PASS).");
+      console.log("🔐 Link de recuperação de senha:", resetLink);
+      console.log("📧 Email:", email);
+      console.log("👤 Usuário:", user.name);
+    }
 
     return NextResponse.json({
       message:
