@@ -520,6 +520,69 @@ Faz upload de arquivo (imagem ou áudio).
 
 ---
 
+### Anki (Importação/Exportação)
+
+<Card title="POST /api/anki/import">
+
+🔒 **Rota Protegida**
+
+Importa um arquivo `.apkg` e retorna as flashcards convertidas (preview — a
+criação do baralho é feita em seguida via `POST /api/decks`).
+
+**Content-Type**: `multipart/form-data`
+
+**Form Data**:
+
+- `file`: Arquivo `.apkg` a ser importado
+
+**Response** (200 OK):
+
+```json
+{
+  "success": true,
+  "data": {
+    "deck": "Nome do Baralho",
+    "flashcards": [
+      { "front": "Pergunta", "back": "Resposta", "tags": ["tag1"] }
+    ],
+    "total": 1
+  }
+}
+```
+
+**Errors**:
+- `400`: Arquivo ausente, extensão diferente de `.apkg` ou pacote inválido/corrompido (a mensagem detalha a causa do parse)
+- `401`: Não autenticado
+- `422`: Nenhuma flashcard compatível (notas sem campos Front/Back ou Frente/Verso)
+- `500`: Erro inesperado ao processar o arquivo
+
+</Card>
+
+<Card title="GET /api/anki/export?deckId={id}">
+
+🔒 **Rota Protegida**
+
+Exporta um baralho no formato `.apkg`.
+
+**Response** (200 OK): binário `application/zip` com
+`Content-Disposition: attachment; filename="nome_do_baralho.apkg"`
+
+**Errors**:
+- `401`: Não autenticado
+- `404`: Baralho não encontrado
+- `500`: Erro ao gerar o arquivo
+
+</Card>
+
+<Callout type="info">
+  **Formato do pacote** — o `.apkg` gerado usa um formato interno em ZIP:
+  `collection.anki2` (JSON com `decks` e `models`) e `notes.json` (notas com
+  campos `Front`/`Back` e tags). O round-trip export → import é coberto por
+  testes automatizados (`src/lib/__tests__/anki-roundtrip.test.ts`).
+</Callout>
+
+---
+
 ### Perfil
 
 <Card title="GET /api/profile">

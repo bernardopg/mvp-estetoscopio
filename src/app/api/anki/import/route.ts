@@ -29,8 +29,34 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse the .apkg file
-    const ankiData = await AnkiParser.parseApkg(file);
+    let ankiData;
+    try {
+      ankiData = await AnkiParser.parseApkg(file);
+    } catch (parseError) {
+      // Erros de parse indicam arquivo inválido/corrompido — 400 com detalhe
+      console.error("Erro ao fazer parse do arquivo Anki:", parseError);
+      return NextResponse.json(
+        {
+          error:
+            parseError instanceof Error
+              ? `Arquivo .apkg inválido: ${parseError.message}`
+              : "Arquivo .apkg inválido",
+        },
+        { status: 400 }
+      );
+    }
+
     const flashcards = await AnkiParser.convertToFlashcards(ankiData);
+
+    if (flashcards.length === 0) {
+      return NextResponse.json(
+        {
+          error:
+            "Nenhuma flashcard compatível encontrada. Verifique se as notas possuem campos Front/Back (ou Frente/Verso).",
+        },
+        { status: 422 }
+      );
+    }
 
     return NextResponse.json({
       success: true,
