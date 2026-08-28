@@ -13,7 +13,6 @@ const includeRoots = [
 ];
 
 const docsDir = path.join(root, 'docs');
-const wikiDir = path.join(root, 'wiki');
 
 function walk(dir, exts = new Set(['.md', '.mdx'])) {
   const out = [];
@@ -56,7 +55,7 @@ function checkLinks(file) {
     const [relPath, anchor] = href.split('#');
     let candidate = path.resolve(dir, relPath || '.');
     if (!fs.existsSync(candidate)) {
-      // Try extensionless Markdown paths (e.g., wiki links like user/guide)
+      // Try extensionless Markdown paths (e.g., user/guide -> user/guide.md)
       if (!path.extname(candidate) && fs.existsSync(candidate + '.md')) {
         candidate = candidate + '.md';
       }
@@ -97,7 +96,6 @@ function checkLinks(file) {
 const filesToCheck = [
   ...includeRoots.map((f) => path.join(root, f)).filter((f) => fs.existsSync(f)),
   ...fs.existsSync(docsDir) ? walk(docsDir) : [],
-  ...fs.existsSync(wikiDir) ? walk(wikiDir) : [],
 ];
 filesToCheck.forEach(checkLinks);
 

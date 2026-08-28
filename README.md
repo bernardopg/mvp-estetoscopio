@@ -6,12 +6,13 @@
 
 Plataforma moderna de estudos inspirada no Anki, construída com Next.js 16, TypeScript e SQLite. Crie baralhos personalizados com texto, imagens e áudio, e estude de forma inteligente com algoritmo SM-2.
 
+[![CI](https://github.com/bernardopg/mvp-estetoscopio/actions/workflows/ci.yml/badge.svg)](https://github.com/bernardopg/mvp-estetoscopio/actions/workflows/ci.yml)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?logo=tailwind-css)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-[✨ Demo](#-demonstração) • [📚 Documentação](https://github.com/bernardopg/mvp-estetoscopio/wiki) • [🚀 Início Rápido](#-início-rápido) • [🤝 Contribuir](CONTRIBUTING.md)
+[✨ Demo](#-demonstração) • [📚 Documentação](#-documentação) • [🚀 Início Rápido](#-início-rápido) • [🤝 Contribuir](CONTRIBUTING.md)
 
 </div>
 
@@ -193,13 +194,14 @@ graph TB
 </tr>
 </table>
 
-**Detalhes completos**: Veja a [arquitetura técnica na Wiki](https://github.com/bernardopg/mvp-estetoscopio/wiki/Arquitetura)
+**Detalhes completos**: veja a [arquitetura técnica](docs/developer/architecture.md)
 
 ---
 
 ## 📚 Documentação
 
-Toda a documentação detalhada está disponível na **[Wiki do Projeto](https://github.com/bernardopg/mvp-estetoscopio/wiki)**:
+Toda a documentação vive no diretório **[`docs/`](docs/)** e também é publicada
+dentro da própria aplicação em `/docs`:
 
 ### 📖 Para Usuários
 

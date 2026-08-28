@@ -10,90 +10,77 @@ Este diretório contém os workflows automatizados do projeto.
 
 **Arquivo**: `ci.yml`
 
+**Status**: [![CI](https://github.com/bernardopg/mvp-estetoscopio/actions/workflows/ci.yml/badge.svg)](https://github.com/bernardopg/mvp-estetoscopio/actions/workflows/ci.yml)
+
 **Quando executa:**
 
-- Push para branches `main` ou `dev`
+- Push para as branches `main` ou `dev`
 - Pull requests para `main`
+- Manualmente via `workflow_dispatch`
 
-**O que faz:**
+**Jobs:**
 
-1. **Lint**: Executa ESLint para verificar qualidade do código
-2. **Build**: Compila o projeto Next.js
-3. **Artifacts**: Salva o build por 7 dias
+| Job | Depende de | Timeout | O que faz |
+| --- | --- | --- | --- |
+| **Lint** | — | 10 min | `npm run lint` (ESLint) e `npm run docs:check` (links da documentação) |
+| **Test** | — | 10 min | `npm test` (Jest — 44 testes de libs) |
+| **Build** | Lint + Test | 15 min | `npm run build` (Next.js) e upload do artefato |
 
-**Status**: ![CI](https://github.com/bernardopg/mvp-estetoscopio/actions/workflows/ci.yml/badge.svg)
+`Lint` e `Test` rodam **em paralelo**; `Build` só inicia se ambos passarem.
 
----
+**Comportamentos importantes:**
 
-### 📚 Wiki Sync
-
-**Arquivo**: `wiki-sync.yml`
-
-**Quando executa:**
-
-- Push para `main` que modifica arquivos em `docs/**/*.md`
-- Manualmente via workflow_dispatch
-
-**O que faz:**
-
-1. Copia documentação de `docs/` para o GitHub Wiki
-2. Organiza em páginas estruturadas
-3. Cria sidebar de navegação
-4. Commit e push automático no wiki
-
-**Estrutura do Wiki:**
-
-```
-wiki/
-├── Home.md                    # docs/README.md
-├── _Sidebar.md                # Navegação
-├── user/
-│   ├── getting-started.md
-│   ├── user-guide.md
-│   ├── examples.md
-│   └── faq.md
-├── developer/
-│   ├── architecture.md
-│   ├── api-reference.md
-│   └── migrations.md
-├── maintainer/
-│   ├── agents.md
-│   ├── claude-context.md
-│   └── release-guide.md
-└── releases/
-    └── v1.1.0.md
-```
-
-**Status**: ![Wiki Sync](https://github.com/bernardopg/mvp-estetoscopio/actions/workflows/wiki-sync.yml/badge.svg)
+- `concurrency` cancela execuções anteriores do mesmo branch/PR a cada novo push
+- `permissions: contents: read` no nível do workflow (princípio do menor privilégio)
+- Node definido uma única vez em `env.NODE_VERSION` (deve satisfazer `engines` do `package.json`, hoje `>=22`)
+- Cache de dependências via `setup-node` (`cache: 'npm'`) e cache de build do Next (`.next/cache`)
+- Artefato `build` retido por 7 dias, **sem** `.next/cache`, com `if-no-files-found: error` para falhar caso o build não gere saída
 
 ---
 
-## 🚀 Como Usar
+## 🚀 Reproduzindo o CI Localmente
 
-### Executar CI Localmente
+A sequência abaixo é exatamente a executada pelos jobs:
 
 ```bash
-# Lint
+npm ci --no-audit --no-fund
 npm run lint
-
-# Build
+npm run docs:check
+npm test
 npm run build
 ```
 
-### Sincronizar Wiki Manualmente
-
-1. Vá para Actions no GitHub
-2. Selecione "Sync Wiki"
-3. Clique em "Run workflow"
-4. Selecione a branch `main`
-5. Clique em "Run workflow"
-
-Ou use o script local:
+Para validar a sintaxe dos workflows antes de commitar:
 
 ```bash
-chmod +x scripts/sync-wiki.sh
-./scripts/sync-wiki.sh
+actionlint            # https://github.com/rhysd/actionlint
 ```
+
+---
+
+## 🔄 Dependabot
+
+**Arquivo**: `../dependabot.yml`
+
+- Atualiza dependências **npm** e **GitHub Actions** semanalmente (segundas, 06:00 BRT)
+- Agrupa minors/patches em PRs únicos (produção e desenvolvimento separados)
+- Ignora majors que hoje quebram o projeto — ver "Limitações conhecidas"
+
+---
+
+## ⚠️ Limitações Conhecidas (upstream)
+
+Avisos que aparecem no log do CI e **não são corrigíveis** no projeto hoje:
+
+| Aviso | Causa | Quando revisitar |
+| --- | --- | --- |
+| `npm warn deprecated eslint@9.x` | ESLint 10 quebra o `eslint-config-next` 16.x: os plugins embutidos (`eslint-plugin-react`, `jsx-a11y`, `import`) declaram peer `<= 9` e usam APIs removidas na v10 | Quando o `eslint-config-next` publicar suporte a ESLint 10 |
+| `npm warn deprecated whatwg-encoding@3.x` | Vem de `jest-environment-jsdom` → `jsdom` → `html-encoding-sniffer@4`. A v6 do sniffer migrou para `@exodus/bytes`, mas o jsdom 26 ainda usa a v4 | Quando o `jest-environment-jsdom` subir para um jsdom mais novo |
+| `hint: Using 'master' as the name for the initial branch` | Emitido pelo `git init` executado **dentro** do `actions/checkout` | Nada a fazer — é interno da action |
+
+O compilador nativo do TypeScript (7.x) também está bloqueado: o código já é
+compatível (`tsc --noEmit` e `next build` passam), mas o `typescript-eslint`
+embutido no `eslint-config-next` ainda não o suporta.
 
 ---
 
@@ -109,19 +96,31 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '24'
+
 jobs:
   job-name:
     name: Nome do Job
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '18'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
 
       - name: Sua tarefa
         run: echo "Hello World"
@@ -129,11 +128,14 @@ jobs:
 
 ### Boas Práticas
 
-1. **Nome claro**: Use nomes descritivos
-2. **Triggers específicos**: Evite executar em todo push
-3. **Cache**: Use cache para dependências
-4. **Secrets**: Nunca exponha secrets no código
-5. **Permissões**: Use permissões mínimas necessárias
+1. **Nome claro**: use nomes descritivos para workflow, jobs e steps
+2. **Triggers específicos**: evite executar em todo push desnecessariamente
+3. **Cache**: use `cache: 'npm'` no `setup-node` e cache o `.next/cache` em builds
+4. **Timeout**: defina `timeout-minutes` (o padrão de 6h desperdiça minutos em travamentos)
+5. **Permissões**: declare `permissions` mínimas — o padrão do repositório é `contents: read`
+6. **Concurrency**: cancele execuções obsoletas do mesmo ref
+7. **Secrets**: nunca exponha secrets em `run:`; use `${{ secrets.NOME }}`
+8. **Validação**: rode `actionlint` antes de commitar
 
 ---
 
@@ -141,49 +143,37 @@ jobs:
 
 ### Secrets Necessários
 
-Atualmente nenhum secret é necessário (workflows usam GITHUB_TOKEN automático).
+Nenhum secret é necessário no CI atual (usa apenas o `GITHUB_TOKEN` implícito).
+
+Para o envio de emails em produção (recuperação de senha), a aplicação espera
+as variáveis descritas em `.env.example` (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`,
+`SMTP_PASS`, `SMTP_FROM`, `JWT_SECRET`, `NEXT_PUBLIC_APP_URL`) — elas pertencem
+ao ambiente de deploy, não ao CI.
 
 ### Como Adicionar Secrets
 
-1. Vá para Settings > Secrets and variables > Actions
-2. Clique em "New repository secret"
-3. Adicione nome e valor
-4. Use no workflow: `${{ secrets.SECRET_NAME }}`
+1. Settings > Secrets and variables > Actions
+2. "New repository secret"
+3. Use no workflow: `${{ secrets.SECRET_NAME }}`
 
 ---
 
 ## 🐛 Troubleshooting
 
-### CI Falhando
+**Lint falhando** → rode `npm run lint` localmente; o mesmo ESLint e a mesma
+versão de Node (24) são usados no CI.
 
-**Problema**: Lint errors
+**Test falhando** → `npm test`. Para depurar um arquivo: `npm test -- auth`.
 
-- **Solução**: Execute `npm run lint` localmente e corrija
+**Build falhando** → `npm run build`. Erros de tipo aparecem aqui porque o
+`next build` executa o TypeScript.
 
-**Problema**: Build errors
+**Artefato vazio** → o job falha de propósito (`if-no-files-found: error`).
+Indica que `.next/` não foi gerado; verifique o passo de build.
 
-- **Solução**: Execute `npm run build` localmente e corrija
-
-### Wiki Sync Falhando
-
-**Problema**: Wiki não habilitado
-
-- **Solução**: Vá em Settings > Features > Ative "Wikis"
-
-**Problema**: Permissões negadas
-
-- **Solução**: Verifique que Actions tem permissão de escrita:
-  - Settings > Actions > General
-  - Workflow permissions > "Read and write permissions"
-
----
-
-## 📊 Status dos Workflows
-
-Veja o status em:
-
-- [Actions Tab](https://github.com/bernardopg/mvp-estetoscopio/actions)
-- Badges no README.md
+**`npm ci` falhando por engine** → o `package.json` exige Node `>=22` (o
+`better-sqlite3` 13 não compila em versões anteriores). Atualize
+`env.NODE_VERSION` e o ambiente local juntos.
 
 ---
 
@@ -191,12 +181,17 @@ Veja o status em:
 
 ### Em Planejamento
 
-- [ ] **Tests**: Executar testes automatizados
-- [ ] **Deploy**: Deploy automático para produção
-- [ ] **Release**: Automação de releases
-- [ ] **Dependency Updates**: Atualização automática de dependências
-- [ ] **Security Scan**: Scan de vulnerabilidades
+- [ ] **Deploy**: deploy automático para produção
+- [ ] **Release**: automação de releases e tags
+- [ ] **E2E**: Playwright em pull requests
+- [ ] **Coverage**: publicação do relatório de cobertura
 - [ ] **Performance**: Lighthouse CI
+
+### Concluídos
+
+- [x] **Tests**: job `Test` executando a suíte Jest
+- [x] **Security Scan**: CodeQL (default setup) + Dependabot alerts
+- [x] **Dependency Updates**: `dependabot.yml` com agrupamento semanal
 
 ---
 
@@ -204,8 +199,9 @@ Veja o status em:
 
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
 - [Workflow Syntax](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
-- [Actions Marketplace](https://github.com/marketplace?type=actions)
+- [actionlint](https://github.com/rhysd/actionlint)
+- [Dependabot Options](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference)
 
 ---
 
-**Última Atualização**: 05/11/2025
+**Última Atualização**: 28/08/2026

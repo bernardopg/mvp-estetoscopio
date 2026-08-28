@@ -125,11 +125,11 @@ Descrição do passo
 
 ## 🔄 Sincronização
 
-Esta documentação é sincronizada automaticamente com:
+Esta documentação é consumida em:
 
-- **GitHub Wiki** - Via GitHub Actions
-- **Site de Docs** - Renderizado como MDX via Next.js
+- **Site de Docs** - Renderizado como MDX via Next.js em `/docs`
 - **README.md** - Links para seções principais
+- **CI** - `npm run docs:check` valida links relativos e sincronia do changelog
 
 ---
 
