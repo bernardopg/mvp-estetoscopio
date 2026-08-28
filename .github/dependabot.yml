@@ -1,0 +1,60 @@
+version: 2
+
+updates:
+  # ---------------------------------------------------------------------------
+  # Dependências npm
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: chore(deps)
+      prefix-development: chore(deps-dev)
+      include: scope
+    groups:
+      # Agrupa atualizações de baixo risco em um único PR para reduzir ruído
+      production-minor-patch:
+        dependency-type: production
+        update-types:
+          - minor
+          - patch
+      development-minor-patch:
+        dependency-type: development
+        update-types:
+          - minor
+          - patch
+    ignore:
+      # ESLint 10 quebra o eslint-config-next 16.x: os plugins embutidos
+      # (react, jsx-a11y, import) declaram peer <= 9 e usam APIs removidas.
+      - dependency-name: eslint
+        update-types:
+          - version-update:semver-major
+      # TypeScript 7 (compilador nativo) ainda não é suportado pelo
+      # typescript-eslint embutido no eslint-config-next.
+      - dependency-name: typescript
+        update-types:
+          - version-update:semver-major
+      # @types/node deve acompanhar o runtime usado (Node 24), não o latest.
+      - dependency-name: '@types/node'
+        update-types:
+          - version-update:semver-major
+
+  # ---------------------------------------------------------------------------
+  # Actions usadas nos workflows
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: ci
+      include: scope
