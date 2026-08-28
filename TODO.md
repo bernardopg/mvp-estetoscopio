@@ -84,10 +84,12 @@
   - PUT/DELETE /api/tags/[id] ✅
   - Atualizar GET /api/decks para incluir tags/folder (JOIN) ✅
   - Atualizar POST/PUT /api/decks para salvar tags ✅
-- [ ] Integração de email para recuperação de senha
-  - Configuração SMTP (Nodemailer/SendGrid)
-  - Templates de email profissionais
-  - Testes de envio e entrega
+- [x] Integração de email para recuperação de senha
+  - Configuração SMTP via Nodemailer (`src/lib/mailer.ts`) ✅
+  - Template de email profissional (HTML + texto plano, escape de HTML) ✅
+  - Variáveis de ambiente documentadas em `.env.example` ✅
+  - Fallback para log do servidor quando SMTP não está configurado ✅
+  - Falhas de envio não vazam para o usuário (resposta genérica por segurança) ✅
 - [x] Drag-and-drop entre pastas
   - Instalado @dnd-kit/core, @dnd-kit/sortable, @dnd-kit/utilities
   - Criado endpoint PATCH /api/decks/[id]/move
@@ -142,21 +144,34 @@
   - API completa (GET /api/decks/[id]/export, POST /api/decks/import) ✅
   - UI com botões de exportar e página de importar ✅
   - Download automático de arquivo JSON ✅
-- [ ] Integração de email para recuperação de senha
-  - Configuração SMTP (Nodemailer/SendGrid)
-  - Templates de email profissionais
-  - Testes de envio e entrega
+### v1.3 (Em andamento)
 
-### v1.3 (Planejado)
-
+- [x] Configurações de notificações
+  - Ativar/desativar notificações por tipo ✅
+  - Preferências de notificações de comunidades ✅
+  - Página de configurações em `/perfil/configuracoes` ✅
 - [ ] Suporte ao formato Anki (.apkg)
-  - Parser de arquivos .apkg
-  - Conversão de notas Anki para flashcards
-  - Exportação para formato .apkg
-- [ ] Configurações de notificações
-  - Ativar/desativar notificações por tipo
-  - Preferências de notificações de comunidades
-  - Página de configurações em /perfil/configuracoes
+  - Parser de arquivos .apkg (`src/lib/anki.ts`) ✅
+  - Conversão de notas Anki para flashcards ✅
+  - Exportação para formato .apkg (`src/lib/anki-export.ts`) ✅
+  - APIs `POST /api/anki/import` e `GET /api/anki/export` ✅
+  - Round-trip export → import corrigido e coberto por testes ✅
+  - Mensagens de erro específicas no import (400/422 com detalhe do parse) ✅
+  - Documentação dos endpoints em `docs/api.mdx` ✅
+  - **Pendente**: UI de importação/exportação Anki nas páginas de baralhos
+  - **Pendente**: validação com arquivos reais gerados pelo Anki Desktop
+- [x] Fundação de testes automatizados
+  - Jest 30 + Testing Library configurados (`jest.config.mjs`) ✅
+  - Testes do algoritmo SM-2 (`src/lib/__tests__/spaced-repetition.test.ts`) ✅
+  - Testes de round-trip Anki (`src/lib/__tests__/anki-roundtrip.test.ts`) ✅
+  - Testes de autenticação JWT/bcrypt (`src/lib/__tests__/auth.test.ts`) ✅
+  - Job de testes no CI ✅
+  - **Pendente**: testes de componentes (RTL) e E2E (Playwright)
+- [x] Manutenção técnica
+  - Dependências atualizadas e 0 vulnerabilidades (ver `RELATORIO_ATUALIZACAO_PACOTES.md`) ✅
+  - 14 erros de lint (react-hooks v7 / React Compiler) corrigidos ✅
+  - `alert()` substituídos por toasts em toda a aplicação ✅
+  - CI atualizado para Node 24 + campo `engines` no package.json ✅
 
 ### v2.0 (Futuro)
 
@@ -193,7 +208,7 @@
 - [ ] Sistema de cache com Redis
 - [ ] Rate limiting nas APIs
 - [ ] Upload para S3 ou Cloudinary
-- [ ] Testes unitários e de integração (Jest + React Testing Library)
+- [ ] Ampliar cobertura de testes (componentes com RTL + integração de APIs)
 
 ### v3.0 (Longo Prazo)
 
