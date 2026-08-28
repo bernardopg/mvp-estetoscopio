@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import CommentForm from "./CommentForm";
+import { useToast } from "@/components/ToastContainer";
 
 interface Comment {
   id: number;
@@ -35,33 +36,12 @@ export default function CommentsList({
   sharedDeckId,
   currentUserId = 1,
 }: CommentsListProps) {
+  const { showToast } = useToast();
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
   const [replyingTo, setReplyingTo] = useState<number | null>(null);
   const [editingComment, setEditingComment] = useState<number | null>(null);
   const [editContent, setEditContent] = useState("");
-
-  useEffect(() => {
-    loadComments();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sharedDeckId]);
-
-  const loadComments = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch(`/api/shared-decks/${sharedDeckId}/comments`);
-      if (res.ok) {
-        const data = await res.json();
-        // Organizar comentários em hierarquia
-        const organized = organizeComments(data);
-        setComments(organized);
-      }
-    } catch (err) {
-      console.error("Erro ao carregar comentários:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const organizeComments = (flatComments: Comment[]): Comment[] => {
     const commentMap = new Map<number, Comment>();
@@ -88,6 +68,30 @@ export default function CommentsList({
     return rootComments;
   };
 
+  const loadComments = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(`/api/shared-decks/${sharedDeckId}/comments`);
+      if (res.ok) {
+        const data = await res.json();
+        // Organizar comentários em hierarquia
+        const organized = organizeComments(data);
+        setComments(organized);
+      }
+    } catch (err) {
+      console.error("Erro ao carregar comentários:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      await loadComments();
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sharedDeckId]);
+
   const handleDeleteComment = async (commentId: number) => {
     if (!confirm("Tem certeza que deseja deletar este comentário?")) return;
 
@@ -107,7 +111,11 @@ export default function CommentsList({
       // Recarregar comentários
       await loadComments();
     } catch (err) {
-      alert(err instanceof Error ? err.message : "Erro ao deletar comentário");
+      showToast(
+        "error",
+        "Erro ao deletar comentário",
+        err instanceof Error ? err.message : undefined
+      );
     }
   };
 
@@ -135,7 +143,11 @@ export default function CommentsList({
       setEditingComment(null);
       setEditContent("");
     } catch (err) {
-      alert(err instanceof Error ? err.message : "Erro ao editar comentário");
+      showToast(
+        "error",
+        "Erro ao editar comentário",
+        err instanceof Error ? err.message : undefined
+      );
     }
   };
 

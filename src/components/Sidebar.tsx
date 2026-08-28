@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
 interface NavItem {
   href: string;
@@ -158,11 +158,38 @@ const navItems: NavSection[] = [
   },
 ];
 
+// Store externo para o estado de colapso da sidebar (localStorage).
+// useSyncExternalStore evita setState síncrono em effects e problemas de
+// hidratação, e ainda sincroniza entre abas via evento "storage".
+const SIDEBAR_COLLAPSE_EVENT = "sidebar-collapse-change";
+
+function subscribeSidebarCollapse(callback: () => void) {
+  window.addEventListener(SIDEBAR_COLLAPSE_EVENT, callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    window.removeEventListener(SIDEBAR_COLLAPSE_EVENT, callback);
+    window.removeEventListener("storage", callback);
+  };
+}
+
+function getSidebarCollapseSnapshot(): boolean {
+  try {
+    const saved = localStorage.getItem("sidebarCollapsed");
+    return saved !== null ? JSON.parse(saved) : false;
+  } catch {
+    return false;
+  }
+}
+
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const isCollapsed = useSyncExternalStore(
+    subscribeSidebarCollapse,
+    getSidebarCollapseSnapshot,
+    () => false // snapshot do servidor
+  );
   const [loggingOut, setLoggingOut] = useState(false);
   const [unreadCount, setUnreadCount] = useState<number>(0);
   const [collapsedSections, setCollapsedSections] = useState<
@@ -198,14 +225,6 @@ export default function Sidebar() {
     return () => clearInterval(interval);
   }, []);
 
-  // Salvar estado de colapso no localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem("sidebarCollapsed");
-    if (saved !== null) {
-      setIsCollapsed(JSON.parse(saved));
-    }
-  }, []);
-
   // Atualizar variável CSS do body quando o estado mudar
   useEffect(() => {
     const sidebarWidthValue = isCollapsed ? "80px" : "288px";
@@ -217,8 +236,8 @@ export default function Sidebar() {
 
   const toggleCollapse = () => {
     const newState = !isCollapsed;
-    setIsCollapsed(newState);
     localStorage.setItem("sidebarCollapsed", JSON.stringify(newState));
+    window.dispatchEvent(new Event(SIDEBAR_COLLAPSE_EVENT));
   };
 
   const isActive = (href: string) => {

@@ -24,6 +24,7 @@ import {
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { useToast } from "@/components/ToastContainer";
 
 interface Card {
   frente: CardContent | string; // Suporta formato antigo e novo
@@ -47,6 +48,7 @@ function normalizeCardContent(content: CardContent | string): CardContent {
 export default function EstudarBaralho() {
   const params = useParams();
   const router = useRouter();
+  const { showToast } = useToast();
   const id = params.id as string;
 
   const [deck, setDeck] = useState<Deck | null>(null);
@@ -86,18 +88,22 @@ export default function EstudarBaralho() {
           saveProgress(id, savedProgress);
         }
       } else {
-        alert("Baralho não encontrado");
+        showToast("error", "Baralho não encontrado");
       }
     } catch (error) {
       console.error("Erro:", error);
-      alert("Erro ao carregar baralho");
+      showToast("error", "Erro ao carregar baralho");
     } finally {
       setLoading(false);
     }
-  }, [id]);
+  }, [id, showToast]);
 
   useEffect(() => {
-    if (id) fetchDeck();
+    if (id) {
+      (async () => {
+        await fetchDeck();
+      })();
+    }
   }, [id, fetchDeck]);
 
   const handleDifficulty = useCallback(
@@ -184,7 +190,7 @@ export default function EstudarBaralho() {
       router.push("/baralhos");
     } catch (error) {
       console.error("Erro ao salvar progresso:", error);
-      alert("Erro ao salvar progresso");
+      showToast("error", "Erro ao salvar progresso");
     } finally {
       setSavingProgress(false);
     }

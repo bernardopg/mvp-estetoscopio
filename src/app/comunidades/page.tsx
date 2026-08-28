@@ -32,7 +32,9 @@ export default function CommunitiesPage() {
   }, [filter]);
 
   useEffect(() => {
-    loadCommunities();
+    (async () => {
+      await loadCommunities();
+    })();
   }, [loadCommunities]);
 
   const filteredCommunities = communities.filter(

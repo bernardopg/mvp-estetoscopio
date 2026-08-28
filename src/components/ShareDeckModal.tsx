@@ -3,6 +3,7 @@
 import { Copy, Edit, Eye, Lock, Share2, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useToast } from "@/components/ToastContainer";
 
 interface ShareDeckModalProps {
   isOpen: boolean;
@@ -26,6 +27,7 @@ export default function ShareDeckModal({
   deckId,
   deckTitle,
 }: ShareDeckModalProps) {
+  const { showToast } = useToast();
   const [communities, setCommunities] = useState<Community[]>([]);
   const [selectedCommunity, setSelectedCommunity] = useState<number | null>(
     null
@@ -36,12 +38,6 @@ export default function ShareDeckModal({
   const [allowComments, setAllowComments] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (isOpen) {
-      loadCommunities();
-    }
-  }, [isOpen]);
 
   const loadCommunities = async () => {
     try {
@@ -54,6 +50,14 @@ export default function ShareDeckModal({
       console.error("Erro ao carregar comunidades:", err);
     }
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      (async () => {
+        await loadCommunities();
+      })();
+    }
+  }, [isOpen]);
 
   const handleShare = async () => {
     if (!selectedCommunity) {
@@ -83,7 +87,7 @@ export default function ShareDeckModal({
       }
 
       // Sucesso
-      alert("Baralho compartilhado com sucesso!");
+      showToast("success", "Baralho compartilhado com sucesso!");
       onClose();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erro ao compartilhar");

@@ -33,7 +33,9 @@ export default function NotificationsPage() {
   }, [filter]);
 
   useEffect(() => {
-    fetchNotifications();
+    (async () => {
+      await fetchNotifications();
+    })();
   }, [fetchNotifications]);
 
   const markAsRead = async (id: number) => {

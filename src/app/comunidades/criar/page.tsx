@@ -3,6 +3,7 @@
 import { ArrowLeft, Globe, Lock, Palette } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ToastContainer";
 import { useState } from "react";
 
 const COLORS = [
@@ -39,6 +40,7 @@ const ICONS = [
 
 export default function CreateCommunityPage() {
   const router = useRouter();
+  const { showToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -52,7 +54,7 @@ export default function CreateCommunityPage() {
     e.preventDefault();
 
     if (!formData.name.trim()) {
-      alert("O nome da comunidade é obrigatório");
+      showToast("warning", "O nome da comunidade é obrigatório");
       return;
     }
 
@@ -70,11 +72,11 @@ export default function CreateCommunityPage() {
       if (response.ok) {
         router.push(`/comunidades/${data.community.id}`);
       } else {
-        alert(data.error || "Erro ao criar comunidade");
+        showToast("error", "Erro ao criar comunidade", data.error);
       }
     } catch (error) {
       console.error("Erro ao criar comunidade:", error);
-      alert("Erro ao criar comunidade");
+      showToast("error", "Erro ao criar comunidade");
     } finally {
       setLoading(false);
     }

@@ -102,7 +102,9 @@ export default function PerfilPage() {
   }, [router]);
 
   useEffect(() => {
-    fetchProfile();
+    (async () => {
+      await fetchProfile();
+    })();
   }, [fetchProfile]);
 
   const fetchStats = useCallback(async () => {
@@ -129,7 +131,9 @@ export default function PerfilPage() {
 
   useEffect(() => {
     if (activeTab === "stats" && !stats) {
-      fetchStats();
+      (async () => {
+        await fetchStats();
+      })();
     }
   }, [activeTab, stats, fetchStats]);
 

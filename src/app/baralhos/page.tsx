@@ -35,6 +35,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useToast } from "@/components/ToastContainer";
 
 interface DeckProgress {
   cards_completed: number;
@@ -84,7 +85,14 @@ interface Deck {
 
 type ViewMode = "cards" | "list" | "tree";
 
+// Gerar nome de arquivo de exportação (fora do componente: Date.now() é impuro e
+// não pode ser chamado durante o render — regra react-hooks/purity)
+function exportDeckFilename(deckId: number) {
+  return `deck_${deckId}_${Date.now()}.json`;
+}
+
 export default function Baralhos() {
+  const { showToast } = useToast();
   const [decks, setDecks] = useState<Deck[]>([]);
   const [folders, setFolders] = useState<Folder[]>([]);
   const [loading, setLoading] = useState(true);
@@ -110,8 +118,33 @@ export default function Baralhos() {
     parentId: null,
   });
 
+  const fetchData = async () => {
+    try {
+      const [decksRes, foldersRes] = await Promise.all([
+        fetch("/api/decks"),
+        fetch("/api/folders"),
+      ]);
+
+      if (decksRes.ok) {
+        const decksData = await decksRes.json();
+        setDecks(decksData);
+      }
+
+      if (foldersRes.ok) {
+        const foldersData = await foldersRes.json();
+        setFolders(foldersData);
+      }
+    } catch (error) {
+      console.error("Erro:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetchData();
+    (async () => {
+      await fetchData();
+    })();
   }, []);
 
   // Configurar sensores de drag
@@ -165,32 +198,9 @@ export default function Baralhos() {
       await fetchData();
     } catch (error) {
       console.error("Erro ao mover deck:", error);
-      alert("Erro ao mover baralho. Tente novamente.");
+      showToast("error", "Erro ao mover baralho", "Tente novamente.");
       // Reverter mudança otimista
       await fetchData();
-    }
-  };
-
-  const fetchData = async () => {
-    try {
-      const [decksRes, foldersRes] = await Promise.all([
-        fetch("/api/decks"),
-        fetch("/api/folders"),
-      ]);
-
-      if (decksRes.ok) {
-        const decksData = await decksRes.json();
-        setDecks(decksData);
-      }
-
-      if (foldersRes.ok) {
-        const foldersData = await foldersRes.json();
-        setFolders(foldersData);
-      }
-    } catch (error) {
-      console.error("Erro:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -215,11 +225,11 @@ export default function Baralhos() {
         closeDeleteModal();
       } else {
         const error = await response.json();
-        alert(`Erro: ${error.error}`);
+        showToast("error", "Erro ao deletar baralho", error.error);
       }
     } catch (error) {
       console.error("Erro:", error);
-      alert("Erro ao deletar baralho.");
+      showToast("error", "Erro ao deletar baralho");
     }
   };
 
@@ -245,7 +255,7 @@ export default function Baralhos() {
       setFolderModal({ isOpen: false, parentId: null });
     } catch (error) {
       console.error("Erro ao criar pasta:", error);
-      alert("Erro ao criar pasta. Tente novamente.");
+      showToast("error", "Erro ao criar pasta", "Tente novamente.");
     }
   };
 
@@ -267,7 +277,7 @@ export default function Baralhos() {
       const contentDisposition = res.headers.get("Content-Disposition");
       const filename = contentDisposition
         ? contentDisposition.split("filename=")[1].replace(/"/g, "")
-        : `deck_${deckId}_${Date.now()}.json`;
+        : exportDeckFilename(deckId);
 
       a.download = filename;
       document.body.appendChild(a);
@@ -276,7 +286,7 @@ export default function Baralhos() {
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Erro ao exportar:", error);
-      alert("Erro ao exportar baralho. Tente novamente.");
+      showToast("error", "Erro ao exportar baralho", "Tente novamente.");
     }
   };
 
