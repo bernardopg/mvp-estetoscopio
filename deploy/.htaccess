@@ -1,0 +1,94 @@
+# Docroot de estetoscopio.scalpel.com.br
+Options -Indexes
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "no-referrer"
+  Header always set X-DNS-Prefetch-Control "off"
+</IfModule>
+
+# Arquivos internos da API: só incluídos pelos endpoints, nunca acessados
+# direto.
+<FilesMatch "^_.*\.php$">
+  Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Mapeia as rotas "limpas" que o frontend usa (herdadas do Next.js App
+  # Router) para os arquivos .php reais, que usam nomes fixos + querystring
+  # em vez de segmentos dinâmicos (export estático não suporta rota
+  # dinâmica no servidor). Ordem importa: mais específico primeiro.
+  RewriteRule ^api/decks/import/?$ api/decks/import.php [L,QSA]
+  RewriteRule ^api/decks/([0-9]+)/move/?$ api/decks/move.php?id=$1 [L,QSA]
+  RewriteRule ^api/decks/([0-9]+)/progress/?$ api/decks/progress.php?id=$1 [L,QSA]
+  RewriteRule ^api/decks/([0-9]+)/review/?$ api/decks/review.php?id=$1 [L,QSA]
+  RewriteRule ^api/decks/([0-9]+)/export/?$ api/decks/export.php?id=$1 [L,QSA]
+  RewriteRule ^api/decks/([0-9]+)/?$ api/decks/detail.php?id=$1 [L,QSA]
+  RewriteRule ^api/decks/?$ api/decks/index.php [L,QSA]
+
+  RewriteRule ^api/folders/([0-9]+)/?$ api/folders/detail.php?id=$1 [L,QSA]
+  RewriteRule ^api/folders/?$ api/folders/index.php [L,QSA]
+
+  RewriteRule ^api/tags/([0-9]+)/?$ api/tags/detail.php?id=$1 [L,QSA]
+  RewriteRule ^api/tags/?$ api/tags/index.php [L,QSA]
+
+  RewriteRule ^api/dashboard/?$ api/dashboard/index.php [L,QSA]
+
+  RewriteRule ^api/profile/stats/?$ api/profile/stats.php [L,QSA]
+
+  RewriteRule ^api/upload/?$ api/upload.php [L,QSA]
+
+  RewriteRule ^api/anki/export/?$ api/anki/export.php [L,QSA]
+  RewriteRule ^api/anki/import/?$ api/anki/import.php [L,QSA]
+
+  RewriteRule ^api/communities/([0-9]+)/decks/?$ api/communities/decks.php?id=$1 [L,QSA]
+  RewriteRule ^api/communities/([0-9]+)/join/?$ api/communities/join.php?id=$1 [L,QSA]
+  RewriteRule ^api/communities/([0-9]+)/leave/?$ api/communities/leave.php?id=$1 [L,QSA]
+  RewriteRule ^api/communities/([0-9]+)/members/?$ api/communities/members.php?id=$1 [L,QSA]
+  RewriteRule ^api/communities/([0-9]+)/?$ api/communities/detail.php?id=$1 [L,QSA]
+  RewriteRule ^api/communities/?$ api/communities/index.php [L,QSA]
+
+  RewriteRule ^api/shared-decks/([0-9]+)/clone/?$ api/shared-decks/clone.php?id=$1 [L,QSA]
+  RewriteRule ^api/shared-decks/([0-9]+)/comments/?$ api/shared-decks/comments.php?id=$1 [L,QSA]
+  RewriteRule ^api/shared-decks/([0-9]+)/?$ api/shared-decks/detail.php?id=$1 [L,QSA]
+
+  RewriteRule ^api/notifications/([0-9]+)/?$ api/notifications/detail.php?id=$1 [L,QSA]
+  RewriteRule ^api/notifications/?$ api/notifications/index.php [L,QSA]
+
+  RewriteRule ^api/user/notification-settings/?$ api/user/notification-settings.php [L,QSA]
+
+  RewriteRule ^api/auth/([a-z-]+)/?$ api/auth/$1.php [L,QSA]
+
+  # Qualquer outro api/*.php resolve sozinho (arquivo real).
+  RewriteRule ^api/ - [L]
+
+  # Uploads de mídia dos cards e avatares.
+  RewriteRule ^uploads/ - [L]
+
+  # Next export gera .html por rota; serve arquivo/diretório existente direto.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Rota sem trailing slash: tenta a versão .html gerada pelo export.
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.*)$ $1.html [L]
+</IfModule>
+
+# Hashes no nome do arquivo (_next/static): cache longo é seguro.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 month"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|php)$">
+    Header always set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

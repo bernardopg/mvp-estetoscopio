@@ -64,8 +64,8 @@ export default function StatsCharts({
   return (
     <div className="space-y-8">
       {/* Gráfico de Desempenho Semanal */}
-      <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
-        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-4">
+      <div className="bg-[var(--color-surface)] rounded-xl p-6 border border-[var(--color-border)]">
+        <h3 className="text-lg font-semibold text-[var(--color-text)] mb-4">
           Desempenho Semanal
         </h3>
         <ResponsiveContainer width="100%" height={300}>
@@ -82,9 +82,9 @@ export default function StatsCharts({
             />
             <XAxis
               dataKey="day"
-              className="text-xs text-zinc-600 dark:text-zinc-400"
+              className="text-xs text-[var(--color-text-muted)]"
             />
-            <YAxis className="text-xs text-zinc-600 dark:text-zinc-400" />
+            <YAxis className="text-xs text-[var(--color-text-muted)]" />
             <Tooltip
               contentStyle={{
                 backgroundColor: "rgba(24, 24, 27, 0.9)",
@@ -108,8 +108,8 @@ export default function StatsCharts({
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Gráfico de Tempo de Estudo */}
-        <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
-          <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-4">
+        <div className="bg-[var(--color-surface)] rounded-xl p-6 border border-[var(--color-border)]">
+          <h3 className="text-lg font-semibold text-[var(--color-text)] mb-4">
             Tempo de Estudo (min)
           </h3>
           <ResponsiveContainer width="100%" height={250}>
@@ -120,9 +120,9 @@ export default function StatsCharts({
               />
               <XAxis
                 dataKey="day"
-                className="text-xs text-zinc-600 dark:text-zinc-400"
+                className="text-xs text-[var(--color-text-muted)]"
               />
-              <YAxis className="text-xs text-zinc-600 dark:text-zinc-400" />
+              <YAxis className="text-xs text-[var(--color-text-muted)]" />
               <Tooltip
                 contentStyle={{
                   backgroundColor: "rgba(24, 24, 27, 0.9)",
@@ -143,8 +143,8 @@ export default function StatsCharts({
         </div>
 
         {/* Gráfico de Distribuição de Dificuldade */}
-        <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
-          <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-4">
+        <div className="bg-[var(--color-surface)] rounded-xl p-6 border border-[var(--color-border)]">
+          <h3 className="text-lg font-semibold text-[var(--color-text)] mb-4">
             Distribuição de Dificuldade
           </h3>
           {pieData.length > 0 ? (

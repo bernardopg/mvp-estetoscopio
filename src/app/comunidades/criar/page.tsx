@@ -70,7 +70,7 @@ export default function CreateCommunityPage() {
       const data = await response.json();
 
       if (response.ok) {
-        router.push(`/comunidades/${data.community.id}`);
+        router.push(`/comunidades/detalhe?id=${data.community.id}`);
       } else {
         showToast("error", "Erro ao criar comunidade", data.error);
       }
@@ -89,15 +89,15 @@ export default function CreateCommunityPage() {
         <div className="mb-8">
           <Link
             href="/comunidades"
-            className="inline-flex items-center gap-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 mb-4 transition-colors"
+            className="inline-flex items-center gap-2 text-[var(--color-text-muted)] hover:text-zinc-900 dark:hover:text-zinc-50 mb-4 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Voltar para Comunidades
           </Link>
-          <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+          <h1 className="text-4xl font-bold text-[var(--color-text)] mb-2">
             Criar Nova Comunidade
           </h1>
-          <p className="text-zinc-600 dark:text-zinc-400">
+          <p className="text-[var(--color-text-muted)]">
             Crie uma comunidade para compartilhar baralhos com outros usuários
           </p>
         </div>
@@ -105,10 +105,10 @@ export default function CreateCommunityPage() {
         {/* Formulário */}
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Card principal */}
-          <div className="bg-white dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 p-6">
+          <div className="bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)] p-6">
             {/* Nome */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-50 mb-2">
+              <label className="block text-sm font-medium text-[var(--color-text)] mb-2">
                 Nome da Comunidade *
               </label>
               <input
@@ -119,7 +119,7 @@ export default function CreateCommunityPage() {
                 }
                 placeholder="Ex: Estudantes de Medicina"
                 maxLength={100}
-                className="w-full px-4 py-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-zinc-50 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 bg-[var(--color-surface)] border border-zinc-300 dark:border-zinc-700 rounded-lg text-[var(--color-text)] placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
               <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
@@ -129,7 +129,7 @@ export default function CreateCommunityPage() {
 
             {/* Descrição */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-50 mb-2">
+              <label className="block text-sm font-medium text-[var(--color-text)] mb-2">
                 Descrição
               </label>
               <textarea
@@ -139,13 +139,13 @@ export default function CreateCommunityPage() {
                 }
                 placeholder="Descreva o propósito da comunidade..."
                 rows={4}
-                className="w-full px-4 py-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-zinc-50 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                className="w-full px-4 py-2 bg-[var(--color-surface)] border border-zinc-300 dark:border-zinc-700 rounded-lg text-[var(--color-text)] placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
               />
             </div>
 
             {/* Privacidade */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-50 mb-3">
+              <label className="block text-sm font-medium text-[var(--color-text)] mb-3">
                 Privacidade
               </label>
               <div className="space-y-3">
@@ -162,11 +162,11 @@ export default function CreateCommunityPage() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <Globe className="w-4 h-4 text-blue-500" />
-                      <span className="font-medium text-zinc-900 dark:text-zinc-50">
+                      <span className="font-medium text-[var(--color-text)]">
                         Pública
                       </span>
                     </div>
-                    <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                    <p className="text-sm text-[var(--color-text-muted)]">
                       Qualquer pessoa pode ver e entrar na comunidade
                     </p>
                   </div>
@@ -184,11 +184,11 @@ export default function CreateCommunityPage() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <Lock className="w-4 h-4 text-zinc-500" />
-                      <span className="font-medium text-zinc-900 dark:text-zinc-50">
+                      <span className="font-medium text-[var(--color-text)]">
                         Privada
                       </span>
                     </div>
-                    <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                    <p className="text-sm text-[var(--color-text-muted)]">
                       Apenas membros convidados podem acessar
                     </p>
                   </div>
@@ -198,7 +198,7 @@ export default function CreateCommunityPage() {
 
             {/* Ícone */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-50 mb-3">
+              <label className="block text-sm font-medium text-[var(--color-text)] mb-3">
                 Ícone
               </label>
               <div className="grid grid-cols-6 gap-2">
@@ -221,7 +221,7 @@ export default function CreateCommunityPage() {
 
             {/* Cor */}
             <div>
-              <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-50 mb-3">
+              <label className="block text-sm font-medium text-[var(--color-text)] mb-3">
                 <Palette className="w-4 h-4 inline-block mr-2" />
                 Cor
               </label>
@@ -245,11 +245,11 @@ export default function CreateCommunityPage() {
           </div>
 
           {/* Preview */}
-          <div className="bg-white dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 p-6">
-            <h3 className="text-sm font-medium text-zinc-900 dark:text-zinc-50 mb-3">
+          <div className="bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)] p-6">
+            <h3 className="text-sm font-medium text-[var(--color-text)] mb-3">
               Pré-visualização
             </h3>
-            <div className="border border-zinc-200 dark:border-zinc-700 rounded-lg p-4">
+            <div className="border border-[var(--color-border)] rounded-lg p-4">
               <div className="flex items-start gap-4">
                 <div
                   className="w-12 h-12 rounded-lg flex items-center justify-center text-2xl text-white shrink-0"
@@ -258,10 +258,10 @@ export default function CreateCommunityPage() {
                   {formData.icon}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-1">
+                  <h4 className="font-semibold text-[var(--color-text)] mb-1">
                     {formData.name || "Nome da Comunidade"}
                   </h4>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                  <p className="text-sm text-[var(--color-text-muted)]">
                     {formData.description || "Descrição da comunidade..."}
                   </p>
                 </div>
@@ -274,7 +274,7 @@ export default function CreateCommunityPage() {
             <button
               type="button"
               onClick={() => router.back()}
-              className="flex-1 px-6 py-3 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 border border-zinc-300 dark:border-zinc-700 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors font-semibold"
+              className="flex-1 px-6 py-3 bg-[var(--color-surface)] text-[var(--color-text)] border border-zinc-300 dark:border-zinc-700 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors font-semibold"
             >
               Cancelar
             </button>

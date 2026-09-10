@@ -1,48 +1,503 @@
 @import "tailwindcss";
 
+/* =============================================================================
+   Tokens do MVP Estetoscópio.
+
+   Cópia literal de hub/assets/tokens.css (identidade Scalpel, derivada do
+   scalpel-brand-kit-v2). Mantenha os dois arquivos em sincronia: o hub é a
+   fonte de verdade.
+   ============================================================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light dark;
 
-  /* mapeamento de tokens de tema (substitui @theme inline) */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* --- Primitivas de marca ------------------------------------------------ */
+  --scalpel-teal-50: #f0fdfa;
+  --scalpel-teal-100: #ccfbf1;
+  --scalpel-teal-300: #5eead4;
+  --scalpel-teal-400: #2dd4bf;
+  --scalpel-teal-600: #0d9488;
+  --scalpel-teal-700: #0f766e;
+  --scalpel-teal-800: #115e59;
 
-  /* variáveis de fonte; usam as variáveis injetadas pelo next/font como primeira opção e fallbacks de sistema */
-  --font-sans: var(--font-geist-sans, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial);
-  --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono");
+  --scalpel-blue-50: #eff6ff;
+  --scalpel-blue-100: #dbeafe;
+  --scalpel-blue-500: #3b82f6;
+  --scalpel-blue-600: #2563eb;
 
-  /* Largura da sidebar (dinâmica) */
+  --scalpel-mint-100: #d1fae5;
+  --scalpel-mint-200: #a7f3d0;
+  --scalpel-mint-300: #6ee7b7;
+
+  --scalpel-slate-50: #f8fafc;
+  --scalpel-slate-100: #f1f5f9;
+  --scalpel-slate-200: #e2e8f0;
+  --scalpel-slate-300: #cbd5e1;
+  --scalpel-slate-500: #64748b;
+  --scalpel-slate-600: #475569;
+  --scalpel-slate-700: #334155;
+  --scalpel-slate-900: #0f172a;
+
+  --scalpel-navy: #051b3c;
+
+  /* --- Semânticas: superfície e texto ------------------------------------- */
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+  --color-text: #0f172a;
+  --color-text-muted: #475569;
+  --color-text-subtle: #64748b;
+
+  /* --- Semânticas: ação --------------------------------------------------- */
+  --color-primary: #0f766e;
+  --color-primary-hover: #115e59;
+  --color-primary-soft: #ccfbf1;
+  --color-on-primary: #ffffff;
+  /* Texto sobre as superfícies de marca (gradientes teal→navy, scrims). É
+     sempre branco, nos dois temas — ao contrário de --color-on-primary, que
+     inverte junto com a primária. */
+  --color-on-brand: #ffffff;
+
+  /* --- Semânticas: estado ------------------------------------------------- */
+  --color-success: #059669;
+  --color-success-soft: #d1fae5;
+  --color-warning: #d97706;
+  --color-warning-soft: #fef3c7;
+  --color-danger: #dc2626;
+  --color-danger-soft: #fee2e2;
+  --color-info: #2563eb;
+  --color-info-soft: #dbeafe;
+  --color-focus: #3b82f6;
+
+  /* --- Categóricas (séries de dados, tags) -------------------------------- */
+  --color-cat-1: #0d9488;
+  --color-cat-2: #2563eb;
+  --color-cat-3: #7c3aed;
+  --color-cat-4: #059669;
+  --color-cat-5: #d97706;
+
+  /* --- Tipografia --------------------------------------------------------- */
+  /* --font-scalpel-* vêm do next/font em layout.tsx (auto-hospedado no build). */
+  --font-display: var(--font-scalpel-display), "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-scalpel-body), "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  --tracking-display: -0.035em;
+  --tracking-tight: -0.02em;
+
+  /* --- Raio --------------------------------------------------------------- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* --- Elevação ----------------------------------------------------------- */
+  --shadow-sm: 0 1px 2px rgb(15 23 42 / 0.06);
+  --shadow-md: 0 8px 24px rgb(15 23 42 / 0.08);
+  --shadow-lg: 0 18px 50px rgb(15 23 42 / 0.12);
+
+  /* --- Movimento ---------------------------------------------------------- */
+  --motion-fast: 120ms;
+  --motion-normal: 180ms;
+  --motion-slow: 280ms;
+  --ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* --- Ritmo e layout (base 4 px) ----------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  --content-max: 1200px;
+  --readable-max: 720px;
+  --header-height: 72px;
+  --control-height: 44px;
+  --pad-inline: 1rem;
   --sidebar-width: 288px;
-  /* padrão expandido */
+
+  /* --- Decoração de marca (curva do símbolo) ------------------------------ */
+  --gradient-brand: linear-gradient(135deg, var(--scalpel-teal-400), var(--scalpel-teal-700));
+  --gradient-brand-deep: linear-gradient(145deg, var(--scalpel-teal-600), var(--scalpel-slate-900));
+  --brand-wash: radial-gradient(
+    ellipse 120% 80% at 50% -10%,
+    color-mix(in srgb, var(--color-primary) 10%, transparent),
+    transparent 70%
+  );
+
+  /* --- Aliases de compatibilidade ----------------------------------------- */
+  --color-accent: var(--color-primary);
+  --color-accent-hover: var(--color-primary-hover);
+  --color-accent-soft: var(--color-primary-soft);
+  --color-surface-soft: var(--color-surface-muted);
+  --color-error: var(--color-danger);
+  --color-error-soft: var(--color-danger-soft);
+  --font-sans: var(--font-body);
+  --transition-fast: var(--motion-normal) var(--ease-standard);
+  --transition-base: var(--motion-slow) var(--ease-standard);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --pad-inline: 2rem;
+  }
+}
+
+:root[data-theme="dark"],
+[data-theme="dark"] {
+  --color-bg: #07111f;
+  --color-surface: #0f172a;
+  --color-surface-muted: #172033;
+  --color-border: #273449;
+  --color-border-strong: #334155;
+  --color-text: #f8fafc;
+  --color-text-muted: #cbd5e1;
+  --color-text-subtle: #94a3b8;
+
+  --color-primary: #2dd4bf;
+  --color-primary-hover: #5eead4;
+  --color-primary-soft: #123e3b;
+  --color-on-primary: #07111f;
+
+  --color-success: #34d399;
+  --color-success-soft: rgb(52 211 153 / 0.18);
+  --color-warning: #fbbf24;
+  --color-warning-soft: rgb(251 191 36 / 0.18);
+  --color-danger: #f87171;
+  --color-danger-soft: rgb(248 113 113 / 0.2);
+  --color-info: #60a5fa;
+  --color-info-soft: rgb(96 165 250 / 0.18);
+  --color-focus: #60a5fa;
+
+  --color-cat-1: #2dd4bf;
+  --color-cat-2: #60a5fa;
+  --color-cat-3: #c084fc;
+  --color-cat-4: #34d399;
+  --color-cat-5: #fbbf24;
+
+  --shadow-sm: 0 1px 2px rgb(2 6 23 / 0.4);
+  --shadow-md: 0 8px 24px rgb(2 6 23 / 0.5);
+  --shadow-lg: 0 18px 50px rgb(2 6 23 / 0.6);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --color-bg: #07111f;
+    --color-surface: #0f172a;
+    --color-surface-muted: #172033;
+    --color-border: #273449;
+    --color-border-strong: #334155;
+    --color-text: #f8fafc;
+    --color-text-muted: #cbd5e1;
+    --color-text-subtle: #94a3b8;
 
-    /* manter variáveis derivadas consistentes no modo dark */
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
+    --color-primary: #2dd4bf;
+    --color-primary-hover: #5eead4;
+    --color-primary-soft: #123e3b;
+    --color-on-primary: #07111f;
+
+    --color-success: #34d399;
+    --color-success-soft: rgb(52 211 153 / 0.18);
+    --color-warning: #fbbf24;
+    --color-warning-soft: rgb(251 191 36 / 0.18);
+    --color-danger: #f87171;
+    --color-danger-soft: rgb(248 113 113 / 0.2);
+    --color-info: #60a5fa;
+    --color-info-soft: rgb(96 165 250 / 0.18);
+    --color-focus: #60a5fa;
+
+    --color-cat-1: #2dd4bf;
+    --color-cat-2: #60a5fa;
+    --color-cat-3: #c084fc;
+    --color-cat-4: #34d399;
+    --color-cat-5: #fbbf24;
+
+    --shadow-sm: 0 1px 2px rgb(2 6 23 / 0.4);
+    --shadow-md: 0 8px 24px rgb(2 6 23 / 0.5);
+    --shadow-lg: 0 18px 50px rgb(2 6 23 / 0.6);
   }
+}
+
+/* =============================================================================
+   Camada Tailwind.
+
+   O app foi escrito com a paleta padrão do Tailwind (`bg-blue-600`,
+   `text-zinc-500`, ...) em ~1100 lugares. Em vez de reescrever cada classe —
+   o que garantiria divergência na primeira tela esquecida — a paleta é
+   remapeada aqui na origem:
+
+     blue-*  → teal    (azul era o CTA do app; teal é a primária da marca)
+     zinc-*  → slate   (os neutros da marca)
+     green-* → emerald (verde de sucesso da marca)
+
+   Assim `bg-blue-600` continua sendo o botão principal e passa a ser teal em
+   toda a aplicação de uma vez. Classes novas devem usar os tokens semânticos
+   (`bg-primary`, `text-muted`, ...) expostos logo abaixo.
+   ============================================================================= */
+
+@theme inline {
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-primary-soft: var(--color-primary-soft);
+  --color-on-primary: var(--color-on-primary);
+  --color-surface: var(--color-surface);
+  --color-surface-muted: var(--color-surface-muted);
+  --color-muted: var(--color-text-muted);
+  --color-subtle: var(--color-text-subtle);
+  --color-info: var(--color-info);
+  --color-danger: var(--color-danger);
+}
+
+@theme {
+  /* blue → teal (escala completa, para que qualquer tom já usado exista) */
+  --color-blue-50: #f0fdfa;
+  --color-blue-100: #ccfbf1;
+  --color-blue-200: #99f6e4;
+  --color-blue-300: #5eead4;
+  --color-blue-400: #2dd4bf;
+  --color-blue-500: #14b8a6;
+  --color-blue-600: #0d9488;
+  --color-blue-700: #0f766e;
+  --color-blue-800: #115e59;
+  --color-blue-900: #134e4a;
+  --color-blue-950: #042f2e;
+
+  /* zinc → slate */
+  --color-zinc-50: #f8fafc;
+  --color-zinc-100: #f1f5f9;
+  --color-zinc-200: #e2e8f0;
+  --color-zinc-300: #cbd5e1;
+  --color-zinc-400: #94a3b8;
+  --color-zinc-500: #64748b;
+  --color-zinc-600: #475569;
+  --color-zinc-700: #334155;
+  --color-zinc-800: #1e293b;
+  --color-zinc-900: #0f172a;
+  --color-zinc-950: #07111f;
+
+  /* green → emerald (o verde de sucesso da marca) */
+  --color-green-50: #ecfdf5;
+  --color-green-100: #d1fae5;
+  --color-green-200: #a7f3d0;
+  --color-green-300: #6ee7b7;
+  --color-green-400: #34d399;
+  --color-green-500: #10b981;
+  --color-green-600: #059669;
+  --color-green-700: #047857;
+  --color-green-800: #065f46;
+  --color-green-900: #064e3b;
+  --color-green-950: #022c22;
+}
+
+/* =============================================================================
+   Base
+   ============================================================================= */
+
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--brand-wash), var(--color-bg);
+  background-repeat: no-repeat;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Responsividade do layout com sidebar dinâmica */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  letter-spacing: var(--tracking-display);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-focus) 45%, transparent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+::selection {
+  background: var(--color-primary-soft);
+  color: var(--color-text);
+}
+
+/* Sidebar fixa a partir do desktop */
 @media (min-width: 1024px) {
   .main-content {
     margin-left: var(--sidebar-width);
-    transition: margin-left 300ms ease;
   }
 }
 
-/* Estilo e animação do Flashcard (flip 3D ao estilo Anki) */
+/* =============================================================================
+   Componentes
+   ============================================================================= */
+
+.page {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-8) var(--pad-inline);
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.link {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+/* Botão: radius 12 px e alvo mínimo de 44 px, conforme o guia. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+  padding: 0.65rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    opacity var(--transition-fast),
+    transform var(--motion-fast) var(--ease-standard);
+}
+
+.btn:hover {
+  background: var(--color-primary-hover);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.btn-ghost:hover {
+  background: var(--color-surface-muted);
+  border-color: var(--color-border-strong);
+}
+
+.btn-destructive {
+  background: transparent;
+  color: var(--color-danger);
+  border-color: color-mix(in srgb, var(--color-danger) 35%, transparent);
+}
+
+.btn-destructive:hover {
+  background: var(--color-danger-soft);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  min-height: var(--control-height);
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  transition: border-color var(--transition-fast);
+}
+
+.input::placeholder {
+  color: var(--color-text-subtle);
+}
+
+.input:hover {
+  border-color: var(--color-border-strong);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.badge-success {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+.badge-warning {
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
+}
+.badge-error {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+/* Marca: o símbolo Scalpel nunca recebe filter, sombra, stroke ou distorção. */
+.brand-mark {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+}
+
+.brand-lockup {
+  display: block;
+  width: 180px;
+  height: auto;
+}
+
+/* Flashcard: flip 3D ao estilo Anki */
 .flashcard {
   perspective: 1200px;
 }
@@ -50,7 +505,7 @@ body {
 .flashcard-inner {
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 420ms var(--ease-standard);
 }
 
 .is-flipped .flashcard-inner {
@@ -68,7 +523,7 @@ body {
   transform: rotateY(180deg);
 }
 
-/* Custom Scrollbar para Sidebar */
+/* Scrollbar da sidebar */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
@@ -78,20 +533,21 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #d4d4d8;
-  border-radius: 3px;
+  background: var(--color-border);
+  border-radius: var(--radius-pill);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #a1a1aa;
+  background: var(--color-text-subtle);
 }
 
-@media (prefers-color-scheme: dark) {
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #3f3f46;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #52525b;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }

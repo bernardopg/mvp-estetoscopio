@@ -58,14 +58,14 @@ export default function StatsCard({
     >
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <p className="text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-1">
+          <p className="text-sm font-medium text-[var(--color-text-muted)] mb-1">
             {title}
           </p>
-          <p className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">
+          <p className="text-3xl font-bold text-[var(--color-text)]">
             {value}
           </p>
           {description && (
-            <p className="text-sm text-zinc-500 dark:text-zinc-500 mt-1">
+            <p className="text-sm text-[var(--color-text-muted)] mt-1">
               {description}
             </p>
           )}
@@ -83,7 +83,7 @@ export default function StatsCard({
           )}
         </div>
         <div
-          className={`${colors.icon} p-3 rounded-lg bg-white dark:bg-zinc-800`}
+          className={`${colors.icon} p-3 rounded-lg bg-[var(--color-surface)]`}
         >
           <Icon className="w-6 h-6" />
         </div>

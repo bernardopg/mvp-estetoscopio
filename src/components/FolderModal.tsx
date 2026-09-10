@@ -138,15 +138,15 @@ export default function FolderModal({
       className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4 animate-in fade-in duration-200"
       onClick={(e) => e.target === e.currentTarget && handleClose()}
     >
-      <div className="bg-white dark:bg-zinc-900 rounded-xl sm:rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto custom-scrollbar shadow-2xl border border-zinc-200 dark:border-zinc-800 animate-in slide-in-from-bottom-4 duration-300">
+      <div className="bg-[var(--color-surface)] rounded-xl sm:rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto custom-scrollbar shadow-2xl border border-[var(--color-border)] animate-in slide-in-from-bottom-4 duration-300">
         {/* Header */}
-        <div className="sticky top-0 z-10 bg-white dark:bg-zinc-900 flex items-center justify-between p-4 sm:p-5 border-b border-zinc-200 dark:border-zinc-800">
+        <div className="sticky top-0 z-10 bg-[var(--color-surface)] flex items-center justify-between p-4 sm:p-5 border-b border-[var(--color-border)]">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-linear-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg shrink-0">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-[var(--color-accent)] flex items-center justify-center shadow-lg shrink-0">
               <Folder className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white" />
             </div>
             <div className="min-w-0">
-              <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-50 truncate">
+              <h3 className="text-lg sm:text-xl font-bold text-[var(--color-text)] truncate">
                 {folder ? "Editar Pasta" : "Nova Pasta"}
               </h3>
               <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 truncate">
@@ -160,7 +160,7 @@ export default function FolderModal({
             className="p-1.5 sm:p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors disabled:opacity-50 group shrink-0"
             aria-label="Fechar"
           >
-            <X className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-50 transition-colors" />
+            <X className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[var(--color-text-muted)] group-hover:text-zinc-900 dark:group-hover:text-zinc-50 transition-colors" />
           </button>
         </div>
 
@@ -170,7 +170,7 @@ export default function FolderModal({
         >
           {/* Nome */}
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5 sm:mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-[var(--color-text)] mb-1.5 sm:mb-2">
               Nome da Pasta <span className="text-red-500">*</span>
             </label>
             <input
@@ -178,7 +178,7 @@ export default function FolderModal({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Ex: Medicina, Cardiologia..."
-              className="w-full px-3 py-2 sm:px-4 sm:py-2.5 text-sm sm:text-base bg-zinc-50 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg sm:rounded-xl text-zinc-900 dark:text-zinc-50 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full px-3 py-2 sm:px-4 sm:py-2.5 text-sm sm:text-base bg-[var(--color-bg)] border border-zinc-300 dark:border-zinc-700 rounded-lg sm:rounded-xl text-[var(--color-text)] placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               disabled={saving}
               autoFocus
             />
@@ -186,7 +186,7 @@ export default function FolderModal({
 
           {/* Pasta Pai */}
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-1.5 sm:mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-[var(--color-text)] mb-1.5 sm:mb-2">
               Pasta Pai (Opcional)
             </label>
             <select
@@ -194,7 +194,7 @@ export default function FolderModal({
               onChange={(e) =>
                 setParentId(e.target.value ? Number(e.target.value) : null)
               }
-              className="w-full px-3 py-2 sm:px-4 sm:py-2.5 text-sm sm:text-base bg-zinc-50 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg sm:rounded-xl text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all appearance-none bg-no-repeat bg-right pr-8 sm:pr-10"
+              className="w-full px-3 py-2 sm:px-4 sm:py-2.5 text-sm sm:text-base bg-[var(--color-bg)] border border-zinc-300 dark:border-zinc-700 rounded-lg sm:rounded-xl text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all appearance-none bg-no-repeat bg-right pr-8 sm:pr-10"
               style={{
                 backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
                 backgroundPosition: "right 0.5rem center",
@@ -213,7 +213,7 @@ export default function FolderModal({
 
           {/* Cor */}
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-[var(--color-text)] mb-2">
               Cor
             </label>
             <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
@@ -238,7 +238,7 @@ export default function FolderModal({
 
           {/* Ícone */}
           <div>
-            <label className="block text-xs sm:text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-[var(--color-text)] mb-2">
               Ícone
             </label>
             <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
@@ -262,7 +262,7 @@ export default function FolderModal({
                       className={`w-5 h-5 sm:w-5.5 sm:h-5.5 ${
                         icon === i.name
                           ? "text-blue-600 dark:text-blue-400"
-                          : "text-zinc-600 dark:text-zinc-400"
+                          : "text-[var(--color-text-muted)]"
                       }`}
                     />
                   </button>
@@ -289,14 +289,14 @@ export default function FolderModal({
               type="button"
               onClick={handleClose}
               disabled={saving}
-              className="flex-1 px-4 py-2.5 sm:px-5 sm:py-3 text-sm sm:text-base bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 rounded-lg sm:rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all font-semibold disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
+              className="flex-1 px-4 py-2.5 sm:px-5 sm:py-3 text-sm sm:text-base bg-[var(--color-accent-soft)] text-[var(--color-text)] rounded-lg sm:rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all font-semibold disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={saving || !name.trim()}
-              className="flex-1 px-4 py-2.5 sm:px-5 sm:py-3 text-sm sm:text-base bg-linear-to-r from-blue-600 to-purple-600 text-white rounded-lg sm:rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all font-semibold disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 active:scale-95 flex items-center justify-center gap-2"
+              className="flex-1 px-4 py-2.5 sm:px-5 sm:py-3 text-sm sm:text-base bg-[var(--color-accent)] text-white rounded-lg sm:rounded-xl hover:bg-[var(--color-accent-hover)] transition-all font-semibold disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 active:scale-95 flex items-center justify-center gap-2"
             >
               {saving ? (
                 <>

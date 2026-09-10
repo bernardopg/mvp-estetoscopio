@@ -68,17 +68,17 @@ export default function MoveDeckModal({
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl p-8 max-w-2xl w-full mx-4 shadow-2xl border border-zinc-200 dark:border-zinc-800 max-h-[80vh] overflow-hidden flex flex-col">
+      <div className="bg-[var(--color-surface)] rounded-2xl p-8 max-w-2xl w-full mx-4 shadow-2xl border border-[var(--color-border)] max-h-[80vh] overflow-hidden flex flex-col">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center">
               <FolderInput className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+              <h3 className="text-2xl font-bold text-[var(--color-text)]">
                 Mover Baralho
               </h3>
-              <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">
+              <p className="text-sm text-[var(--color-text-muted)] mt-1">
                 {deckTitle}
               </p>
             </div>
@@ -88,23 +88,23 @@ export default function MoveDeckModal({
             disabled={moving}
             className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors disabled:opacity-50"
           >
-            <X className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
+            <X className="w-5 h-5 text-[var(--color-text-muted)]" />
           </button>
         </div>
 
         {/* Localização Atual */}
-        <div className="mb-6 p-4 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg">
-          <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
+        <div className="mb-6 p-4 bg-[var(--color-bg)] rounded-lg">
+          <p className="text-sm font-medium text-[var(--color-text)] mb-1">
             Localização Atual:
           </p>
-          <p className="text-zinc-900 dark:text-zinc-50">
+          <p className="text-[var(--color-text)]">
             {currentFolder ? currentFolder.name : "Raiz (sem pasta)"}
           </p>
         </div>
 
         {/* Seletor de Pasta */}
         <div className="flex-1 overflow-y-auto mb-6">
-          <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">
+          <p className="text-sm font-medium text-[var(--color-text)] mb-3">
             Selecione a pasta de destino:
           </p>
 
@@ -115,7 +115,7 @@ export default function MoveDeckModal({
             className={`w-full flex items-center gap-2 px-4 py-3 rounded-lg text-left transition-all mb-2 ${
               selectedFolderId === null
                 ? "bg-blue-100 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 border-2 border-blue-500"
-                : "bg-zinc-50 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-50 border-2 border-transparent hover:border-zinc-300 dark:hover:border-zinc-700"
+                : "bg-[var(--color-bg)] text-[var(--color-text)] border-2 border-transparent hover:border-zinc-300 dark:hover:border-zinc-700"
             }`}
           >
             <FolderInput className="w-5 h-5" />
@@ -123,7 +123,7 @@ export default function MoveDeckModal({
           </button>
 
           {/* Árvore de Pastas */}
-          <div className="bg-zinc-50 dark:bg-zinc-800/50 rounded-lg p-4">
+          <div className="bg-[var(--color-bg)] rounded-lg p-4">
             <FolderTree
               folders={folders}
               selectedFolderId={selectedFolderId}
@@ -159,7 +159,7 @@ export default function MoveDeckModal({
             type="button"
             onClick={handleClose}
             disabled={moving}
-            className="flex-1 px-4 py-3 bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-600 transition-colors font-medium disabled:opacity-50"
+            className="flex-1 px-4 py-3 bg-zinc-200 dark:bg-zinc-700 text-[var(--color-text)] rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-600 transition-colors font-medium disabled:opacity-50"
           >
             Cancelar
           </button>

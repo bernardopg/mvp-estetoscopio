@@ -64,7 +64,7 @@ export default function AudioPlayer({ src, className = "" }: AudioPlayerProps) {
     <div className={`w-full ${className}`}>
       <audio ref={audioRef} src={src} preload="metadata" />
 
-      <div className="flex flex-col gap-4 p-6 rounded-xl bg-linear-to-br from-purple-50 to-pink-50 dark:from-purple-950/30 dark:to-pink-950/30 border border-purple-200 dark:border-purple-800">
+      <div className="flex flex-col gap-4 p-6 rounded-xl bg-[var(--color-accent)] dark:from-purple-950/30 dark:to-pink-950/30 border border-purple-200 dark:border-purple-800">
         {/* Icon and Title */}
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/50">
@@ -79,7 +79,7 @@ export default function AudioPlayer({ src, className = "" }: AudioPlayerProps) {
         <div className="flex items-center gap-4">
           <button
             onClick={togglePlay}
-            className="shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-linear-to-br from-purple-500 to-pink-600 text-white hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-200"
+            className="shrink-0 w-12 h-12 flex items-center justify-center rounded-full bg-[var(--color-accent)] text-white hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-200"
           >
             {isPlaying ? (
               <Pause className="w-5 h-5" />

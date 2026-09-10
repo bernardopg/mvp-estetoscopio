@@ -114,7 +114,7 @@ export default function TagSelector({
                 value={newTagName}
                 onChange={(e) => setNewTagName(e.target.value)}
                 placeholder="Nome da tag"
-                className="w-full px-3 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                className="w-full px-3 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-[var(--color-surface)] text-[var(--color-text)] focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 autoFocus
                 onKeyDown={(e) => {
                   if (e.key === "Enter") handleCreateTag();
@@ -152,7 +152,7 @@ export default function TagSelector({
                     setIsCreating(false);
                     setNewTagName("");
                   }}
-                  className="px-4 py-2 bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-600 transition-colors text-sm font-medium"
+                  className="px-4 py-2 bg-zinc-200 dark:bg-zinc-700 text-[var(--color-text)] rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-600 transition-colors text-sm font-medium"
                 >
                   Cancelar
                 </button>
@@ -161,7 +161,7 @@ export default function TagSelector({
           ) : (
             <button
               onClick={() => setIsCreating(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-600 dark:text-zinc-400 hover:border-blue-500 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-sm font-medium"
+              className="inline-flex items-center gap-2 px-4 py-2 border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-lg text-[var(--color-text-muted)] hover:border-blue-500 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-sm font-medium"
             >
               <Plus className="w-4 h-4" />
               Nova Tag

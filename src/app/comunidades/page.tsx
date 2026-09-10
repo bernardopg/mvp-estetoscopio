@@ -50,16 +50,16 @@ export default function CommunitiesPage() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+              <h1 className="text-4xl font-bold text-[var(--color-text)] mb-2">
                 Comunidades
               </h1>
-              <p className="text-zinc-600 dark:text-zinc-400">
+              <p className="text-[var(--color-text-muted)]">
                 Descubra e compartilhe baralhos com outros usuários
               </p>
             </div>
             <button
               onClick={() => router.push("/comunidades/criar")}
-              className="flex items-center gap-2 bg-linear-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-lg hover:opacity-90 transition-opacity font-semibold shadow-lg"
+              className="flex items-center gap-2 bg-[var(--color-accent)] text-white px-6 py-3 rounded-lg hover:opacity-90 transition-opacity font-semibold shadow-lg"
             >
               <Plus className="w-5 h-5" />
               Criar Comunidade
@@ -76,7 +76,7 @@ export default function CommunitiesPage() {
                 placeholder="Buscar comunidades..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-zinc-50 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-10 pr-4 py-2 bg-[var(--color-surface)] border border-zinc-300 dark:border-zinc-700 rounded-lg text-[var(--color-text)] placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
@@ -87,7 +87,7 @@ export default function CommunitiesPage() {
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
                   filter === "all"
                     ? "bg-blue-500 text-white"
-                    : "bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700"
+                    : "bg-[var(--color-surface)] text-[var(--color-text-muted)] border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700"
                 }`}
               >
                 <Users className="w-4 h-4" />
@@ -98,7 +98,7 @@ export default function CommunitiesPage() {
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
                   filter === "my"
                     ? "bg-blue-500 text-white"
-                    : "bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700"
+                    : "bg-[var(--color-surface)] text-[var(--color-text-muted)] border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700"
                 }`}
               >
                 <Users className="w-4 h-4" />
@@ -109,7 +109,7 @@ export default function CommunitiesPage() {
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
                   filter === "public"
                     ? "bg-blue-500 text-white"
-                    : "bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700"
+                    : "bg-[var(--color-surface)] text-[var(--color-text-muted)] border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-700"
                 }`}
               >
                 <Globe className="w-4 h-4" />
@@ -139,14 +139,14 @@ export default function CommunitiesPage() {
         {!loading && filteredCommunities.length === 0 && (
           <div className="text-center py-20">
             <Users className="w-16 h-16 text-zinc-300 dark:text-zinc-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50 mb-2">
+            <h3 className="text-xl font-semibold text-[var(--color-text)] mb-2">
               {searchQuery
                 ? "Nenhuma comunidade encontrada"
                 : filter === "my"
                 ? "Você ainda não faz parte de nenhuma comunidade"
                 : "Nenhuma comunidade disponível"}
             </h3>
-            <p className="text-zinc-600 dark:text-zinc-400 mb-6">
+            <p className="text-[var(--color-text-muted)] mb-6">
               {searchQuery
                 ? "Tente buscar com outros termos"
                 : filter === "my"

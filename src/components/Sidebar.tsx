@@ -8,7 +8,6 @@ import {
   Code2,
   FileText,
   Folder,
-  GraduationCap,
   Home,
   Library,
   Lightbulb,
@@ -23,7 +22,7 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState, useSyncExternalStore } from "react";
 
 interface NavItem {
@@ -183,7 +182,6 @@ function getSidebarCollapseSnapshot(): boolean {
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const isCollapsed = useSyncExternalStore(
     subscribeSidebarCollapse,
@@ -254,19 +252,10 @@ export default function Sidebar() {
     }));
   };
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     setLoggingOut(true);
-    try {
-      await fetch("/api/auth/logout", {
-        method: "POST",
-      });
-      router.push("/login");
-      router.refresh();
-    } catch (error) {
-      console.error("Erro ao fazer logout:", error);
-    } finally {
-      setLoggingOut(false);
-    }
+    // Login é do hub: logout também é lá (mesma sessão SCALPELSESS).
+    window.location.href = "https://scalpel.com.br/logout.php";
   };
 
   const sidebarWidth = isCollapsed ? "w-20" : "w-72";
@@ -276,13 +265,13 @@ export default function Sidebar() {
       {/* Mobile Menu Button */}
       <button
         onClick={toggleSidebar}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg hover:shadow-xl transition-shadow"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] shadow-lg hover:shadow-xl transition-shadow"
         aria-label="Toggle menu"
       >
         {isOpen ? (
-          <X className="w-5 h-5 text-zinc-900 dark:text-zinc-50" />
+          <X className="w-5 h-5 text-[var(--color-text)]" />
         ) : (
-          <Menu className="w-5 h-5 text-zinc-900 dark:text-zinc-50" />
+          <Menu className="w-5 h-5 text-[var(--color-text)]" />
         )}
       </button>
 
@@ -296,27 +285,34 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-0 h-full ${sidebarWidth} bg-linear-to-b from-white via-zinc-50/50 to-white dark:from-zinc-950 dark:via-zinc-900/50 dark:to-zinc-950 border-r border-zinc-200 dark:border-zinc-800 z-40 transition-all duration-300 ${
+        className={`fixed left-0 top-0 h-full ${sidebarWidth} bg-linear-to-b from-white via-zinc-50/50 to-white dark:from-zinc-950 dark:via-zinc-900/50 dark:to-zinc-950 border-r border-[var(--color-border)] z-40 transition-all duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         } flex flex-col shadow-xl`}
       >
         {/* Header */}
-        <div className="relative pt-4 pb-3 px-4 border-b border-zinc-200 dark:border-zinc-800">
+        <div className="relative pt-4 pb-3 px-4 border-b border-[var(--color-border)]">
           <Link
             href="/"
             className="flex items-center gap-3 group"
             onClick={() => setIsOpen(false)}
           >
-            <div className="p-2 rounded-xl bg-linear-to-br from-blue-500 via-purple-600 to-pink-600 shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-200">
-              <GraduationCap className="w-6 h-6 text-white" />
-            </div>
+            {/* Símbolo Scalpel: a marca do hub é a âncora de identidade dos apps.
+                Sem filter/sombra/stroke e sem alterar a proporção (brand kit). */}
+            <img
+              src="/brand/mark.svg"
+              alt="Scalpel"
+              width={40}
+              height={40}
+              className="w-10 h-10 shrink-0 transition-transform duration-200 group-hover:scale-105"
+              decoding="async"
+            />
             {!isCollapsed && (
               <div className="flex-1 min-w-0">
-                <h1 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 truncate">
+                <h1 className="text-lg font-bold text-[var(--color-text)] truncate">
                   Estetoscópio
                 </h1>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate">
-                  v1.1.0
+                <p className="text-xs text-[var(--color-text-subtle)] truncate">
+                  Scalpel · v1.1.0
                 </p>
               </div>
             )}
@@ -325,13 +321,13 @@ export default function Sidebar() {
           {/* Desktop Collapse Toggle */}
           <button
             onClick={toggleCollapse}
-            className="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 items-center justify-center rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 shadow-md hover:shadow-lg transition-all hover:scale-110"
+            className="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 items-center justify-center rounded-full bg-[var(--color-surface)] border border-[var(--color-border)] shadow-md hover:shadow-lg transition-all hover:scale-110"
             aria-label={isCollapsed ? "Expandir sidebar" : "Colapsar sidebar"}
           >
             {isCollapsed ? (
-              <ChevronRight className="w-3 h-3 text-zinc-600 dark:text-zinc-400" />
+              <ChevronRight className="w-3 h-3 text-[var(--color-text-muted)]" />
             ) : (
-              <ChevronRight className="w-3 h-3 text-zinc-600 dark:text-zinc-400" />
+              <ChevronRight className="w-3 h-3 text-[var(--color-text-muted)]" />
             )}
           </button>
         </div>
@@ -413,8 +409,8 @@ export default function Sidebar() {
                               isCollapsed ? "justify-center" : ""
                             } ${
                               active
-                                ? "bg-linear-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/30"
-                                : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/70 hover:text-zinc-900 dark:hover:text-zinc-50"
+                                ? "bg-[var(--color-accent)] text-white shadow-lg shadow-blue-500/30"
+                                : "text-[var(--color-text)] hover:bg-zinc-100 dark:hover:bg-zinc-800/70 hover:text-zinc-900 dark:hover:text-zinc-50"
                             }`}
                             title={tooltipText}
                           >
@@ -455,14 +451,14 @@ export default function Sidebar() {
         </nav>
 
         {/* Footer */}
-        <div className="px-3 py-3 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
+        <div className="px-3 py-3 border-t border-[var(--color-border)] bg-zinc-50/50 dark:bg-zinc-900/50">
           <div className={`flex gap-2 ${isCollapsed ? "flex-col" : ""}`}>
             <Link
               href="/perfil"
               onClick={() => setIsOpen(false)}
               className={`group flex items-center ${
                 isCollapsed ? "justify-center" : "justify-center flex-1"
-              } px-3 py-2.5 rounded-lg text-sm font-medium bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 border border-zinc-200 dark:border-zinc-700 transition-all duration-200 hover:shadow-md`}
+              } px-3 py-2.5 rounded-lg text-sm font-medium bg-[var(--color-surface)] text-[var(--color-text)] hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 border border-[var(--color-border)] transition-all duration-200 hover:shadow-md`}
               title="Perfil"
             >
               <User className="w-5 h-5 transition-transform duration-200 group-hover:scale-110" />
@@ -472,7 +468,7 @@ export default function Sidebar() {
               disabled={loggingOut}
               className={`group flex items-center ${
                 isCollapsed ? "justify-center" : "justify-center flex-1"
-              } px-3 py-2.5 rounded-lg text-sm font-medium bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 border border-zinc-200 dark:border-zinc-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-md`}
+              } px-3 py-2.5 rounded-lg text-sm font-medium bg-[var(--color-surface)] text-[var(--color-text)] hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 border border-[var(--color-border)] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-md`}
               title="Sair"
             >
               {loggingOut ? (

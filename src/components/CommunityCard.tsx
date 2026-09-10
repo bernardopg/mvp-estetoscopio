@@ -11,7 +11,7 @@ interface CommunityCardProps {
 export default function CommunityCard({ community }: CommunityCardProps) {
   return (
     <Link href={`/comunidades/${community.id}`}>
-      <div className="group bg-white dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 p-6 hover:shadow-lg hover:border-blue-300 dark:hover:border-blue-600 transition-all cursor-pointer">
+      <div className="group bg-[var(--color-surface)] rounded-xl border border-[var(--color-border)] p-6 hover:shadow-lg hover:border-blue-300 dark:hover:border-blue-600 transition-all cursor-pointer">
         {/* Header com ícone/cor */}
         <div className="flex items-start justify-between mb-4">
           <div
@@ -31,11 +31,11 @@ export default function CommunityCard({ community }: CommunityCardProps) {
         </div>
 
         {/* Nome e descrição */}
-        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+        <h3 className="text-lg font-semibold text-[var(--color-text)] mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
           {community.name}
         </h3>
         {community.description && (
-          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-4 line-clamp-2">
+          <p className="text-sm text-[var(--color-text-muted)] mb-4 line-clamp-2">
             {community.description}
           </p>
         )}
@@ -56,7 +56,7 @@ export default function CommunityCard({ community }: CommunityCardProps) {
 
         {/* Badge de papel (se houver) */}
         {community.role && (
-          <div className="mt-4 pt-4 border-t border-zinc-200 dark:border-zinc-700">
+          <div className="mt-4 pt-4 border-t border-[var(--color-border)]">
             <span
               className={`inline-block text-xs px-2 py-1 rounded-full font-medium ${
                 community.role === "admin"

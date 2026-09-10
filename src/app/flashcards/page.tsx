@@ -36,34 +36,34 @@ export default function FlashcardsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-zinc-50 via-emerald-50/20 to-teal-50/20 dark:from-black dark:via-emerald-950/10 dark:to-teal-950/10">
+    <div className="min-h-screen bg-[var(--color-bg)]">
       <div className="mx-auto max-w-4xl px-6 py-16">
         {/* Header */}
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-linear-to-br from-emerald-500 to-teal-600 shadow-lg">
+            <div className="p-2 rounded-lg bg-[var(--color-accent)] shadow-lg">
               <BookOpen className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50">
+            <h1 className="text-4xl font-bold text-[var(--color-text)]">
               Flashcards
             </h1>
           </div>
-          <p className="text-lg text-zinc-600 dark:text-zinc-400">
+          <p className="text-lg text-[var(--color-text-muted)]">
             Sistema de estudo estilo Anki com repetição espaçada
           </p>
         </div>
 
         {/* Info Card */}
-        <div className="mb-10 p-6 rounded-xl bg-white dark:bg-zinc-900 border border-blue-200 dark:border-blue-900/50 shadow-lg">
+        <div className="mb-10 p-6 rounded-xl bg-[var(--color-surface)] border border-blue-200 dark:border-blue-900/50 shadow-lg">
           <div className="flex items-start gap-4">
             <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-950/50 shrink-0">
               <Info className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             </div>
             <div>
-              <h3 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-2">
+              <h3 className="font-semibold text-[var(--color-text)] mb-2">
                 Como usar
               </h3>
-              <ul className="text-sm text-zinc-600 dark:text-zinc-400 space-y-1">
+              <ul className="text-sm text-[var(--color-text-muted)] space-y-1">
                 <li>
                   • Clique no botão ou pressione{" "}
                   <kbd className="px-2 py-0.5 rounded bg-zinc-200 dark:bg-zinc-700 font-mono text-xs">
@@ -75,7 +75,7 @@ export default function FlashcardsPage() {
                 <li>
                   • O sistema ajusta automaticamente o intervalo de revisão
                 </li>
-                <li className="mt-2 pt-2 border-t border-zinc-200 dark:border-zinc-800">
+                <li className="mt-2 pt-2 border-t border-[var(--color-border)]">
                   <strong>Botões de dificuldade:</strong>
                   <ul className="ml-4 mt-1 space-y-0.5">
                     <li>
@@ -100,7 +100,7 @@ export default function FlashcardsPage() {
         {/* Feedback */}
         {lastDifficulty && (
           <div
-            className={`mb-6 p-4 rounded-xl bg-white dark:bg-zinc-900 border-2 ${
+            className={`mb-6 p-4 rounded-xl bg-[var(--color-surface)] border-2 ${
               lastDifficulty.color.includes("red")
                 ? "border-red-200 dark:border-red-900"
                 : lastDifficulty.color.includes("amber")
@@ -133,7 +133,7 @@ export default function FlashcardsPage() {
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-12 p-8 rounded-2xl bg-linear-to-br from-purple-500 to-purple-600 shadow-xl shadow-purple-500/30 text-center">
+        <div className="mt-12 p-8 rounded-2xl bg-[var(--color-accent)] shadow-xl shadow-purple-500/30 text-center">
           <h3 className="text-2xl font-bold text-white mb-3">
             Pronto para começar?
           </h3>

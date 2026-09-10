@@ -47,15 +47,18 @@ interface TagType {
   color: string | null;
 }
 
+// Paleta de rótulo do baralho. São os tons categóricos do design system
+// Scalpel (--color-cat-*), em hexadecimal porque o valor é persistido no banco
+// e renderizado como style inline — não é cor de chrome da interface.
 const DECK_COLORS = [
   { name: "Padrão", value: null },
-  { name: "Azul", value: "#3b82f6" },
-  { name: "Verde", value: "#10b981" },
-  { name: "Vermelho", value: "#ef4444" },
-  { name: "Amarelo", value: "#f59e0b" },
-  { name: "Roxo", value: "#8b5cf6" },
-  { name: "Rosa", value: "#ec4899" },
-  { name: "Ciano", value: "#06b6d4" },
+  { name: "Teal", value: "#0d9488" },
+  { name: "Azul", value: "#2563eb" },
+  { name: "Roxo", value: "#7c3aed" },
+  { name: "Verde", value: "#059669" },
+  { name: "Âmbar", value: "#d97706" },
+  { name: "Rosa", value: "#db2777" },
+  { name: "Vermelho", value: "#dc2626" },
 ];
 
 export default function CriarBaralho() {
@@ -307,7 +310,7 @@ export default function CriarBaralho() {
             className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
               card.type === "text"
                 ? "bg-blue-100 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 border-2 border-blue-300 dark:border-blue-700"
-                : "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border-2 border-transparent hover:border-zinc-300 dark:hover:border-zinc-600"
+                : "bg-[var(--color-accent-soft)] text-[var(--color-text-muted)] border-2 border-transparent hover:border-[var(--color-accent)]"
             }`}
           >
             <Text className="w-4 h-4" />
@@ -318,7 +321,7 @@ export default function CriarBaralho() {
             className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
               card.type === "image"
                 ? "bg-purple-100 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 border-2 border-purple-300 dark:border-purple-700"
-                : "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border-2 border-transparent hover:border-zinc-300 dark:hover:border-zinc-600"
+                : "bg-[var(--color-accent-soft)] text-[var(--color-text-muted)] border-2 border-transparent hover:border-[var(--color-accent)]"
             }`}
           >
             <ImageIcon className="w-4 h-4" />
@@ -329,7 +332,7 @@ export default function CriarBaralho() {
             className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
               card.type === "audio"
                 ? "bg-pink-100 dark:bg-pink-950/50 text-pink-600 dark:text-pink-400 border-2 border-pink-300 dark:border-pink-700"
-                : "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border-2 border-transparent hover:border-zinc-300 dark:hover:border-zinc-600"
+                : "bg-[var(--color-accent-soft)] text-[var(--color-text-muted)] border-2 border-transparent hover:border-[var(--color-accent)]"
             }`}
           >
             <FileAudio className="w-4 h-4" />
@@ -342,7 +345,7 @@ export default function CriarBaralho() {
           <textarea
             value={card.content}
             onChange={(e) => atualizarConteudo(index, lado, e.target.value)}
-            className="w-full px-4 py-3 border-2 border-zinc-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none transition-all"
+            className="w-full px-4 py-3 border-2 border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none transition-all"
             rows={4}
             placeholder="Digite o texto..."
           />
@@ -363,7 +366,7 @@ export default function CriarBaralho() {
               className="hidden"
             />
             {card.content ? (
-              <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-zinc-100 dark:bg-zinc-800 border-2 border-zinc-200 dark:border-zinc-700">
+              <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-[var(--color-accent-soft)] border-2 border-[var(--color-border)]">
                 <Image
                   src={card.content}
                   alt="Preview"
@@ -381,15 +384,15 @@ export default function CriarBaralho() {
               <button
                 onClick={() => triggerFileInput(index, lado)}
                 disabled={isUploading}
-                className="w-full p-8 border-2 border-dashed border-zinc-300 dark:border-zinc-600 rounded-lg hover:border-purple-400 dark:hover:border-purple-600 transition-colors"
+                className="w-full p-8 border-2 border-dashed border-[var(--color-border)] rounded-lg hover:border-purple-400 dark:hover:border-purple-600 transition-colors"
               >
                 {isUploading ? (
-                  <div className="flex flex-col items-center gap-2 text-zinc-600 dark:text-zinc-400">
+                  <div className="flex flex-col items-center gap-2 text-[var(--color-text-muted)]">
                     <Loader2 className="w-8 h-8 animate-spin" />
                     <span className="text-sm">Fazendo upload...</span>
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center gap-2 text-zinc-600 dark:text-zinc-400">
+                  <div className="flex flex-col items-center gap-2 text-[var(--color-text-muted)]">
                     <Upload className="w-8 h-8" />
                     <span className="text-sm">
                       Clique para fazer upload da imagem
@@ -401,13 +404,13 @@ export default function CriarBaralho() {
 
             {/* Texto opcional para acompanhar a imagem */}
             <div>
-              <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+              <label className="block text-sm font-medium text-[var(--color-text)] mb-2">
                 📝 Texto adicional (opcional)
               </label>
               <textarea
                 value={card.text || ""}
                 onChange={(e) => atualizarTexto(index, lado, e.target.value)}
-                className="w-full px-4 py-3 border-2 border-zinc-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none transition-all"
+                className="w-full px-4 py-3 border-2 border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none transition-all"
                 rows={3}
                 placeholder="Adicione uma descrição, pergunta ou contexto..."
               />
@@ -430,9 +433,9 @@ export default function CriarBaralho() {
               className="hidden"
             />
             {card.content ? (
-              <div className="p-4 border-2 border-zinc-200 dark:border-zinc-700 rounded-lg bg-zinc-50 dark:bg-zinc-800/50">
+              <div className="p-4 border-2 border-[var(--color-border)] rounded-lg bg-[var(--color-bg)]">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                  <span className="text-sm font-medium text-[var(--color-text)]">
                     Áudio carregado
                   </span>
                   <button
@@ -448,15 +451,15 @@ export default function CriarBaralho() {
               <button
                 onClick={() => triggerFileInput(index, lado)}
                 disabled={isUploading}
-                className="w-full p-8 border-2 border-dashed border-zinc-300 dark:border-zinc-600 rounded-lg hover:border-pink-400 dark:hover:border-pink-600 transition-colors"
+                className="w-full p-8 border-2 border-dashed border-[var(--color-border)] rounded-lg hover:border-pink-400 dark:hover:border-pink-600 transition-colors"
               >
                 {isUploading ? (
-                  <div className="flex flex-col items-center gap-2 text-zinc-600 dark:text-zinc-400">
+                  <div className="flex flex-col items-center gap-2 text-[var(--color-text-muted)]">
                     <Loader2 className="w-8 h-8 animate-spin" />
                     <span className="text-sm">Fazendo upload...</span>
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center gap-2 text-zinc-600 dark:text-zinc-400">
+                  <div className="flex flex-col items-center gap-2 text-[var(--color-text-muted)]">
                     <Upload className="w-8 h-8" />
                     <span className="text-sm">
                       Clique para fazer upload do áudio
@@ -468,13 +471,13 @@ export default function CriarBaralho() {
 
             {/* Texto opcional para acompanhar o áudio */}
             <div>
-              <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+              <label className="block text-sm font-medium text-[var(--color-text)] mb-2">
                 📝 Texto adicional (opcional)
               </label>
               <textarea
                 value={card.text || ""}
                 onChange={(e) => atualizarTexto(index, lado, e.target.value)}
-                className="w-full px-4 py-3 border-2 border-zinc-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none transition-all"
+                className="w-full px-4 py-3 border-2 border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none transition-all"
                 rows={3}
                 placeholder="Adicione uma pergunta, contexto ou descrição..."
               />
@@ -486,55 +489,55 @@ export default function CriarBaralho() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-zinc-50 via-purple-50/20 to-pink-50/20 dark:from-black dark:via-purple-950/10 dark:to-pink-950/10 py-16">
+    <div className="min-h-screen bg-[var(--color-bg)] py-16">
       <div className="mx-auto max-w-5xl px-6">
         {/* Header */}
         <div className="mb-8">
           <Link
             href="/baralhos"
-            className="inline-flex items-center gap-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors mb-6"
+            className="inline-flex items-center gap-2 text-[var(--color-text-muted)] hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Voltar aos baralhos</span>
           </Link>
 
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 rounded-lg bg-linear-to-br from-purple-500 to-pink-600 shadow-lg">
+            <div className="p-2 rounded-lg bg-[var(--color-accent)] shadow-lg">
               <Plus className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50">
+            <h1 className="text-4xl font-bold text-[var(--color-text)]">
               Criar Novo Baralho
             </h1>
           </div>
-          <p className="text-lg text-zinc-600 dark:text-zinc-400">
+          <p className="text-lg text-[var(--color-text-muted)]">
             Monte seu deck personalizado com texto, imagens ou áudio
           </p>
         </div>
 
         <div className="space-y-6">
           {/* Título do Baralho */}
-          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg">
-            <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-3">
+          <div className="p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-lg">
+            <label className="block text-sm font-semibold text-[var(--color-text)] mb-3">
               Título do Baralho
             </label>
             <input
               type="text"
               value={titulo}
               onChange={(e) => setTitulo(e.target.value)}
-              className="w-full px-4 py-3 border-2 border-zinc-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 border-2 border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
               placeholder="Ex: Sons Cardíacos Básicos"
             />
           </div>
 
           {/* Organização */}
-          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg">
-            <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-4">
+          <div className="p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-lg">
+            <h2 className="text-lg font-semibold text-[var(--color-text)] mb-4">
               Organização
             </h2>
             <div className="space-y-4">
               {/* Pasta */}
               <div>
-                <label className="flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                <label className="flex items-center gap-2 text-sm font-medium text-[var(--color-text)] mb-2">
                   <Folder className="w-4 h-4" />
                   Pasta
                 </label>
@@ -543,7 +546,7 @@ export default function CriarBaralho() {
                   onChange={(e) =>
                     setFolderId(e.target.value ? Number(e.target.value) : null)
                   }
-                  className="w-full px-4 py-3 border-2 border-zinc-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                  className="w-full px-4 py-3 border-2 border-[var(--color-border)] rounded-lg bg-[var(--color-surface)] text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                 >
                   <option value="">📂 Sem pasta (raiz)</option>
                   {folders.map((folder) => (
@@ -556,7 +559,7 @@ export default function CriarBaralho() {
 
               {/* Tags */}
               <div>
-                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                <label className="block text-sm font-medium text-[var(--color-text)] mb-2">
                   🏷️ Tags
                 </label>
                 <TagSelector
@@ -571,7 +574,7 @@ export default function CriarBaralho() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Favorito */}
                 <div>
-                  <label className="flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">
+                  <label className="flex items-center gap-2 text-sm font-medium text-[var(--color-text)] mb-3">
                     <Bookmark className="w-4 h-4" />
                     Favorito
                   </label>
@@ -581,7 +584,7 @@ export default function CriarBaralho() {
                     className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 flex items-center justify-center gap-2 ${
                       isBookmarked
                         ? "bg-amber-50 dark:bg-amber-950/30 border-amber-400 dark:border-amber-600 text-amber-700 dark:text-amber-300"
-                        : "border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:border-amber-400 dark:hover:border-amber-600"
+                        : "border-[var(--color-border)] text-[var(--color-text-muted)] hover:border-amber-400 dark:hover:border-amber-600"
                     }`}
                   >
                     <Bookmark
@@ -597,7 +600,7 @@ export default function CriarBaralho() {
 
                 {/* Cor */}
                 <div>
-                  <label className="flex items-center gap-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">
+                  <label className="flex items-center gap-2 text-sm font-medium text-[var(--color-text)] mb-3">
                     <Palette className="w-4 h-4" />
                     Cor do Baralho
                   </label>
@@ -610,7 +613,7 @@ export default function CriarBaralho() {
                         className={`w-12 h-12 rounded-lg border-2 transition-all duration-200 flex items-center justify-center ${
                           deckColor === colorOption.value
                             ? "border-purple-500 dark:border-purple-400 ring-2 ring-purple-500/30"
-                            : "border-zinc-300 dark:border-zinc-600 hover:border-purple-400 dark:hover:border-purple-500"
+                            : "border-[var(--color-border)] hover:border-purple-400 dark:hover:border-purple-500"
                         }`}
                         style={{
                           backgroundColor: colorOption.value || "#ffffff",
@@ -636,14 +639,14 @@ export default function CriarBaralho() {
           </div>
 
           {/* Cards Section */}
-          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg">
+          <div className="p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-lg">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+              <h2 className="text-xl font-semibold text-[var(--color-text)]">
                 Cartas ({cartas.length})
               </h2>
               <button
                 onClick={adicionarCarta}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-linear-to-r from-purple-500 to-pink-600 text-white rounded-lg hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-200 font-medium"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-accent)] text-white rounded-lg hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-200 font-medium"
               >
                 <Plus className="w-4 h-4" />
                 Adicionar Carta
@@ -654,10 +657,10 @@ export default function CriarBaralho() {
               {cartas.map((carta, index) => (
                 <div
                   key={index}
-                  className="group p-6 border-2 border-zinc-200 dark:border-zinc-700 rounded-xl bg-zinc-50 dark:bg-zinc-800/50 hover:border-purple-300 dark:hover:border-purple-700 transition-all"
+                  className="group p-6 border-2 border-[var(--color-border)] rounded-xl bg-[var(--color-bg)] hover:border-purple-300 dark:hover:border-purple-700 transition-all"
                 >
                   <div className="flex items-center justify-between mb-6">
-                    <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-linear-to-r from-purple-500 to-pink-600 text-xs font-semibold text-white">
+                    <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--color-accent)] text-xs font-semibold text-white">
                       Carta {index + 1}
                     </span>
                     <button
@@ -671,13 +674,13 @@ export default function CriarBaralho() {
 
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-3">
+                      <label className="block text-sm font-semibold text-[var(--color-text)] mb-3">
                         💭 Frente (Pergunta)
                       </label>
                       {renderCardSide(carta.frente, index, "frente")}
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300 mb-3">
+                      <label className="block text-sm font-semibold text-[var(--color-text)] mb-3">
                         ✨ Verso (Resposta)
                       </label>
                       {renderCardSide(carta.verso, index, "verso")}
@@ -701,7 +704,7 @@ export default function CriarBaralho() {
           <div className="flex justify-between items-center">
             <Link
               href="/baralhos"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-600 transition-colors font-medium"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-200 dark:bg-zinc-700 text-[var(--color-text)] rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-600 transition-colors font-medium"
             >
               <X className="w-4 h-4" />
               Cancelar
@@ -709,7 +712,7 @@ export default function CriarBaralho() {
             <button
               onClick={salvarBaralho}
               disabled={saving || uploading !== null}
-              className="inline-flex items-center gap-2 px-8 py-3 bg-linear-to-r from-purple-500 to-pink-600 text-white rounded-lg hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-[var(--color-accent)] text-white rounded-lg hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? (
                 <>

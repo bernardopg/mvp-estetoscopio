@@ -155,11 +155,11 @@ export default function NotificationsPage() {
               <X className="w-5 h-5" />
             </button>
             <div className="flex-1">
-              <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 flex items-center gap-3">
+              <h1 className="text-3xl font-bold text-[var(--color-text)] flex items-center gap-3">
                 <Bell className="w-8 h-8" />
                 Notificações
               </h1>
-              <p className="text-zinc-600 dark:text-zinc-400 mt-1">
+              <p className="text-[var(--color-text-muted)] mt-1">
                 {unreadCount > 0
                   ? `${unreadCount} não lida${unreadCount > 1 ? "s" : ""}`
                   : "Nenhuma notificação não lida"}
@@ -175,7 +175,7 @@ export default function NotificationsPage() {
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   filter === "all"
                     ? "bg-blue-500 text-white"
-                    : "bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-700"
+                    : "bg-zinc-200 dark:bg-zinc-800 text-[var(--color-text)] hover:bg-zinc-300 dark:hover:bg-zinc-700"
                 }`}
               >
                 Todas
@@ -185,7 +185,7 @@ export default function NotificationsPage() {
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                   filter === "unread"
                     ? "bg-blue-500 text-white"
-                    : "bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-700"
+                    : "bg-zinc-200 dark:bg-zinc-800 text-[var(--color-text)] hover:bg-zinc-300 dark:hover:bg-zinc-700"
                 }`}
               >
                 Não lidas
@@ -219,14 +219,14 @@ export default function NotificationsPage() {
         {loading ? (
           <div className="text-center py-12">
             <div className="inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-            <p className="text-zinc-600 dark:text-zinc-400 mt-4">
+            <p className="text-[var(--color-text-muted)] mt-4">
               Carregando notificações...
             </p>
           </div>
         ) : notifications.length === 0 ? (
-          <div className="text-center py-12 bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 dark:border-zinc-700">
+          <div className="text-center py-12 bg-[var(--color-surface)] rounded-lg border border-[var(--color-border)]">
             <Bell className="w-16 h-16 mx-auto text-zinc-400 mb-4" />
-            <p className="text-xl text-zinc-600 dark:text-zinc-400">
+            <p className="text-xl text-[var(--color-text-muted)]">
               {filter === "unread"
                 ? "Nenhuma notificação não lida"
                 : "Nenhuma notificação"}
@@ -243,7 +243,7 @@ export default function NotificationsPage() {
                   className={`p-4 rounded-lg border transition-all ${
                     isUnread
                       ? "bg-blue-50 dark:bg-blue-950/20 border-blue-200 dark:border-blue-900"
-                      : "bg-white dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700"
+                      : "bg-[var(--color-surface)] border-[var(--color-border)]"
                   }`}
                 >
                   <div className="flex items-start gap-4">
@@ -273,14 +273,14 @@ export default function NotificationsPage() {
                         className={`text-sm mb-2 ${
                           isUnread
                             ? "text-blue-800 dark:text-blue-200"
-                            : "text-zinc-600 dark:text-zinc-400"
+                            : "text-[var(--color-text-muted)]"
                         }`}
                       >
                         {notification.message}
                       </p>
 
                       <div className="flex items-center gap-3 flex-wrap">
-                        <span className="text-xs text-zinc-500 dark:text-zinc-500">
+                        <span className="text-xs text-[var(--color-text-muted)]">
                           {new Date(notification.created_at).toLocaleString(
                             "pt-BR"
                           )}

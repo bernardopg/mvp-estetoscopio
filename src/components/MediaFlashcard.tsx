@@ -46,7 +46,7 @@ function renderCardContent(cardContent: CardContent) {
   switch (cardContent.type) {
     case "text":
       return (
-        <div className="prose text-center text-zinc-900 dark:text-zinc-50 text-2xl font-medium">
+        <div className="prose text-center text-[var(--color-text)] text-2xl font-medium">
           <div dangerouslySetInnerHTML={{ __html: cardContent.content }} />
         </div>
       );
@@ -55,11 +55,11 @@ function renderCardContent(cardContent: CardContent) {
       return (
         <div className="flex flex-col items-center gap-4 w-full">
           {cardContent.text && (
-            <div className="text-center text-zinc-900 dark:text-zinc-50 text-lg px-4 mb-2">
+            <div className="text-center text-[var(--color-text)] text-lg px-4 mb-2">
               {cardContent.text}
             </div>
           )}
-          <div className="relative w-full max-w-md aspect-video rounded-lg overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+          <div className="relative w-full max-w-md aspect-video rounded-lg overflow-hidden bg-[var(--color-accent-soft)]">
             <Image
               src={cardContent.content}
               alt="Flashcard image"
@@ -78,7 +78,7 @@ function renderCardContent(cardContent: CardContent) {
       return (
         <div className="w-full max-w-md mx-auto flex flex-col gap-4">
           {cardContent.text && (
-            <div className="text-center text-zinc-900 dark:text-zinc-50 text-lg px-4">
+            <div className="text-center text-[var(--color-text)] text-lg px-4">
               {cardContent.text}
             </div>
           )}
@@ -138,7 +138,7 @@ export function MediaFlashcard({
   return (
     <div className={`w-full max-w-2xl mx-auto select-none ${className}`}>
       <div className={`flashcard ${flipped ? "is-flipped" : ""}`}>
-        <div className="flashcard-inner rounded-2xl border border-zinc-200/70 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-lg">
+        <div className="flashcard-inner rounded-2xl border border-zinc-200/70 dark:border-zinc-800 bg-[var(--color-surface)] shadow-lg">
           {/* Frente */}
           <div className="flashcard-face p-8 min-h-64 flex items-center justify-center">
             {renderCardContent(front)}

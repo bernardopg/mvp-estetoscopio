@@ -360,11 +360,11 @@ export default function Baralhos() {
 
         return (
           <DraggableDeckCard key={deck.id} id={deck.id}>
-            <div className="group flex flex-col p-6 bg-white dark:bg-zinc-900 rounded-2xl shadow-lg border border-zinc-200 dark:border-zinc-800 hover:shadow-xl hover:border-blue-300 dark:hover:border-blue-800 transition-all duration-200 hover:-translate-y-1">
+            <div className="group flex flex-col p-6 bg-[var(--color-surface)] rounded-2xl shadow-lg border border-[var(--color-border)] hover:shadow-xl hover:border-blue-300 dark:hover:border-blue-800 transition-all duration-200 hover:-translate-y-1">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50 wrap-break-word line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    <h3 className="text-xl font-semibold text-[var(--color-text)] wrap-break-word line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                       {deck.title}
                     </h3>
                     {deck.is_bookmarked === 1 && (
@@ -395,7 +395,7 @@ export default function Baralhos() {
                     </span>
                     {progress && progress.average_difficulty > 0 && (
                       <span
-                        className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${difficulty.color} bg-zinc-100 dark:bg-zinc-800`}
+                        className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium ${difficulty.color} bg-[var(--color-accent-soft)]`}
                       >
                         <TrendingUp className="w-3 h-3" />
                         {difficulty.label}
@@ -408,17 +408,17 @@ export default function Baralhos() {
               {/* Barra de Progresso */}
               {progress && progress.total_cards > 0 && (
                 <div className="mb-3">
-                  <div className="flex items-center justify-between text-xs text-zinc-600 dark:text-zinc-400 mb-1">
+                  <div className="flex items-center justify-between text-xs text-[var(--color-text-muted)] mb-1">
                     <span>Progresso</span>
                     <span className="font-semibold">{progressPercentage}%</span>
                   </div>
                   <div className="h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-linear-to-r from-blue-500 to-indigo-600 transition-all duration-300"
+                      className="h-full bg-[var(--color-accent)] transition-all duration-300"
                       style={{ width: `${progressPercentage}%` }}
                     />
                   </div>
-                  <div className="mt-1 text-xs text-zinc-500 dark:text-zinc-500">
+                  <div className="mt-1 text-xs text-[var(--color-text-muted)]">
                     {progress.cards_completed} de {progress.total_cards} cards
                     revisados
                   </div>
@@ -426,7 +426,7 @@ export default function Baralhos() {
               )}
 
               {/* Informações de Estudo */}
-              <div className="flex flex-col gap-1 text-xs text-zinc-500 dark:text-zinc-500 mb-4">
+              <div className="flex flex-col gap-1 text-xs text-[var(--color-text-muted)] mb-4">
                 {progress?.last_studied_at && (
                   <div className="flex items-center gap-1">
                     <Clock className="w-3 h-3" />
@@ -446,16 +446,16 @@ export default function Baralhos() {
 
               <div className="flex flex-col gap-2 mt-auto">
                 <Link
-                  href={`/baralhos/${deck.id}/estudar`}
-                  className="flex items-center justify-center gap-2 px-4 py-2.5 bg-linear-to-r from-green-500 to-emerald-600 text-white rounded-lg hover:shadow-lg hover:shadow-green-500/30 transition-all duration-200 text-sm font-medium"
+                  href={`/baralhos/estudar?id=${deck.id}`}
+                  className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[var(--color-accent)] text-white rounded-lg hover:shadow-lg hover:shadow-green-500/30 transition-all duration-200 text-sm font-medium"
                 >
                   <Play className="w-4 h-4" />
                   <span>Estudar</span>
                 </Link>
                 <div className="grid grid-cols-3 gap-2">
                   <Link
-                    href={`/baralhos/${deck.id}/editar`}
-                    className="flex items-center justify-center gap-1.5 px-2 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors text-xs font-medium"
+                    href={`/baralhos/editar?id=${deck.id}`}
+                    className="flex items-center justify-center gap-1.5 px-2 py-2 bg-[var(--color-accent-soft)] text-[var(--color-text)] rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors text-xs font-medium"
                   >
                     <Edit className="w-4 h-4" />
                     <span>Editar</span>
@@ -486,27 +486,27 @@ export default function Baralhos() {
 
   // Renderizar visualização em lista
   const renderListView = () => (
-    <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-lg border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+    <div className="bg-[var(--color-surface)] rounded-2xl shadow-lg border border-[var(--color-border)] overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-zinc-50 dark:bg-zinc-800/50 border-b border-zinc-200 dark:border-zinc-800">
+          <thead className="bg-[var(--color-bg)] border-b border-[var(--color-border)]">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-zinc-600 dark:text-zinc-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wider">
                 Título
               </th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-zinc-600 dark:text-zinc-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wider">
                 Pasta
               </th>
-              <th className="px-6 py-3 text-center text-xs font-semibold text-zinc-600 dark:text-zinc-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-center text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wider">
                 Cards
               </th>
-              <th className="px-6 py-3 text-center text-xs font-semibold text-zinc-600 dark:text-zinc-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-center text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wider">
                 Progresso
               </th>
-              <th className="px-6 py-3 text-left text-xs font-semibold text-zinc-600 dark:text-zinc-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wider">
                 Última Revisão
               </th>
-              <th className="px-6 py-3 text-center text-xs font-semibold text-zinc-600 dark:text-zinc-400 uppercase tracking-wider">
+              <th className="px-6 py-3 text-center text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wider">
                 Ações
               </th>
             </tr>
@@ -528,7 +528,7 @@ export default function Baralhos() {
                 >
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium text-zinc-900 dark:text-zinc-50">
+                      <span className="font-medium text-[var(--color-text)]">
                         {deck.title}
                       </span>
                       {deck.is_bookmarked === 1 && (
@@ -538,7 +538,7 @@ export default function Baralhos() {
                   </td>
                   <td className="px-6 py-4">
                     {deck.folder ? (
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">
+                      <span className="text-sm text-[var(--color-text-muted)]">
                         {deck.folder.name}
                       </span>
                     ) : (
@@ -546,7 +546,7 @@ export default function Baralhos() {
                     )}
                   </td>
                   <td className="px-6 py-4 text-center">
-                    <span className="text-sm font-medium text-zinc-900 dark:text-zinc-50">
+                    <span className="text-sm font-medium text-[var(--color-text)]">
                       {cards.length}
                     </span>
                   </td>
@@ -554,17 +554,17 @@ export default function Baralhos() {
                     <div className="flex items-center gap-2">
                       <div className="flex-1 h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-linear-to-r from-blue-500 to-indigo-600"
+                          className="h-full bg-[var(--color-accent)]"
                           style={{ width: `${progressPercentage}%` }}
                         />
                       </div>
-                      <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400">
+                      <span className="text-xs font-medium text-[var(--color-text-muted)]">
                         {progressPercentage}%
                       </span>
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="text-sm text-zinc-600 dark:text-zinc-400">
+                    <span className="text-sm text-[var(--color-text-muted)]">
                       {progress?.last_studied_at
                         ? getRelativeTime(progress.last_studied_at)
                         : "Nunca"}
@@ -573,14 +573,14 @@ export default function Baralhos() {
                   <td className="px-6 py-4">
                     <div className="flex items-center justify-center gap-2">
                       <Link
-                        href={`/baralhos/${deck.id}/estudar`}
+                        href={`/baralhos/estudar?id=${deck.id}`}
                         className="p-2 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-950/30 rounded-lg transition-colors"
                         title="Estudar"
                       >
                         <Play className="w-4 h-4" />
                       </Link>
                       <Link
-                        href={`/baralhos/${deck.id}/editar`}
+                        href={`/baralhos/editar?id=${deck.id}`}
                         className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 rounded-lg transition-colors"
                         title="Editar"
                       >
@@ -626,9 +626,9 @@ export default function Baralhos() {
         <div key={folderKey} style={{ marginLeft: `${depth * 24}px` }}>
           {childFolders.map((folder) => (
             <div key={`folder-${folder.id}`} className="mb-2">
-              <div className="flex items-center gap-2 px-4 py-2 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg">
-                <FolderOpen className="w-4 h-4 text-zinc-600 dark:text-zinc-400" />
-                <span className="font-medium text-zinc-900 dark:text-zinc-50">
+              <div className="flex items-center gap-2 px-4 py-2 bg-[var(--color-bg)] rounded-lg">
+                <FolderOpen className="w-4 h-4 text-[var(--color-text-muted)]" />
+                <span className="font-medium text-[var(--color-text)]">
                   {folder.name}
                 </span>
                 <span className="text-xs text-zinc-500">
@@ -644,13 +644,13 @@ export default function Baralhos() {
             return (
               <div
                 key={`deck-${deck.id}`}
-                className="flex items-center justify-between px-4 py-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg mb-2 hover:border-blue-300 dark:hover:border-blue-800 transition-colors"
+                className="flex items-center justify-between px-4 py-3 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg mb-2 hover:border-blue-300 dark:hover:border-blue-800 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <Library className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-medium text-zinc-900 dark:text-zinc-50">
+                      <span className="font-medium text-[var(--color-text)]">
                         {deck.title}
                       </span>
                       {deck.is_bookmarked === 1 && (
@@ -664,13 +664,13 @@ export default function Baralhos() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Link
-                    href={`/baralhos/${deck.id}/estudar`}
+                    href={`/baralhos/estudar?id=${deck.id}`}
                     className="p-2 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-950/30 rounded-lg transition-colors"
                   >
                     <Play className="w-4 h-4" />
                   </Link>
                   <Link
-                    href={`/baralhos/${deck.id}/editar`}
+                    href={`/baralhos/editar?id=${deck.id}`}
                     className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 rounded-lg transition-colors"
                   >
                     <Edit className="w-4 h-4" />
@@ -694,13 +694,13 @@ export default function Baralhos() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-zinc-50 via-blue-50/20 to-indigo-50/20 dark:from-black dark:via-blue-950/10 dark:to-indigo-950/10 py-16 px-6">
+      <div className="min-h-screen bg-[var(--color-bg)] py-16 px-6">
         <div className="mx-auto max-w-7xl">
           <div className="flex items-center gap-3 mb-8">
-            <div className="p-2 rounded-lg bg-linear-to-br from-blue-500 to-indigo-600 shadow-lg">
+            <div className="p-2 rounded-lg bg-[var(--color-accent)] shadow-lg">
               <Library className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50">
+            <h1 className="text-4xl font-bold text-[var(--color-text)]">
               Meus Baralhos
             </h1>
           </div>
@@ -718,12 +718,12 @@ export default function Baralhos() {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="min-h-screen bg-linear-to-br from-zinc-50 via-blue-50/20 to-indigo-50/20 dark:from-black dark:via-blue-950/10 dark:to-indigo-950/10 py-16 px-6">
+      <div className="min-h-screen bg-[var(--color-bg)] py-16 px-6">
         <div className="mx-auto max-w-7xl">
           <div className="flex gap-6">
             {/* Sidebar com FolderTree */}
             <aside className="w-72 shrink-0 sticky top-16 self-start">
-              <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-lg border border-zinc-200 dark:border-zinc-800 p-6">
+              <div className="bg-[var(--color-surface)] rounded-2xl shadow-lg border border-[var(--color-border)] p-6">
                 <h3 className="text-sm font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-4">
                   Organização
                 </h3>
@@ -734,7 +734,7 @@ export default function Baralhos() {
                     className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all mb-2 ${
                       selectedFolder === null
                         ? "bg-blue-100 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300"
-                        : "hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+                        : "hover:bg-zinc-100 dark:hover:bg-zinc-800 text-[var(--color-text)]"
                     }`}
                     onClick={() => setSelectedFolder(null)}
                   >
@@ -742,7 +742,7 @@ export default function Baralhos() {
                     <span className="flex-1 text-sm font-medium">
                       Todos os Baralhos
                     </span>
-                    <span className="text-xs text-zinc-500 dark:text-zinc-500">
+                    <span className="text-xs text-[var(--color-text-muted)]">
                       {decks.filter((d) => !d.folder_id).length}
                     </span>
                   </div>
@@ -760,13 +760,13 @@ export default function Baralhos() {
                 />
 
                 {/* Filtros */}
-                <div className="mt-6 pt-6 border-t border-zinc-200 dark:border-zinc-800">
+                <div className="mt-6 pt-6 border-t border-[var(--color-border)]">
                   <button
                     onClick={() => setShowBookmarked(!showBookmarked)}
                     className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                       showBookmarked
                         ? "bg-amber-100 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400"
-                        : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                        : "text-[var(--color-text-muted)] hover:bg-zinc-100 dark:hover:bg-zinc-800"
                     }`}
                   >
                     <Bookmark
@@ -789,10 +789,10 @@ export default function Baralhos() {
               <div className="flex justify-between items-start mb-8">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="p-2 rounded-lg bg-linear-to-br from-blue-500 to-indigo-600 shadow-lg">
+                    <div className="p-2 rounded-lg bg-[var(--color-accent)] shadow-lg">
                       <Library className="w-6 h-6 text-white" />
                     </div>
-                    <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50">
+                    <h1 className="text-4xl font-bold text-[var(--color-text)]">
                       Meus Baralhos
                     </h1>
                   </div>
@@ -807,7 +807,7 @@ export default function Baralhos() {
 
                 <Link
                   href="/baralhos/criar"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-200 font-medium"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-accent)] text-white rounded-lg hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-200 font-medium"
                 >
                   <Plus className="w-4 h-4" />
                   Criar Novo
@@ -815,7 +815,7 @@ export default function Baralhos() {
 
                 <Link
                   href="/baralhos/importar"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-green-500 to-emerald-600 text-white rounded-lg hover:shadow-lg hover:shadow-green-500/30 transition-all duration-200 font-medium"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-accent)] text-white rounded-lg hover:shadow-lg hover:shadow-green-500/30 transition-all duration-200 font-medium"
                 >
                   <Upload className="w-4 h-4" />
                   Importar
@@ -832,18 +832,18 @@ export default function Baralhos() {
                     placeholder="Buscar baralhos..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-zinc-900 dark:text-zinc-50 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full pl-10 pr-4 py-2 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg text-[var(--color-text)] placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
                 {/* Toggle de Visualização */}
-                <div className="flex gap-1 p-1 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+                <div className="flex gap-1 p-1 bg-[var(--color-accent-soft)] rounded-lg">
                   <button
                     onClick={() => setViewMode("cards")}
                     className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all ${
                       viewMode === "cards"
-                        ? "bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 shadow"
-                        : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50"
+                        ? "bg-white dark:bg-zinc-700 text-[var(--color-text)] shadow"
+                        : "text-[var(--color-text-muted)] hover:text-zinc-900 dark:hover:text-zinc-50"
                     }`}
                     title="Visualização em Cards"
                   >
@@ -854,8 +854,8 @@ export default function Baralhos() {
                     onClick={() => setViewMode("list")}
                     className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all ${
                       viewMode === "list"
-                        ? "bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 shadow"
-                        : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50"
+                        ? "bg-white dark:bg-zinc-700 text-[var(--color-text)] shadow"
+                        : "text-[var(--color-text-muted)] hover:text-zinc-900 dark:hover:text-zinc-50"
                     }`}
                     title="Visualização em Lista"
                   >
@@ -866,8 +866,8 @@ export default function Baralhos() {
                     onClick={() => setViewMode("tree")}
                     className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all ${
                       viewMode === "tree"
-                        ? "bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 shadow"
-                        : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50"
+                        ? "bg-white dark:bg-zinc-700 text-[var(--color-text)] shadow"
+                        : "text-[var(--color-text-muted)] hover:text-zinc-900 dark:hover:text-zinc-50"
                     }`}
                     title="Visualização em Árvore"
                   >
@@ -879,19 +879,19 @@ export default function Baralhos() {
 
               {decks.length === 0 ? (
                 <div className="text-center py-20">
-                  <div className="mb-6 inline-flex p-4 rounded-2xl bg-zinc-100 dark:bg-zinc-800">
+                  <div className="mb-6 inline-flex p-4 rounded-2xl bg-[var(--color-accent-soft)]">
                     <Library className="w-16 h-16 text-zinc-400 dark:text-zinc-600" />
                   </div>
-                  <h3 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50 mb-3">
+                  <h3 className="text-2xl font-semibold text-[var(--color-text)] mb-3">
                     Nenhum baralho ainda
                   </h3>
-                  <p className="text-zinc-600 dark:text-zinc-400 mb-8 max-w-md mx-auto">
+                  <p className="text-[var(--color-text-muted)] mb-8 max-w-md mx-auto">
                     Crie seu primeiro baralho para começar a organizar seus
                     estudos.
                   </p>
                   <Link
                     href="/baralhos/criar"
-                    className="inline-flex items-center gap-2 px-8 py-4 bg-linear-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-200 font-medium text-lg"
+                    className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--color-accent)] text-white rounded-lg hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-200 font-medium text-lg"
                   >
                     <Plus className="w-5 h-5" />
                     Criar Primeiro Baralho
@@ -899,7 +899,7 @@ export default function Baralhos() {
                 </div>
               ) : filteredDecks.length === 0 ? (
                 <div className="text-center py-20">
-                  <p className="text-zinc-600 dark:text-zinc-400">
+                  <p className="text-[var(--color-text-muted)]">
                     Nenhum baralho encontrado com os filtros aplicados.
                   </p>
                 </div>
@@ -917,17 +917,17 @@ export default function Baralhos() {
         {/* Modal de confirmação de delete */}
         {deleteModal.isOpen && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-white dark:bg-zinc-900 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl border border-zinc-200 dark:border-zinc-800">
+            <div className="bg-[var(--color-surface)] rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl border border-[var(--color-border)]">
               <div className="mb-6">
                 <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-950/50 flex items-center justify-center mb-4">
                   <Trash2 className="w-6 h-6 text-red-600 dark:text-red-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+                <h3 className="text-2xl font-bold text-[var(--color-text)] mb-2">
                   Confirmar exclusão
                 </h3>
-                <p className="text-zinc-600 dark:text-zinc-400">
+                <p className="text-[var(--color-text-muted)]">
                   Tem certeza que deseja deletar o baralho{" "}
-                  <strong className="text-zinc-900 dark:text-zinc-50">
+                  <strong className="text-[var(--color-text)]">
                     {deleteModal.deckTitle}
                   </strong>
                   ? Esta ação não pode ser desfeita.
@@ -936,7 +936,7 @@ export default function Baralhos() {
               <div className="flex gap-3">
                 <button
                   onClick={closeDeleteModal}
-                  className="flex-1 px-4 py-3 bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-600 transition-colors font-medium"
+                  className="flex-1 px-4 py-3 bg-zinc-200 dark:bg-zinc-700 text-[var(--color-text)] rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-600 transition-colors font-medium"
                 >
                   Cancelar
                 </button>
@@ -963,8 +963,8 @@ export default function Baralhos() {
       {/* Drag Overlay */}
       <DragOverlay>
         {activeDragId ? (
-          <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border-2 border-blue-500 p-6 opacity-90 cursor-grabbing">
-            <div className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+          <div className="bg-[var(--color-surface)] rounded-2xl shadow-2xl border-2 border-blue-500 p-6 opacity-90 cursor-grabbing">
+            <div className="text-lg font-semibold text-[var(--color-text)]">
               {decks.find((d) => d.id === activeDragId)?.title}
             </div>
           </div>

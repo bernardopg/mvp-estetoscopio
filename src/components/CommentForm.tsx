@@ -76,7 +76,7 @@ export default function CommentForm({
           rows={3}
           autoFocus={autoFocus}
           disabled={loading}
-          className="w-full px-4 py-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-zinc-900 dark:text-zinc-50 placeholder-zinc-400 dark:placeholder-zinc-500 resize-none disabled:opacity-50"
+          className="w-full px-4 py-3 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-[var(--color-text)] placeholder-zinc-400 dark:placeholder-zinc-500 resize-none disabled:opacity-50"
         />
         {error && (
           <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>
@@ -89,7 +89,7 @@ export default function CommentForm({
             type="button"
             onClick={onCancel}
             disabled={loading}
-            className="px-4 py-2 text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors disabled:opacity-50"
+            className="px-4 py-2 text-sm text-[var(--color-text-muted)] hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors disabled:opacity-50"
           >
             Cancelar
           </button>

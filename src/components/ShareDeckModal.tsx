@@ -100,15 +100,15 @@ export default function ShareDeckModal({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-zinc-800 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-[var(--color-surface)] rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-zinc-200 dark:border-zinc-700">
+        <div className="flex items-center justify-between p-6 border-b border-[var(--color-border)]">
           <div>
-            <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-[var(--color-text)] flex items-center gap-2">
               <Share2 className="w-6 h-6 text-blue-600" />
               Compartilhar Baralho
             </h2>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">
+            <p className="text-sm text-[var(--color-text-muted)] mt-1">
               {deckTitle}
             </p>
           </div>
@@ -116,7 +116,7 @@ export default function ShareDeckModal({
             onClick={onClose}
             className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded-lg transition-colors"
           >
-            <X className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
+            <X className="w-5 h-5 text-[var(--color-text-muted)]" />
           </button>
         </div>
 
@@ -124,12 +124,12 @@ export default function ShareDeckModal({
         <div className="p-6 space-y-6">
           {/* Select Community */}
           <div>
-            <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-50 mb-3">
+            <label className="block text-sm font-medium text-[var(--color-text)] mb-3">
               Escolha a comunidade
             </label>
             {communities.length === 0 ? (
               <div className="text-center py-8 bg-zinc-50 dark:bg-zinc-900 rounded-lg">
-                <p className="text-zinc-600 dark:text-zinc-400 mb-2">
+                <p className="text-[var(--color-text-muted)] mb-2">
                   Você ainda não é membro de nenhuma comunidade.
                 </p>
                 <Link
@@ -148,7 +148,7 @@ export default function ShareDeckModal({
                     className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all text-left ${
                       selectedCommunity === community.id
                         ? "border-blue-600 bg-blue-50 dark:bg-blue-900/20"
-                        : "border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600"
+                        : "border-[var(--color-border)] hover:border-[var(--color-accent)]"
                     }`}
                   >
                     <div
@@ -158,10 +158,10 @@ export default function ShareDeckModal({
                       {community.icon}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-zinc-900 dark:text-zinc-50 truncate">
+                      <p className="font-medium text-[var(--color-text)] truncate">
                         {community.name}
                       </p>
-                      <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                      <p className="text-sm text-[var(--color-text-muted)]">
                         {community.member_count} membros
                       </p>
                     </div>
@@ -176,7 +176,7 @@ export default function ShareDeckModal({
 
           {/* Permission Level */}
           <div>
-            <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-50 mb-3">
+            <label className="block text-sm font-medium text-[var(--color-text)] mb-3">
               Nível de permissão
             </label>
             <div className="grid grid-cols-1 gap-3">
@@ -185,17 +185,17 @@ export default function ShareDeckModal({
                 className={`flex items-start gap-3 p-4 rounded-lg border-2 transition-all text-left ${
                   permissionLevel === "view"
                     ? "border-blue-600 bg-blue-50 dark:bg-blue-900/20"
-                    : "border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600"
+                    : "border-[var(--color-border)] hover:border-[var(--color-accent)]"
                 }`}
               >
                 <div className="w-10 h-10 bg-zinc-500 rounded-lg flex items-center justify-center text-white shrink-0">
                   <Eye className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="font-medium text-zinc-900 dark:text-zinc-50 mb-1">
+                  <p className="font-medium text-[var(--color-text)] mb-1">
                     Visualizar
                   </p>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                  <p className="text-sm text-[var(--color-text-muted)]">
                     Membros podem apenas visualizar e estudar o baralho
                   </p>
                 </div>
@@ -206,17 +206,17 @@ export default function ShareDeckModal({
                 className={`flex items-start gap-3 p-4 rounded-lg border-2 transition-all text-left ${
                   permissionLevel === "edit"
                     ? "border-blue-600 bg-blue-50 dark:bg-blue-900/20"
-                    : "border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600"
+                    : "border-[var(--color-border)] hover:border-[var(--color-accent)]"
                 }`}
               >
                 <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center text-white shrink-0">
                   <Edit className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="font-medium text-zinc-900 dark:text-zinc-50 mb-1">
+                  <p className="font-medium text-[var(--color-text)] mb-1">
                     Editar
                   </p>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                  <p className="text-sm text-[var(--color-text-muted)]">
                     Membros podem visualizar, estudar e editar o baralho
                   </p>
                 </div>
@@ -227,17 +227,17 @@ export default function ShareDeckModal({
                 className={`flex items-start gap-3 p-4 rounded-lg border-2 transition-all text-left ${
                   permissionLevel === "clone"
                     ? "border-blue-600 bg-blue-50 dark:bg-blue-900/20"
-                    : "border-zinc-200 dark:border-zinc-700 hover:border-zinc-300 dark:hover:border-zinc-600"
+                    : "border-[var(--color-border)] hover:border-[var(--color-accent)]"
                 }`}
               >
                 <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center text-white shrink-0">
                   <Copy className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="font-medium text-zinc-900 dark:text-zinc-50 mb-1">
+                  <p className="font-medium text-[var(--color-text)] mb-1">
                     Clonar
                   </p>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                  <p className="text-sm text-[var(--color-text-muted)]">
                     Membros podem visualizar, estudar e criar uma cópia para sua
                     biblioteca
                   </p>
@@ -249,10 +249,10 @@ export default function ShareDeckModal({
           {/* Allow Comments */}
           <div className="flex items-center justify-between p-4 bg-zinc-50 dark:bg-zinc-900 rounded-lg">
             <div>
-              <p className="font-medium text-zinc-900 dark:text-zinc-50 mb-1">
+              <p className="font-medium text-[var(--color-text)] mb-1">
                 Permitir comentários
               </p>
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              <p className="text-sm text-[var(--color-text-muted)]">
                 Membros poderão comentar sobre o baralho
               </p>
             </div>
@@ -279,10 +279,10 @@ export default function ShareDeckModal({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end gap-3 p-6 border-t border-zinc-200 dark:border-zinc-700">
+        <div className="flex items-center justify-end gap-3 p-6 border-t border-[var(--color-border)]">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors"
+            className="px-4 py-2 text-[var(--color-text-muted)] hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors"
             disabled={loading}
           >
             Cancelar

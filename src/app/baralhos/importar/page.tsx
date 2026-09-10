@@ -111,31 +111,31 @@ export default function ImportarBaralho() {
         <div className="mb-8">
           <button
             onClick={() => router.back()}
-            className="mb-4 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors inline-flex items-center gap-2"
+            className="mb-4 text-[var(--color-text-muted)] hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors inline-flex items-center gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
             Voltar
           </button>
 
-          <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50 mb-2 flex items-center gap-3">
+          <h1 className="text-4xl font-bold text-[var(--color-text)] mb-2 flex items-center gap-3">
             <Upload className="w-10 h-10" />
             Importar Baralho
           </h1>
-          <p className="text-zinc-600 dark:text-zinc-400">
+          <p className="text-[var(--color-text-muted)]">
             Importe um baralho exportado em formato JSON
           </p>
         </div>
 
         {success ? (
           // Mensagem de sucesso
-          <div className="bg-white dark:bg-zinc-800 rounded-xl shadow-sm p-12 text-center border border-green-200 dark:border-green-900">
+          <div className="bg-[var(--color-surface)] rounded-xl shadow-sm p-12 text-center border border-green-200 dark:border-green-900">
             <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="w-8 h-8 text-green-600 dark:text-green-400" />
             </div>
-            <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+            <h2 className="text-2xl font-bold text-[var(--color-text)] mb-2">
               Baralho importado com sucesso!
             </h2>
-            <p className="text-zinc-600 dark:text-zinc-400 mb-4">
+            <p className="text-[var(--color-text-muted)] mb-4">
               Redirecionando para seus baralhos...
             </p>
           </div>
@@ -143,16 +143,16 @@ export default function ImportarBaralho() {
           <>
             {/* Upload Area */}
             {!file ? (
-              <div className="bg-white dark:bg-zinc-800 rounded-xl shadow-sm p-8 border-2 border-dashed border-zinc-300 dark:border-zinc-700 hover:border-blue-500 dark:hover:border-blue-500 transition-colors">
+              <div className="bg-[var(--color-surface)] rounded-xl shadow-sm p-8 border-2 border-dashed border-zinc-300 dark:border-zinc-700 hover:border-blue-500 dark:hover:border-blue-500 transition-colors">
                 <label className="flex flex-col items-center justify-center gap-4 cursor-pointer">
                   <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center">
                     <FileJson className="w-8 h-8 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div className="text-center">
-                    <p className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-1">
+                    <p className="text-lg font-semibold text-[var(--color-text)] mb-1">
                       Clique para selecionar um arquivo JSON
                     </p>
-                    <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                    <p className="text-sm text-[var(--color-text-muted)]">
                       ou arraste e solte aqui
                     </p>
                   </div>
@@ -167,12 +167,12 @@ export default function ImportarBaralho() {
             ) : (
               <>
                 {/* Preview */}
-                <div className="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-700 overflow-hidden mb-6">
+                <div className="bg-[var(--color-surface)] rounded-xl shadow-sm border border-[var(--color-border)] overflow-hidden mb-6">
                   {/* Header do Preview */}
-                  <div className="p-4 bg-zinc-50 dark:bg-zinc-900/50 border-b border-zinc-200 dark:border-zinc-700 flex items-center justify-between">
+                  <div className="p-4 bg-zinc-50 dark:bg-zinc-900/50 border-b border-[var(--color-border)] flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <FileJson className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                      <span className="font-medium text-zinc-900 dark:text-zinc-50">
+                      <span className="font-medium text-[var(--color-text)]">
                         {file.name}
                       </span>
                       <span className="text-sm text-zinc-500 dark:text-zinc-400">
@@ -202,10 +202,10 @@ export default function ImportarBaralho() {
                           </div>
                         )}
                         <div className="flex-1">
-                          <h3 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+                          <h3 className="text-2xl font-bold text-[var(--color-text)] mb-2">
                             {preview.title}
                           </h3>
-                          <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-600 dark:text-zinc-400">
+                          <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--color-text-muted)]">
                             <span className="flex items-center gap-1">
                               📇 {preview.cardsCount} cards
                             </span>
@@ -228,7 +228,7 @@ export default function ImportarBaralho() {
                         <button
                           onClick={handleImport}
                           disabled={loading}
-                          className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-linear-to-r from-green-500 to-emerald-600 text-white rounded-lg hover:shadow-lg hover:shadow-green-500/30 transition-all duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-[var(--color-accent)] text-white rounded-lg hover:shadow-lg hover:shadow-green-500/30 transition-all duration-200 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           {loading ? (
                             <>
@@ -245,7 +245,7 @@ export default function ImportarBaralho() {
                         <button
                           onClick={clearFile}
                           disabled={loading}
-                          className="px-6 py-3 bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="px-6 py-3 bg-zinc-200 dark:bg-zinc-700 text-[var(--color-text)] rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           Cancelar
                         </button>

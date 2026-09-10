@@ -142,16 +142,16 @@ export default function NotificationSettingsPage() {
         <div className="mb-8">
           <button
             onClick={() => router.push("/perfil")}
-            className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors inline-flex items-center gap-2"
+            className="text-[var(--color-text-muted)] hover:text-zinc-900 dark:hover:text-zinc-50 transition-colors inline-flex items-center gap-2"
           >
             ← Voltar para o perfil
           </button>
 
-          <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mt-4">
+          <h1 className="text-3xl font-bold text-[var(--color-text)] mt-4">
             Configurações de Notificações
           </h1>
 
-          <p className="text-zinc-600 dark:text-zinc-400 mt-2">
+          <p className="text-[var(--color-text-muted)] mt-2">
             Escolha quais notificações você deseja receber
           </p>
         </div>
@@ -169,7 +169,7 @@ export default function NotificationSettingsPage() {
         )}
 
         {/* Settings */}
-        <div className="bg-white dark:bg-zinc-800 rounded-xl shadow-sm divide-y divide-zinc-200 dark:divide-zinc-700">
+        <div className="bg-[var(--color-surface)] rounded-xl shadow-sm divide-y divide-zinc-200 dark:divide-zinc-700">
           {notificationTypes.map((type) => (
             <div
               key={type.key}
@@ -177,14 +177,14 @@ export default function NotificationSettingsPage() {
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-4">
-                  <div className="shrink-0 w-10 h-10 bg-zinc-100 dark:bg-zinc-700 rounded-lg flex items-center justify-center text-zinc-600 dark:text-zinc-400">
+                  <div className="shrink-0 w-10 h-10 bg-zinc-100 dark:bg-zinc-700 rounded-lg flex items-center justify-center text-[var(--color-text-muted)]">
                     {type.icon}
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
+                    <h3 className="text-lg font-semibold text-[var(--color-text)]">
                       {type.title}
                     </h3>
-                    <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">
+                    <p className="text-sm text-[var(--color-text-muted)] mt-1">
                       {type.description}
                     </p>
                   </div>

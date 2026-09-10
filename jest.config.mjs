@@ -13,10 +13,7 @@ const config = {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
   testMatch: ["**/__tests__/**/*.test.ts", "**/__tests__/**/*.test.tsx"],
-  collectCoverageFrom: [
-    "src/lib/**/*.ts",
-    "!src/lib/db.ts", // requer banco local; testado via integração
-  ],
+  collectCoverageFrom: ["src/lib/**/*.ts"],
 };
 
 export default createJestConfig(config);

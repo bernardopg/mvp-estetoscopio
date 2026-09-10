@@ -71,12 +71,12 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-zinc-50 via-blue-50/20 to-purple-50/20 dark:from-black dark:via-blue-950/10 dark:to-purple-950/10 flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--color-bg)] flex items-center justify-center">
         <div className="text-center">
-          <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-linear-to-br from-blue-500 to-purple-600 shadow-xl shadow-blue-500/30 mb-4">
+          <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-[var(--color-accent)] shadow-xl shadow-blue-500/30 mb-4">
             <GraduationCap className="w-12 h-12 text-white animate-pulse" />
           </div>
-          <p className="text-zinc-600 dark:text-zinc-400">
+          <p className="text-[var(--color-text-muted)]">
             Carregando dashboard...
           </p>
         </div>
@@ -85,23 +85,23 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-zinc-50 via-blue-50/20 to-purple-50/20 dark:from-black dark:via-blue-950/10 dark:to-purple-950/10 py-8 px-6">
+    <div className="min-h-screen bg-[var(--color-bg)] py-8 px-6">
       <div className="max-w-7xl mx-auto">
         {/* Header com perfil */}
         <div className="mb-8">
           <div className="flex items-start justify-between mb-6">
             <div>
-              <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+              <h1 className="text-4xl font-bold text-[var(--color-text)] mb-2">
                 Dashboard
               </h1>
-              <p className="text-zinc-600 dark:text-zinc-400">
+              <p className="text-[var(--color-text-muted)]">
                 Bem-vindo de volta, {dashboardData?.user.name}!
               </p>
             </div>
             <div className="flex items-center gap-4">
               <Link
                 href="/baralhos/criar"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-linear-to-br from-blue-500 to-purple-600 text-white font-medium shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--color-accent)] text-white font-medium shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all duration-300"
               >
                 <Plus className="w-5 h-5" />
                 Novo Baralho
@@ -110,22 +110,22 @@ export default function Home() {
           </div>
 
           {/* Perfil Card */}
-          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg">
+          <div className="p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-lg">
             <div className="flex items-center gap-4">
-              <div className="p-4 rounded-full bg-linear-to-br from-blue-500 to-purple-600 shadow-lg">
+              <div className="p-4 rounded-full bg-[var(--color-accent)] shadow-lg">
                 <User className="w-8 h-8 text-white" />
               </div>
               <div className="flex-1">
-                <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+                <h2 className="text-2xl font-bold text-[var(--color-text)]">
                   {dashboardData?.user.name}
                 </h2>
-                <p className="text-zinc-600 dark:text-zinc-400">
+                <p className="text-[var(--color-text-muted)]">
                   {dashboardData?.user.email}
                 </p>
               </div>
               <div className="flex items-center gap-4">
                 <div className="text-right">
-                  <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
+                  <div className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
                     <Calendar className="w-4 h-4" />
                     <span>
                       Conta criada há {dashboardData?.user.accountAge || 0} dias
@@ -134,7 +134,7 @@ export default function Home() {
                 </div>
                 <Link
                   href="/perfil"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 text-[var(--color-text)] hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all"
                   title="Editar Perfil"
                 >
                   <Settings className="w-4 h-4" />
@@ -148,7 +148,7 @@ export default function Home() {
         {/* Estatísticas principais */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {/* Cards devidos hoje */}
-          <div className="p-6 rounded-xl bg-linear-to-br from-orange-500 to-red-600 text-white shadow-lg hover:shadow-xl transition-shadow">
+          <div className="p-6 rounded-xl bg-[var(--color-accent)] text-white shadow-lg hover:shadow-xl transition-shadow">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 rounded-lg bg-white/20">
                 <Target className="w-6 h-6" />
@@ -166,52 +166,52 @@ export default function Home() {
           </div>
 
           {/* Streak */}
-          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg hover:shadow-xl transition-shadow">
+          <div className="p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-lg hover:shadow-xl transition-shadow">
             <div className="flex items-center justify-between mb-4">
-              <div className="p-3 rounded-lg bg-linear-to-br from-amber-400 to-orange-500">
+              <div className="p-3 rounded-lg bg-[var(--color-accent)]">
                 <Flame className="w-6 h-6 text-white" />
               </div>
             </div>
-            <p className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-1">
+            <p className="text-3xl font-bold text-[var(--color-text)] mb-1">
               {dashboardData?.stats.streak || 0} dias
             </p>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+            <p className="text-sm text-[var(--color-text-muted)]">
               Sequência de Estudo
             </p>
           </div>
 
           {/* Cards estudados hoje */}
-          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg hover:shadow-xl transition-shadow">
+          <div className="p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-lg hover:shadow-xl transition-shadow">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 rounded-lg bg-emerald-100 dark:bg-emerald-950/50">
                 <CheckCircle2 className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
               </div>
             </div>
-            <p className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-1">
+            <p className="text-3xl font-bold text-[var(--color-text)] mb-1">
               {dashboardData?.stats.cardsStudiedToday || 0}
             </p>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+            <p className="text-sm text-[var(--color-text-muted)]">
               Estudados Hoje
             </p>
-            <p className="text-xs text-zinc-500 dark:text-zinc-500 mt-1">
+            <p className="text-xs text-[var(--color-text-muted)] mt-1">
               {dashboardData?.stats.cardsStudiedWeek || 0} esta semana
             </p>
           </div>
 
           {/* Total de cards */}
-          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg hover:shadow-xl transition-shadow">
+          <div className="p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-lg hover:shadow-xl transition-shadow">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 rounded-lg bg-blue-100 dark:bg-blue-950/50">
                 <Library className="w-6 h-6 text-blue-600 dark:text-blue-400" />
               </div>
             </div>
-            <p className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-1">
+            <p className="text-3xl font-bold text-[var(--color-text)] mb-1">
               {dashboardData?.stats.totalCards || 0}
             </p>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+            <p className="text-sm text-[var(--color-text-muted)]">
               Total de Cards
             </p>
-            <p className="text-xs text-zinc-500 dark:text-zinc-500 mt-1">
+            <p className="text-xs text-[var(--color-text-muted)] mt-1">
               {dashboardData?.stats.totalDecks || 0} baralhos
             </p>
           </div>
@@ -219,53 +219,53 @@ export default function Home() {
 
         {/* Estatísticas de revisão */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg">
+          <div className="p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-lg">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-green-100 dark:bg-green-950/50">
                 <Zap className="w-5 h-5 text-green-600 dark:text-green-400" />
               </div>
-              <h3 className="font-semibold text-zinc-900 dark:text-zinc-50">
+              <h3 className="font-semibold text-[var(--color-text)]">
                 Cards Maduros
               </h3>
             </div>
-            <p className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+            <p className="text-2xl font-bold text-[var(--color-text)]">
               {dashboardData?.stats.matureCards || 0}
             </p>
-            <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1">
+            <p className="text-xs text-[var(--color-text-muted)] mt-1">
               Revisados 2+ vezes
             </p>
           </div>
 
-          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg">
+          <div className="p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-lg">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-yellow-100 dark:bg-yellow-950/50">
                 <BookOpen className="w-5 h-5 text-yellow-600 dark:text-yellow-400" />
               </div>
-              <h3 className="font-semibold text-zinc-900 dark:text-zinc-50">
+              <h3 className="font-semibold text-[var(--color-text)]">
                 Cards Jovens
               </h3>
             </div>
-            <p className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+            <p className="text-2xl font-bold text-[var(--color-text)]">
               {dashboardData?.stats.youngCards || 0}
             </p>
-            <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1">
+            <p className="text-xs text-[var(--color-text-muted)] mt-1">
               Revisado 1 vez
             </p>
           </div>
 
-          <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg">
+          <div className="p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-lg">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-lg bg-purple-100 dark:bg-purple-950/50">
                 <Sparkles className="w-5 h-5 text-purple-600 dark:text-purple-400" />
               </div>
-              <h3 className="font-semibold text-zinc-900 dark:text-zinc-50">
+              <h3 className="font-semibold text-[var(--color-text)]">
                 Cards Novos
               </h3>
             </div>
-            <p className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+            <p className="text-2xl font-bold text-[var(--color-text)]">
               {dashboardData?.stats.newCards || 0}
             </p>
-            <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1">
+            <p className="text-xs text-[var(--color-text-muted)] mt-1">
               Nunca revisados
             </p>
           </div>
@@ -275,9 +275,9 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Baralhos recentes */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg">
+            <div className="p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-lg">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">
+                <h2 className="text-xl font-bold text-[var(--color-text)]">
                   Baralhos Recentes
                 </h2>
                 <Link
@@ -294,8 +294,8 @@ export default function Home() {
                   {dashboardData.recentDecks.map((deck) => (
                     <Link
                       key={deck.id}
-                      href={`/baralhos/${deck.id}/estudar`}
-                      className="block p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-md transition-all"
+                      href={`/baralhos/estudar?id=${deck.id}`}
+                      className="block p-4 rounded-lg border border-[var(--color-border)] hover:border-blue-500 dark:hover:border-blue-500 hover:shadow-md transition-all"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
@@ -303,10 +303,10 @@ export default function Home() {
                             <Library className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                           </div>
                           <div>
-                            <h3 className="font-semibold text-zinc-900 dark:text-zinc-50">
+                            <h3 className="font-semibold text-[var(--color-text)]">
                               {deck.title}
                             </h3>
-                            <div className="flex items-center gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+                            <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
                               <Clock className="w-3 h-3" />
                               <span>
                                 Atualizado{" "}
@@ -317,7 +317,7 @@ export default function Home() {
                             </div>
                           </div>
                         </div>
-                        <div className="text-sm text-zinc-600 dark:text-zinc-400">
+                        <div className="text-sm text-[var(--color-text-muted)]">
                           <span>Estudar →</span>
                         </div>
                       </div>
@@ -327,7 +327,7 @@ export default function Home() {
               ) : (
                 <div className="text-center py-12">
                   <Library className="w-12 h-12 text-zinc-300 dark:text-zinc-700 mx-auto mb-4" />
-                  <p className="text-zinc-600 dark:text-zinc-400 mb-4">
+                  <p className="text-[var(--color-text-muted)] mb-4">
                     Você ainda não tem baralhos
                   </p>
                   <Link
@@ -343,7 +343,7 @@ export default function Home() {
 
             {/* Maior baralho */}
             {dashboardData?.stats.largestDeck && (
-              <div className="p-6 rounded-xl bg-linear-to-br from-amber-500 to-orange-600 text-white shadow-lg">
+              <div className="p-6 rounded-xl bg-[var(--color-accent)] text-white shadow-lg">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-3 rounded-lg bg-white/20">
                     <Sparkles className="w-6 h-6" />
@@ -357,7 +357,7 @@ export default function Home() {
                   </span>
                 </p>
                 <Link
-                  href={`/baralhos/${dashboardData.stats.largestDeck.id}/estudar`}
+                  href={`/baralhos/estudar?id=${dashboardData.stats.largestDeck.id}`}
                   className="inline-flex items-center gap-2 text-white font-medium hover:underline"
                 >
                   {dashboardData.stats.largestDeck.title} →
@@ -369,8 +369,8 @@ export default function Home() {
           {/* Sidebar com ações rápidas */}
           <div className="space-y-6">
             {/* Ações rápidas */}
-            <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg">
-              <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
+            <div className="p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-lg">
+              <h2 className="text-xl font-bold text-[var(--color-text)] mb-4">
                 Ações Rápidas
               </h2>
               <div className="space-y-3">
@@ -382,10 +382,10 @@ export default function Home() {
                     <Plus className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <p className="font-medium text-zinc-900 dark:text-zinc-50">
+                    <p className="font-medium text-[var(--color-text)]">
                       Criar Baralho
                     </p>
-                    <p className="text-xs text-zinc-600 dark:text-zinc-400">
+                    <p className="text-xs text-[var(--color-text-muted)]">
                       Adicione novos cards
                     </p>
                   </div>
@@ -399,10 +399,10 @@ export default function Home() {
                     <Library className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <p className="font-medium text-zinc-900 dark:text-zinc-50">
+                    <p className="font-medium text-[var(--color-text)]">
                       Meus Baralhos
                     </p>
-                    <p className="text-xs text-zinc-600 dark:text-zinc-400">
+                    <p className="text-xs text-[var(--color-text-muted)]">
                       Gerencie seus cards
                     </p>
                   </div>
@@ -416,10 +416,10 @@ export default function Home() {
                     <BookOpen className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <p className="font-medium text-zinc-900 dark:text-zinc-50">
+                    <p className="font-medium text-[var(--color-text)]">
                       Flashcards
                     </p>
-                    <p className="text-xs text-zinc-600 dark:text-zinc-400">
+                    <p className="text-xs text-[var(--color-text-muted)]">
                       Ver exemplos
                     </p>
                   </div>
@@ -428,7 +428,7 @@ export default function Home() {
             </div>
 
             {/* Dica do dia */}
-            <div className="p-6 rounded-xl bg-linear-to-br from-blue-500 to-purple-600 text-white shadow-lg">
+            <div className="p-6 rounded-xl bg-[var(--color-accent)] text-white shadow-lg">
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-2 rounded-lg bg-white/20">
                   <Sparkles className="w-6 h-6" />
@@ -446,23 +446,23 @@ export default function Home() {
             </div>
 
             {/* Progresso */}
-            <div className="p-6 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg">
-              <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
+            <div className="p-6 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-lg">
+              <h2 className="text-xl font-bold text-[var(--color-text)] mb-4">
                 Seu Progresso
               </h2>
               <div className="space-y-4">
                 <div>
                   <div className="flex justify-between text-sm mb-2">
-                    <span className="text-zinc-600 dark:text-zinc-400">
+                    <span className="text-[var(--color-text-muted)]">
                       Cards Criados
                     </span>
-                    <span className="font-semibold text-zinc-900 dark:text-zinc-50">
+                    <span className="font-semibold text-[var(--color-text)]">
                       {dashboardData?.stats.totalCards || 0}
                     </span>
                   </div>
                   <div className="w-full bg-zinc-200 dark:bg-zinc-800 rounded-full h-2">
                     <div
-                      className="bg-linear-to-r from-blue-500 to-purple-600 h-2 rounded-full"
+                      className="bg-[var(--color-accent)] h-2 rounded-full"
                       style={{
                         width: `${Math.min(
                           ((dashboardData?.stats.totalCards || 0) / 100) * 100,
@@ -474,16 +474,16 @@ export default function Home() {
                 </div>
                 <div>
                   <div className="flex justify-between text-sm mb-2">
-                    <span className="text-zinc-600 dark:text-zinc-400">
+                    <span className="text-[var(--color-text-muted)]">
                       Baralhos Criados
                     </span>
-                    <span className="font-semibold text-zinc-900 dark:text-zinc-50">
+                    <span className="font-semibold text-[var(--color-text)]">
                       {dashboardData?.stats.totalDecks || 0}
                     </span>
                   </div>
                   <div className="w-full bg-zinc-200 dark:bg-zinc-800 rounded-full h-2">
                     <div
-                      className="bg-linear-to-r from-emerald-500 to-teal-600 h-2 rounded-full"
+                      className="bg-[var(--color-accent)] h-2 rounded-full"
                       style={{
                         width: `${Math.min(
                           ((dashboardData?.stats.totalDecks || 0) / 20) * 100,

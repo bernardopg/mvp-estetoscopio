@@ -163,7 +163,7 @@ export default function CommentsList({
       >
         <div className="flex gap-3">
           {/* Avatar */}
-          <div className="w-10 h-10 bg-linear-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold shrink-0">
+          <div className="w-10 h-10 bg-[var(--color-accent)] rounded-full flex items-center justify-center text-white font-semibold shrink-0">
             {comment.user.name.charAt(0).toUpperCase()}
           </div>
 
@@ -172,7 +172,7 @@ export default function CommentsList({
             {/* Header */}
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
-                <span className="font-medium text-zinc-900 dark:text-zinc-50">
+                <span className="font-medium text-[var(--color-text)]">
                   {comment.user.name}
                 </span>
                 <span className="text-xs text-zinc-500 dark:text-zinc-400">
@@ -197,13 +197,13 @@ export default function CommentsList({
                   <button className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded transition-colors">
                     <MoreVertical className="w-4 h-4 text-zinc-400" />
                   </button>
-                  <div className="absolute right-0 top-full mt-1 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-lg py-1 min-w-[120px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
+                  <div className="absolute right-0 top-full mt-1 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg shadow-lg py-1 min-w-[120px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
                     <button
                       onClick={() => {
                         setEditingComment(comment.id);
                         setEditContent(comment.content);
                       }}
-                      className="w-full px-4 py-2 text-left text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 flex items-center gap-2"
+                      className="w-full px-4 py-2 text-left text-sm text-[var(--color-text)] hover:bg-zinc-100 dark:hover:bg-zinc-700 flex items-center gap-2"
                     >
                       <Edit className="w-3 h-3" />
                       Editar
@@ -227,7 +227,7 @@ export default function CommentsList({
                   value={editContent}
                   onChange={(e) => setEditContent(e.target.value)}
                   rows={3}
-                  className="w-full px-3 py-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-zinc-900 dark:text-zinc-50 text-sm resize-none"
+                  className="w-full px-3 py-2 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-[var(--color-text)] text-sm resize-none"
                 />
                 <div className="flex items-center gap-2">
                   <button
@@ -241,7 +241,7 @@ export default function CommentsList({
                       setEditingComment(null);
                       setEditContent("");
                     }}
-                    className="px-3 py-1.5 text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50"
+                    className="px-3 py-1.5 text-sm text-[var(--color-text-muted)] hover:text-zinc-900 dark:hover:text-zinc-50"
                   >
                     Cancelar
                   </button>
@@ -249,7 +249,7 @@ export default function CommentsList({
               </div>
             ) : (
               <>
-                <p className="text-zinc-700 dark:text-zinc-300 text-sm whitespace-pre-wrap">
+                <p className="text-[var(--color-text)] text-sm whitespace-pre-wrap">
                   {comment.content}
                 </p>
 
@@ -317,7 +317,7 @@ export default function CommentsList({
     <div className="space-y-6">
       {/* New comment form */}
       <div>
-        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-4 flex items-center gap-2">
+        <h3 className="text-lg font-semibold text-[var(--color-text)] mb-4 flex items-center gap-2">
           <MessageSquare className="w-5 h-5" />
           Comentários ({comments.length})
         </h3>
@@ -331,7 +331,7 @@ export default function CommentsList({
       {comments.length === 0 ? (
         <div className="text-center py-12 bg-zinc-50 dark:bg-zinc-900 rounded-lg">
           <MessageSquare className="w-12 h-12 text-zinc-400 mx-auto mb-3" />
-          <p className="text-zinc-600 dark:text-zinc-400">
+          <p className="text-[var(--color-text-muted)]">
             Nenhum comentário ainda. Seja o primeiro a comentar!
           </p>
         </div>

@@ -75,7 +75,7 @@ export default function FolderTree({
             className={`group flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all ${
               isSelected
                 ? "bg-blue-100 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300"
-                : "hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+                : "hover:bg-zinc-100 dark:hover:bg-zinc-800 text-[var(--color-text)]"
             }`}
             onClick={() => onFolderSelect(folder.id)}
           >
@@ -114,7 +114,7 @@ export default function FolderTree({
             </span>
 
             {folder.deckCount !== undefined && folder.deckCount > 0 && (
-              <span className="text-xs text-zinc-500 dark:text-zinc-500">
+              <span className="text-xs text-[var(--color-text-muted)]">
                 {folder.deckCount}
               </span>
             )}
@@ -152,7 +152,7 @@ export default function FolderTree({
         className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all ${
           selectedFolderId === null
             ? "bg-blue-100 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300"
-            : "hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
+            : "hover:bg-zinc-100 dark:hover:bg-zinc-800 text-[var(--color-text)]"
         }`}
         onClick={() => onFolderSelect(null)}
       >
@@ -167,7 +167,7 @@ export default function FolderTree({
       {onCreateFolder && (
         <button
           onClick={() => onCreateFolder(null)}
-          className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-sm font-medium"
+          className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-[var(--color-text-muted)] hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-blue-600 dark:hover:text-blue-400 transition-all text-sm font-medium"
         >
           <Plus className="w-4 h-4" />
           <span>Nova Pasta</span>

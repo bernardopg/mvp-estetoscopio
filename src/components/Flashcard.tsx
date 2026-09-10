@@ -82,16 +82,16 @@ export function Flashcard({
   return (
     <div className={`w-full max-w-2xl mx-auto select-none ${className}`}>
       <div className={`flashcard ${flipped ? "is-flipped" : ""}`}>
-        <div className="flashcard-inner rounded-2xl border border-zinc-200/70 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-lg">
+        <div className="flashcard-inner rounded-2xl border border-zinc-200/70 dark:border-zinc-800 bg-[var(--color-surface)] shadow-lg">
           {/* Frente */}
           <div className="flashcard-face p-8 min-h-64 flex items-center justify-center">
-            <div className="prose text-center text-zinc-900 dark:text-zinc-50 text-2xl font-medium">
+            <div className="prose text-center text-[var(--color-text)] text-2xl font-medium">
               {front}
             </div>
           </div>
           {/* Verso */}
           <div className="flashcard-face flashcard-back p-8 min-h-64 flex items-center justify-center">
-            <div className="prose text-center text-zinc-900 dark:text-zinc-50 text-2xl font-medium">
+            <div className="prose text-center text-[var(--color-text)] text-2xl font-medium">
               {back}
             </div>
           </div>
